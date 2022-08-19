@@ -2,7 +2,7 @@
 
 $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-$subject = filter_input(INPUT_POST, 'subject', FILTER_SANITIZE_SPECIAL_CHARS);
+$phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_SPECIAL_CHARS);
 $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
 // Varios destinatarios
 $para  = 'arrejoria.work@gmail.com';
@@ -31,7 +31,7 @@ $mensaje = '
     </tr>
     <tr>
       <td>Asunto:</td>
-      <td>'. $subject .'</td>
+      <td>'. $phone .'</td>
     </tr>
     <tr>
       <td>Mensaje:</td>
