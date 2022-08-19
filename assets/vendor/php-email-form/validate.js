@@ -11,7 +11,7 @@ form.addEventListener("submit", function (e) {
     searchParams.append(pair[0], pair[1]);
   }
 
-  fetch("forms/contact.php", {
+  fetch("/forms/contact.php", {
     method: "POST",
     body: formData,
   })
