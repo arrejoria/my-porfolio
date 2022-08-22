@@ -29,6 +29,8 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 
 </head>
 
@@ -481,6 +483,7 @@
 
           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
             <form id="contactForm" method="POST" role="form" class="php-email-form">
+              
               <input type="hidden" name="access_key" value="e60ac1c3-9a35-4a32-a796-5d2fb19e9916">
               <input type="hidden" name="subject" value="New Submission from Web3Forms">
               <input type="checkbox" name="botcheck" id="" style="display: none;">
@@ -507,7 +510,8 @@
                 <div class="error-message"></div>
                 <div class="sent-message">Mensaje enviado exitosamente. Gracias!</div>
               </div>
-              <div class="text-center"><button type="submit">Enviar</button></div>
+              <div class="g-recaptcha" data-sitekey="6Le_cpshAAAAAMdNOzDUBrp1F6coiyuZiwoQZ_X-"></div>
+              <div class="text-left mt-3"><button type="submit">Enviar</button></div>
             </form>
           </div>
 
@@ -540,6 +544,8 @@
   <script src="assets/vendor/typed.js/typed.min.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+<!--   <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
+
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
