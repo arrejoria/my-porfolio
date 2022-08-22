@@ -20,6 +20,7 @@ form.addEventListener("submit", function (e) {
       })
       .then(function (response) {
         form.reset();
+        grecaptcha.reset();
         successMsg();
         return response.text();
       })
