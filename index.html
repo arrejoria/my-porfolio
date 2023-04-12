@@ -29,6 +29,8 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 
 </head>
 
@@ -91,7 +93,7 @@
             <img src="assets/img/profile-1.jpg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-            <h3>Web Developer.</h3>
+            <h3>Web Developer</h3>
             <p class="fst-italic">
               Hola, soy Lucas Arrejoria, un desarrollador Frontend con experiencia en desarrollo de sitios web en
               constante crecimiento aplicando las últimas tecnologías de desarrollo. Mi objetivo es crear sitios web que
@@ -99,7 +101,7 @@
             </p>
             <p class="fst-italic">
               Personalmente me encanta trabajar con diferentes personas para conocer otras culturas y así dar un paso
-              fuera de mi zona de confort, donde así mismo podré adquirir nuevas aptitudes y habilidades que sumen en mi
+              fuera de mi zona de confort, donde podré adquirir nuevas aptitudes y habilidades que sumen en mi
               desarrollo tanto profesional como personal.
             </p>
             <div class="row">
@@ -123,7 +125,7 @@
               </div>
             </div>
             <p>
-              <a href="assets/Curriculum-ES-08-2022.pdf" class="btn btn-primary mt-3" download><i class="bx bx-download"></i>
+              <a href="assets/CV-Resume-es-ES.pdf" class="btn btn-primary mt-3" download><i class="bx bx-download"></i>
                 Download CV</a>
             </p>
           </div>
@@ -236,7 +238,7 @@
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
 
             <div class="progress">
-              <span class="skill">PHP <i class="val">Junior</i></span>
+              <span class="skill">PHP <i class="val">Ssr</i></span>
               <div class="progress-bar-wrap">
                 <div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
                 </div>
@@ -244,7 +246,7 @@
             </div>
 
             <div class="progress">
-              <span class="skill">WordPress/CMS <i class="val">Ssr</i></span>
+              <span class="skill">WordPress/CMS <i class="val">Sr</i></span>
               <div class="progress-bar-wrap">
                 <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
                 </div>
@@ -252,7 +254,7 @@
             </div>
 
             <div class="progress">
-              <span class="skill">SQL <i class="val">Junior</i></span>
+              <span class="skill">SQL <i class="val">Ssr</i></span>
               <div class="progress-bar-wrap">
                 <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
                 </div>
@@ -299,10 +301,10 @@
             <div class="resume-item pb-0">
               <h4>Lucas Arrejoria</h4>
               <p><em>Innovador desarrollador web con más de 3 años de experiencia en la matería y 1 año activo
-                  realizando proyectos de desarrollo para material de Marketing y diseño UX/UI en MVC open source como
+                  realizando proyectos de desarrollo para material de Marketing y diseño UX/UI en CMS de código abierto como
                   WordPress.</em></p>
               <ul>
-                <li>Pacheco de Melo 2760, Recoleta, CABA</li>
+                <li>Recoleta, CABA</li>
                 <li>+54 11 5849-5508</li>
                 <li>arrejoria.work@gmail.com</li>
               </ul>
@@ -314,14 +316,14 @@
               <h5>2019 - 2020</h5>
               <h5>2023 - 2025</h5>
               <p><em>Primera escuela de arte multimedial</em></p>
-              <p>Fue en la Universidad Leonardo Da Vinci donde creé la base de mis
+              <p>En la Universidad Leonardo Da Vinci creé la base de mis
                 conocimientos y pude iniciarme en este mundo con la carrera de
-                Diseño y Programación Web./p>
+                Diseño y Programación Web.</p>
             </div>
             <div class="resume-item">
-              <h4>Autoaprendizaje &amp; Google</h4>
+              <h4>Autodidacta &amp; Google</h4>
               <h5>2020 - Present</h5>
-              <p>Continué mis estudios por mi cuenta, capacitándome continuamente a
+              <p>Continué mis estudios de modo autodidacta, capacitándome continuamente a
                 través del trabajo o de mis propios proyectos para crear siempre
                 código limpio y de calidad.
                 Hasta ahora sigo implementando este método para afianzar mis
@@ -380,7 +382,7 @@
             </div>
 
             <div class="resume-item">
-              <h4>FANSTATIC</h4>
+              <h4>FANTASKTIC</h4>
               <h5>2017 - 2019</h5>
               <p><em>Junior Developer</em></p>
               <p>Migraciones de sitios de WordPress.</p>
@@ -388,11 +390,9 @@
                 <li>Resolución de conflictos posteriores a la migración:</li>
                 <span> - Problemas de URL, codificación de base de datos, archivos faltantes y
                   más</span>
-                <li>Instalación y configuración de tienda online con WC.</li>
-                <li>Desarrollo de checkout para diferentes tipos de envíos y formas de pago.</li>
-                <li>Mails personalizables para clientes y administrador.</li>
+                <li>Migración personalizada de sitios multisite multisite < — > single site.</li>
+                <li>Migración de WP.com < — > WP.org sites.</li>
               </ul>
-              <p>Tecnologías utilizadas: WordPress, PHP, JavaScript, HTML, Bootstrap y CSS.</p>
             </div>
           </div>
         </div>
@@ -483,6 +483,7 @@
 
           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
             <form id="contactForm" method="POST" role="form" class="php-email-form">
+              
               <input type="hidden" name="access_key" value="e60ac1c3-9a35-4a32-a796-5d2fb19e9916">
               <input type="hidden" name="subject" value="New Submission from Web3Forms">
               <input type="checkbox" name="botcheck" id="" style="display: none;">
@@ -509,7 +510,8 @@
                 <div class="error-message"></div>
                 <div class="sent-message">Mensaje enviado exitosamente. Gracias!</div>
               </div>
-              <div class="text-center"><button type="submit">Enviar</button></div>
+              <div class="g-recaptcha" data-sitekey="6Le_cpshAAAAAMdNOzDUBrp1F6coiyuZiwoQZ_X-"></div>
+              <div class="text-left mt-3"><button type="submit">Enviar</button></div>
             </form>
           </div>
 
@@ -542,6 +544,8 @@
   <script src="assets/vendor/typed.js/typed.min.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+<!--   <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
+
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
