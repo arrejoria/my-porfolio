@@ -7,24 +7,31 @@ form.addEventListener("submit", function (e) {
   const formData = new FormData(this);
   const searchParams = new URLSearchParams();
 
-  for(const pair of formData) {
+  for (const pair of formData) {
     searchParams.append(pair[0], pair[1]);
   }
 
-  fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    body: formData,
-  })
-    .then(function (response) {
-      form.reset();
-      successMsg();
-      return response.text();
-    })
-    .catch(function (error) {
-      errorMsg();
-      console.log(error);
-    });
+  if (grecaptcha.getResponse() == "") {
+    errorMsg();
+  } else {
+    fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      })
+      .then(function (response) {
+        form.reset();
+        grecaptcha.reset();
+        successMsg();
+        return response.text();
+      })
+      .catch(function (error) {
+        errorMsg();
+        console.log(error);
+      });
+  }
 });
+
+
 
 function successMsg() {
   success.style.display = "block";
@@ -36,6 +43,7 @@ function successMsg() {
 
 function errorMsg() {
   error.style.display = "block";
+  error.textContent === '' ? error.textContent = 'Hubo un error al enviar el formulario. Verificar que todos los campos estén completos.' : null;
   setTimeout(function () {
     error.style.display = "none";
   }, 3000);
