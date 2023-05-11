@@ -412,7 +412,7 @@ section {
   margin-left: 60px;
 }
 
-.facts .count-box span:before {
+.facts .count-box:last-child span:before {
   content: "+";
   display: inline-block;
   margin-right: 5px;
