@@ -5,13 +5,14 @@ import { ArrowUpRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { SocialLinks } from '@/components/social-links'
 import { useI18n } from '@/lib/i18n/provider'
+import { Reveal } from '@/components/motion/reveal'
 
 export function ContactSection() {
   const { t } = useI18n()
 
   return (
     <section id="contact" className="border-t border-border/60 bg-vignette">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-20 text-center sm:px-6 md:py-28">
+      <Reveal className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-20 text-center sm:px-6 md:py-28">
         <h2 className="font-display text-4xl uppercase tracking-tight sm:text-5xl md:text-6xl">
           {t.contact.title}
         </h2>
@@ -33,7 +34,7 @@ export function ContactSection() {
 
         <p className="mt-10 text-sm text-muted-foreground">{t.contact.or}</p>
         <SocialLinks className="mt-3" />
-      </div>
+      </Reveal>
     </section>
   )
 }

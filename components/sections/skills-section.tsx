@@ -2,13 +2,14 @@
 
 import { useI18n } from '@/lib/i18n/provider'
 import { skillGroups } from '@/lib/site-data'
+import { Reveal } from '@/components/motion/reveal'
 
 export function SkillsSection() {
   const { t } = useI18n()
 
   return (
     <section id="skills" className="border-t border-border/60 bg-vignette">
-      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
+      <Reveal className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-display text-4xl uppercase tracking-tight sm:text-5xl md:text-6xl">
             {t.skills.title}
@@ -46,7 +47,7 @@ export function SkillsSection() {
             </div>
           ))}
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }

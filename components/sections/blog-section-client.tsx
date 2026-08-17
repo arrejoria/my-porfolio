@@ -5,13 +5,14 @@ import { ArrowUpRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useI18n } from '@/lib/i18n/provider'
 import type { PostDoc } from '@/lib/payload/types'
+import { Reveal } from '@/components/motion/reveal'
 
 export function BlogSectionClient({ posts }: { posts: PostDoc[] }) {
   const { t, locale } = useI18n()
 
   return (
     <section id="blog" className="border-t border-border/60">
-      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
+      <Reveal className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
         <h2 className="font-display text-4xl uppercase tracking-tight sm:text-5xl md:text-6xl">
           {t.blog.title}
         </h2>
@@ -56,7 +57,7 @@ export function BlogSectionClient({ posts }: { posts: PostDoc[] }) {
             className="group rounded-full px-7"
           />
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }

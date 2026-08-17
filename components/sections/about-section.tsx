@@ -3,13 +3,14 @@
 import { MapPin } from 'lucide-react'
 import { useI18n } from '@/lib/i18n/provider'
 import { experience, profile } from '@/lib/site-data'
+import { Reveal } from '@/components/motion/reveal'
 
 export function AboutSection() {
   const { t, locale } = useI18n()
 
   return (
     <section id="about" className="border-t border-border/60">
-      <div className="mx-auto grid w-full max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-28">
+      <Reveal className="mx-auto grid w-full max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-28">
         <div>
           <h2 className="font-display text-4xl uppercase tracking-tight sm:text-5xl">
             {t.about.title}
@@ -67,7 +68,7 @@ export function AboutSection() {
             </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }
