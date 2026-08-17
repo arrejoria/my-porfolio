@@ -5,7 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useState,
+  useSyncExternalStore,
 } from 'react'
 import { dictionary, type Dictionary, type Locale } from './dictionary'
 
@@ -20,21 +20,43 @@ const I18nContext = createContext<I18nContextValue | null>(null)
 
 const STORAGE_KEY = 'la-locale'
 
+type Listener = () => void
+const listeners = new Set<Listener>()
+
+function getSnapshot(): Locale {
+  const stored = window.localStorage.getItem(STORAGE_KEY)
+  return stored === 'es' || stored === 'en' ? stored : 'es'
+}
+
+function getServerSnapshot(): Locale {
+  return 'es'
+}
+
+// `storage` events only fire in OTHER tabs, never the one that wrote the
+// value, so setLocale calls notify() itself to trigger a re-render here too.
+function subscribe(listener: Listener) {
+  listeners.add(listener)
+  window.addEventListener('storage', listener)
+  return () => {
+    listeners.delete(listener)
+    window.removeEventListener('storage', listener)
+  }
+}
+
+function notify() {
+  listeners.forEach((listener) => listener())
+}
+
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('es')
+  const locale = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY) as Locale | null
-    if (stored === 'es' || stored === 'en') {
-      setLocaleState(stored)
-      document.documentElement.lang = stored
-    }
-  }, [])
+    document.documentElement.lang = locale
+  }, [locale])
 
   const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next)
     window.localStorage.setItem(STORAGE_KEY, next)
-    document.documentElement.lang = next
+    notify()
   }, [])
 
   const toggleLocale = useCallback(() => {
