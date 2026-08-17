@@ -98,12 +98,21 @@ fi
 echo "==> Building ($MODE)"
 docker compose -f "$COMPOSE_FILE" build
 
+if [[ "$MODE" == "dev" ]]; then
+  echo "==> Starting local Postgres"
+  docker compose -f "$COMPOSE_FILE" up -d --wait postgres
+fi
+
 echo "==> Running migrations"
-pnpm db:migrate
-if [[ "$MODE" == "prod" ]]; then
-  pnpm payload:migrate
-else
+if [[ "$MODE" == "dev" ]]; then
+  # Run inside the app container so it reaches Postgres via the compose
+  # network (service name), not the host — sidesteps host<->container
+  # networking quirks with the local-only dev database.
+  docker compose -f "$COMPOSE_FILE" run --rm app pnpm db:migrate
   echo "(dev: Payload syncs its own collection schema automatically on server start)"
+else
+  pnpm db:migrate
+  pnpm payload:migrate
 fi
 
 echo "==> Starting containers"
