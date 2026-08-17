@@ -2,36 +2,37 @@
 
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
-import { useSyncExternalStore } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-
-// Client-only mount flag via useSyncExternalStore instead of useState+useEffect:
-// the server snapshot (false) and client snapshot (true) differ on purpose, which
-// is exactly the mechanism this hook exists for — React re-renders once after
-// hydration with no setState-in-effect and no hydration mismatch.
-function subscribe() {
-  return () => {}
-}
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
-  const mounted = useSyncExternalStore(
-    subscribe,
-    () => true,
-    () => false,
-  )
+  // Verified via live SSR/client logging that useSyncExternalStore's
+  // getServerSnapshot is NOT honored for this component's hydration render
+  // in this Next 16/Turbopack setup — the client's first observed render
+  // already reports the client snapshot, causing a real aria-label hydration
+  // mismatch. useState+useEffect is the only pattern that reliably renders
+  // `false` on both the server and the client's first paint here; the
+  // eslint-disable is the documented exception for mount-detection effects.
+  const [mounted, setMounted] = useState(false)
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setMounted(true), [])
 
   const isDark = resolvedTheme === 'dark'
+  // Gate on `mounted` like the icon below: the server (and first client
+  // paint, before hydration) can't know the resolved theme, so both must
+  // render the same deterministic state or React flags a hydration mismatch.
+  const showDark = mounted && isDark
 
   return (
     <Button
       variant="outline"
       size="icon"
       className="size-9 rounded-full"
-      aria-label={isDark ? 'Activar modo claro' : 'Activar modo oscuro'}
+      aria-label={showDark ? 'Activar modo claro' : 'Activar modo oscuro'}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
     >
-      {mounted && isDark ? (
+      {showDark ? (
         <Sun className="size-4" />
       ) : (
         <Moon className="size-4" />
