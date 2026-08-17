@@ -5,9 +5,9 @@ import { ArrowUpRight } from 'lucide-react'
 import { GithubIcon } from '@/components/icons'
 import { Badge } from '@/components/ui/badge'
 import { useI18n } from '@/lib/i18n/provider'
-import { projects } from '@/lib/site-data'
+import { mediaUrl, type ProjectDoc } from '@/lib/payload/types'
 
-export function PortfolioGrid() {
+export function PortfolioGrid({ projects }: { projects: ProjectDoc[] }) {
   const { t, locale } = useI18n()
 
   return (
@@ -19,7 +19,7 @@ export function PortfolioGrid() {
         >
           <div className="relative aspect-[16/10] overflow-hidden border-b border-border">
             <Image
-              src={project.image || '/placeholder.svg'}
+              src={mediaUrl(project.image) || '/placeholder.svg'}
               alt={project.title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -34,7 +34,7 @@ export function PortfolioGrid() {
               {project.description[locale]}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
+              {(project.tags ?? []).map(({ tag }) => (
                 <Badge key={tag} variant="secondary" className="font-mono text-xs">
                   {tag}
                 </Badge>
