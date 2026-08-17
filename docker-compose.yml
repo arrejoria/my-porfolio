@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    ports:
+      - '${PORT:-3000}:3000'
+    env_file:
+      - .env
+    volumes:
+      - media:/app/media
+    restart: unless-stopped
+
+# No reverse proxy or TLS termination here — this only runs the app on
+# ${PORT:-3000}. Put your own Caddy/Nginx/Traefik in front on the VPS,
+# whatever it already uses for other sites.
+volumes:
+  media:

@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - '${PORT:-3000}:3000'
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      # Anonymous volumes so the container's own installs aren't shadowed
+      # by bind-mounting the host's (possibly Windows/different-arch) copies.
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
