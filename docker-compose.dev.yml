@@ -7,7 +7,7 @@ services:
     ports:
       - '${PORT:-3000}:3000'
     env_file:
-      - .env
+      - .env.development.local
     volumes:
       - .:/app
       # Anonymous volumes so the container's own installs aren't shadowed
