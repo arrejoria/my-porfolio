@@ -13,6 +13,7 @@ import { Admins } from './lib/payload/collections/admins'
 import { Media } from './lib/payload/collections/media'
 import { Posts } from './lib/payload/collections/posts'
 import { Projects } from './lib/payload/collections/projects'
+import { ContactSettings } from './lib/payload/globals/contact-settings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -25,6 +26,7 @@ export default buildConfig({
     },
   },
   collections: [Admins, Media, Posts, Projects],
+  globals: [ContactSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET ?? '',
   typescript: {

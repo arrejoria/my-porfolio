@@ -7,7 +7,6 @@ export const profile = {
   socials: {
     github: 'https://github.com/arr-dev',
     linkedin: 'https://www.linkedin.com/in/arr-dev/',
-    whatsapp: 'https://wa.me/',
   },
 }
 

@@ -1,13 +1,14 @@
-import { Mail, MessageCircle } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '@/components/icons'
 import { profile } from '@/lib/site-data'
 import { cn } from '@/lib/utils'
 
+// WhatsApp lives as the main CTA on /contact (CMS-managed via Payload's
+// contact-settings global), not duplicated here as a static icon link.
 const links = [
   { href: profile.socials.github, label: 'GitHub', Icon: GithubIcon },
   { href: profile.socials.linkedin, label: 'LinkedIn', Icon: LinkedinIcon },
   { href: `mailto:${profile.email}`, label: 'Email', Icon: Mail },
-  { href: profile.socials.whatsapp, label: 'WhatsApp', Icon: MessageCircle },
 ]
 
 export function SocialLinks({

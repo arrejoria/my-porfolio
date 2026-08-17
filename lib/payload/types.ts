@@ -39,3 +39,17 @@ export function mediaUrl(media: MediaDoc | string | null | undefined): string | 
   if (!media || typeof media === 'string') return undefined
   return media.url ?? undefined
 }
+
+export type ContactSettingsDoc = {
+  buttonLabel: string
+  buttonLink: string
+  message?: string | null
+}
+
+// Appends `message` as a WhatsApp prefilled-text `?text=` param when set,
+// so the CMS-managed buttonLink can stay a plain wa.me URL.
+export function whatsappHref(settings: ContactSettingsDoc): string {
+  if (!settings.message) return settings.buttonLink
+  const separator = settings.buttonLink.includes('?') ? '&' : '?'
+  return `${settings.buttonLink}${separator}text=${encodeURIComponent(settings.message)}`
+}
