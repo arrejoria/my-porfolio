@@ -20,12 +20,16 @@ export function ContactSection() {
           {t.contact.subtitle}
         </p>
 
-        <Button asChild size="lg" className="group mt-9 rounded-full px-7">
-          <Link href="/contact">
-            {t.hero.contact}
-            <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
-        </Button>
+        <Button
+          render={
+            <Link href="/contact">
+              {t.hero.contact}
+              <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          }
+          size="lg"
+          className="group mt-9 rounded-full px-7"
+        />
 
         <p className="mt-10 text-sm text-muted-foreground">{t.contact.or}</p>
         <SocialLinks className="mt-3" />

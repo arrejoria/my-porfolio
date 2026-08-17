@@ -25,15 +25,22 @@ export function HeroSection() {
         </p>
 
         <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
-          <Button asChild size="lg" variant="outline" className="rounded-full px-7">
-            <Link href="/portfolio">{t.hero.discover}</Link>
-          </Button>
-          <Button asChild size="lg" className="group rounded-full px-7">
-            <Link href="/contact">
-              {t.hero.contact}
-              <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Link>
-          </Button>
+          <Button
+            render={<Link href="/portfolio">{t.hero.discover}</Link>}
+            size="lg"
+            variant="outline"
+            className="rounded-full px-7"
+          />
+          <Button
+            render={
+              <Link href="/contact">
+                {t.hero.contact}
+                <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            }
+            size="lg"
+            className="group rounded-full px-7"
+          />
         </div>
 
         <div className="mt-16 h-24 w-px bg-gradient-to-b from-border to-transparent" aria-hidden />

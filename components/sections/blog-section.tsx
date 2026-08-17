@@ -37,12 +37,16 @@ export function BlogSection() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <Button asChild variant="outline" className="group rounded-full px-7">
-            <Link href="/blog">
-              {t.blog.viewAll}
-              <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Link>
-          </Button>
+          <Button
+            render={
+              <Link href="/blog">
+                {t.blog.viewAll}
+                <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            }
+            variant="outline"
+            className="group rounded-full px-7"
+          />
         </div>
       </div>
     </section>

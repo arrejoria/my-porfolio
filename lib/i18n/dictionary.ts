@@ -181,4 +181,6 @@ export const dictionary = {
   },
 } as const
 
-export type Dictionary = (typeof dictionary)['es']
+type Widen<T> = { readonly [K in keyof T]: T[K] extends string ? string : Widen<T[K]> }
+
+export type Dictionary = Widen<(typeof dictionary)['es']>
