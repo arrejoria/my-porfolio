@@ -28,6 +28,7 @@ export function ContactSection() {
               <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           }
+          nativeButton={false}
           size="lg"
           className="group mt-9 rounded-full px-7"
         />

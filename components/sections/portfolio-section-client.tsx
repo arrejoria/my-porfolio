@@ -58,6 +58,7 @@ export function PortfolioSectionClient({ project }: { project: ProjectDoc }) {
                 <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             }
+            nativeButton={false}
             variant="outline"
             className="group rounded-full px-7"
           />
