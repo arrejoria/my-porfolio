@@ -5,11 +5,14 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
-import { account, session, user, verification } from '@/lib/db/schema'
-import { Admins } from '@/lib/payload/collections/admins'
-import { Media } from '@/lib/payload/collections/media'
-import { Posts } from '@/lib/payload/collections/posts'
-import { Projects } from '@/lib/payload/collections/projects'
+// Relative imports (not the `@/*` tsconfig alias) so this config loads
+// correctly under CLI tools that don't resolve tsconfig path aliases
+// (e.g. `payload migrate:create --use-swc`), not just Next.js's bundler.
+import { account, session, user, verification } from './lib/db/schema'
+import { Admins } from './lib/payload/collections/admins'
+import { Media } from './lib/payload/collections/media'
+import { Posts } from './lib/payload/collections/posts'
+import { Projects } from './lib/payload/collections/projects'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
