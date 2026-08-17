@@ -46,6 +46,17 @@ export type ContactSettingsDoc = {
   message?: string | null
 }
 
+export type PageDoc = {
+  id: string
+  title: string
+  slug: string
+}
+
+export type SiteSettingsDoc = {
+  siteName: string
+  homePage?: PageDoc | string | null
+}
+
 // Appends `message` as a WhatsApp prefilled-text `?text=` param when set,
 // so the CMS-managed buttonLink can stay a plain wa.me URL.
 export function whatsappHref(settings: ContactSettingsDoc): string {
