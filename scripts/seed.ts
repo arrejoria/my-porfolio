@@ -4,6 +4,7 @@ if (!process.env.DATABASE_URL) {
   )
 }
 
+import path from 'node:path'
 import { getPayload } from 'payload'
 import config from '../payload.config'
 
@@ -27,6 +28,116 @@ const seedProjects = [
       en: 'Custom online store on WordPress + WooCommerce with payment gateway and management panel.',
     },
     tags: [{ tag: 'WordPress' }, { tag: 'PHP' }, { tag: 'WooCommerce' }],
+  },
+  {
+    slug: 'agimed',
+    title: 'Agimed',
+    description: {
+      es: 'Sitio institucional para Agimed, equipamiento médico y soluciones de salud para instituciones y profesionales.',
+      en: 'Institutional site for Agimed, medical equipment and health solutions for institutions and professionals.',
+    },
+    tags: [{ tag: 'WordPress' }, { tag: 'PHP' }],
+    liveUrl: 'https://agimed.com.ar',
+    imageFile: 'agimed.jpg',
+  },
+  {
+    slug: 'tienda-agimed',
+    title: 'Tienda Agimed',
+    description: {
+      es: 'E-commerce especializado en CPAP, BiPAP y equipamiento de ventilación no invasiva para pacientes.',
+      en: 'E-commerce specialized in CPAP, BiPAP and non-invasive ventilation equipment for patients.',
+    },
+    tags: [{ tag: 'WordPress' }, { tag: 'WooCommerce' }, { tag: 'PHP' }],
+    liveUrl: 'https://tienda.agimed.com.ar',
+    imageFile: 'tienda-agimed.jpg',
+  },
+  {
+    slug: 'aguamat',
+    title: 'Aguamat',
+    description: {
+      es: 'Sitio institucional para Aguamat, accesorios para redes de agua potable, sanitarias y de riego.',
+      en: 'Institutional site for Aguamat, accessories for potable water, sanitary and irrigation networks.',
+    },
+    tags: [{ tag: 'WordPress' }, { tag: 'PHP' }],
+    liveUrl: 'https://aguamat.com',
+    imageFile: 'aguamat.jpg',
+  },
+  {
+    slug: 'malegraf',
+    title: 'Malegraf',
+    description: {
+      es: 'Sitio institucional para Malegraf, fabricante de etiquetas colgantes (hang tags) para la industria textil.',
+      en: 'Institutional site for Malegraf, a hang tags manufacturer for the textile industry.',
+    },
+    tags: [{ tag: 'WordPress' }, { tag: 'PHP' }],
+    liveUrl: 'https://malegraf.com',
+    imageFile: 'malegraf.jpg',
+  },
+  {
+    slug: 'sal-de-los-andes',
+    title: 'Sal de los Andes',
+    description: {
+      es: 'Sitio institucional para Sal de los Andes, exportador de sales gourmet ricas en minerales y oligoelementos.',
+      en: 'Institutional site for Sal de los Andes, an exporter of gourmet salts rich in minerals and trace elements.',
+    },
+    tags: [{ tag: 'WordPress' }, { tag: 'PHP' }],
+    liveUrl: 'https://saldelosandes.com',
+    imageFile: 'saldelosandes.jpg',
+  },
+  {
+    slug: 'estudio-dalinger',
+    title: 'Estudio Dalinger',
+    description: {
+      es: 'Sitio institucional para Estudio Dalinger, especialistas en arquitectura legal y derecho de la construcción.',
+      en: 'Institutional site for Estudio Dalinger, specialists in legal architecture and construction law.',
+    },
+    tags: [{ tag: 'WordPress' }, { tag: 'PHP' }],
+    liveUrl: 'https://estudiodalinger.com',
+    imageFile: 'estudiodalinger.jpg',
+  },
+  {
+    slug: 'starpay',
+    title: 'Starpay',
+    description: {
+      es: 'Landing page para Starpay, una tarjeta prepaga con una nueva forma de comprar.',
+      en: 'Landing page for Starpay, a prepaid card offering a new way to shop.',
+    },
+    tags: [{ tag: 'WordPress' }, { tag: 'PHP' }],
+    liveUrl: 'https://starpaycard.com',
+    imageFile: 'starpaycard.jpg',
+  },
+  {
+    slug: 'drewolf',
+    title: 'DreWolf',
+    description: {
+      es: 'Sitio institucional para DreWolf, servicio de desarrollo de software y contratación de desarrolladores.',
+      en: 'Institutional site for DreWolf, a software development service and developer hiring platform.',
+    },
+    tags: [{ tag: 'React' }, { tag: 'Next.js' }],
+    liveUrl: 'https://drewolf.com',
+    imageFile: 'drewolf.jpg',
+  },
+  {
+    slug: 'broder',
+    title: 'Broder',
+    description: {
+      es: 'Sitio institucional para Broder, estudio de diseño gráfico y web con foco en branding y packaging.',
+      en: 'Institutional site for Broder, a graphic and web design studio focused on branding and packaging.',
+    },
+    tags: [{ tag: 'WordPress' }, { tag: 'PHP' }],
+    liveUrl: 'https://broder.com.ar',
+    imageFile: 'broder.jpg',
+  },
+  {
+    slug: 'hello-mushrooms',
+    title: 'Hello Mushrooms',
+    description: {
+      es: 'E-commerce para Hello Mushrooms, snacks crocantes de shiitake, saludables y sabrosos.',
+      en: 'E-commerce for Hello Mushrooms, crunchy and healthy shiitake snacks.',
+    },
+    tags: [{ tag: 'WordPress' }, { tag: 'WooCommerce' }, { tag: 'PHP' }],
+    liveUrl: 'https://hellomushrooms.com',
+    imageFile: 'hellomushrooms.jpg',
   },
 ]
 
@@ -106,14 +217,25 @@ async function seed() {
   const payload = await getPayload({ config })
 
   let createdProjects = 0
-  for (const project of seedProjects) {
+  for (const { imageFile, ...project } of seedProjects) {
     const existing = await payload.find({
       collection: 'projects',
       where: { slug: { equals: project.slug } },
       limit: 1,
     })
     if (existing.docs.length > 0) continue
-    await payload.create({ collection: 'projects', data: project })
+
+    let image: number | undefined
+    if (imageFile) {
+      const media = await payload.create({
+        collection: 'media',
+        data: { alt: project.title },
+        filePath: path.resolve(process.cwd(), 'scripts', 'seed-assets', imageFile),
+      })
+      image = media.id
+    }
+
+    await payload.create({ collection: 'projects', data: { ...project, image } })
     createdProjects += 1
   }
 
