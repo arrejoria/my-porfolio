@@ -10,6 +10,11 @@ overrides:
   pg: ^8.23.0
   '@types/pg': ^8.21.0
 
+patchedDependencies:
+  '@next/env@15.5.23':
+    hash: 2f0373a912effe09cef1aae79a3a16914a39a67d766b4383d5cb2096f0f35f8b
+    path: patches/@next__env@15.5.23.patch
+
 importers:
 
   .:
@@ -6838,7 +6843,7 @@ snapshots:
       '@tybys/wasm-util': 0.10.3
     optional: true
 
-  '@next/env@15.5.23': {}
+  '@next/env@15.5.23(patch_hash=2f0373a912effe09cef1aae79a3a16914a39a67d766b4383d5cb2096f0f35f8b)': {}
 
   '@next/env@16.3.0': {}
 
@@ -10147,7 +10152,7 @@ snapshots:
 
   payload@3.88.0(graphql@16.14.0)(typescript@5.7.3):
     dependencies:
-      '@next/env': 15.5.23
+      '@next/env': 15.5.23(patch_hash=2f0373a912effe09cef1aae79a3a16914a39a67d766b4383d5cb2096f0f35f8b)
       '@payloadcms/translations': 3.88.0
       '@types/busboy': 1.5.4
       ajv: 8.18.0

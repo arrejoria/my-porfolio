@@ -15,3 +15,6 @@ node_modules
 .next/
 .DS_Store
 tsconfig.tsbuildinfo
+
+# Payload media uploads (local disk storage, see lib/payload/collections/media.ts)
+media/
