@@ -6,12 +6,16 @@ import { GithubIcon } from '@/components/icons'
 import { Badge } from '@/components/ui/badge'
 import { useI18n } from '@/lib/i18n/provider'
 import { mediaUrl, type ProjectDoc } from '@/lib/payload/types'
+import { Reveal } from '@/components/motion/reveal'
 
 export function PortfolioGrid({ projects }: { projects: ProjectDoc[] }) {
   const { t, locale } = useI18n()
 
   return (
-    <div className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-20">
+    <Reveal
+      className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-20"
+      stagger={0.08}
+    >
       {projects.map((project, index) => (
         <article
           key={project.slug}
@@ -68,6 +72,6 @@ export function PortfolioGrid({ projects }: { projects: ProjectDoc[] }) {
           </div>
         </article>
       ))}
-    </div>
+    </Reveal>
   )
 }

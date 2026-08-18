@@ -1,31 +1,59 @@
 'use client'
 
+import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useI18n } from '@/lib/i18n/provider'
 import { mediaUrl, type ProjectDoc } from '@/lib/payload/types'
-import { Reveal } from '@/components/motion/reveal'
+import { Reveal, prefersReducedMotion } from '@/components/motion/reveal'
 
 export function PortfolioSectionClient({ project }: { project: ProjectDoc }) {
   const { t, locale } = useI18n()
+  const imageRef = useRef<HTMLImageElement>(null)
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion() || !imageRef.current) return
+
+      gsap.from(imageRef.current, {
+        scale: 1.05,
+        duration: 0.7,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: imageRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      })
+    },
+    { scope: imageRef },
+  )
 
   return (
     <section id="work" className="border-t border-border/60">
-      <Reveal className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
-        <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
-          {t.portfolio.title}
-        </h2>
-        <span className="mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
-        <p className="mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground">
-          {t.portfolio.subtitle}
-        </p>
+      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
+        <Reveal>
+          <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
+            {t.portfolio.title}
+          </h2>
+          <span className="mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
+          <p className="mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground">
+            {t.portfolio.subtitle}
+          </p>
+        </Reveal>
 
-        <div className="mt-12 overflow-hidden rounded-3xl border border-border bg-card transition-colors hover:border-primary/50 md:grid md:grid-cols-2">
+        <Reveal
+          delay={0.15}
+          className="mt-12 overflow-hidden rounded-3xl border border-border bg-card transition-colors hover:border-primary/50 md:grid md:grid-cols-2"
+        >
           <div className="relative aspect-[16/10] overflow-hidden border-b border-border md:border-b-0 md:border-r">
             <Image
+              ref={imageRef}
               src={mediaUrl(project.image) || '/placeholder.svg'}
               alt={project.title}
               fill
@@ -48,7 +76,7 @@ export function PortfolioSectionClient({ project }: { project: ProjectDoc }) {
               ))}
             </div>
           </div>
-        </div>
+        </Reveal>
 
         <div className="mt-10 flex justify-center">
           <Button
@@ -63,7 +91,7 @@ export function PortfolioSectionClient({ project }: { project: ProjectDoc }) {
             className="group rounded-full px-7"
           />
         </div>
-      </Reveal>
+      </div>
     </section>
   )
 }
