@@ -18,7 +18,10 @@ export function ContactPageContent({ settings }: { settings: ContactSettingsDoc 
           render={
             <a href={whatsappHref(settings)} target="_blank" rel="noreferrer">
               {settings.buttonLabel}
-              <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight
+                className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                aria-hidden="true"
+              />
             </a>
           }
           nativeButton={false}

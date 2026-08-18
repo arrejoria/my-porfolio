@@ -13,10 +13,10 @@ export function ContactSection() {
   return (
     <section id="contact" className="border-t border-border/60 bg-vignette">
       <Reveal className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-20 text-center sm:px-6 md:py-28">
-        <h2 className="font-display text-4xl uppercase tracking-tight sm:text-5xl md:text-6xl">
+        <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
           {t.contact.title}
         </h2>
-        <span className="mt-4 block h-px w-24 bg-primary" />
+        <span className="mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
         <p className="mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground">
           {t.contact.subtitle}
         </p>

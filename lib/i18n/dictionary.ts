@@ -8,6 +8,10 @@ export const dictionary = {
       blog: 'Blog',
       contact: 'Contacto',
       admin: 'Panel',
+      mainLabel: 'Principal',
+      mobileLabel: 'Móvil',
+      openMenu: 'Abrir menú',
+      closeMenu: 'Cerrar menú',
     },
     hero: {
       role: 'Desarrollador Frontend',
@@ -70,6 +74,10 @@ export const dictionary = {
       blog: 'Blog',
       contact: 'Contact',
       admin: 'Admin',
+      mainLabel: 'Main',
+      mobileLabel: 'Mobile',
+      openMenu: 'Open menu',
+      closeMenu: 'Close menu',
     },
     hero: {
       role: 'Frontend Developer',

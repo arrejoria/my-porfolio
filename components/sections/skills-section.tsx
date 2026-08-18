@@ -11,7 +11,7 @@ export function SkillsSection() {
     <section id="skills" className="border-t border-border/60 bg-vignette">
       <Reveal className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-4xl uppercase tracking-tight sm:text-5xl md:text-6xl">
+          <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
             {t.skills.title}
           </h2>
           <p className="mt-6 text-pretty leading-relaxed text-muted-foreground">
@@ -25,7 +25,7 @@ export function SkillsSection() {
               <h3 className="text-center font-display text-2xl uppercase tracking-[0.15em] text-foreground">
                 {t.skills.columns[group.key]}
               </h3>
-              <span className="mx-auto mt-3 block h-px w-12 bg-primary" />
+              <span className="mx-auto mt-3 block h-px w-12 bg-primary" aria-hidden="true" />
               <ul className="mt-6 space-y-5">
                 {group.items.map((item) => (
                   <li key={item.name}>

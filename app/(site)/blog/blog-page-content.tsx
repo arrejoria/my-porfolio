@@ -20,7 +20,7 @@ export function BlogPageContent({ posts }: { posts: PostDoc[] }) {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/50"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 outline-none transition-colors hover:border-primary/50 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 <p className="font-mono text-xs text-muted-foreground">
                   {new Date(post.createdAt).toLocaleDateString(locale)}

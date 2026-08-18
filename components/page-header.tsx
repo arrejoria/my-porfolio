@@ -11,7 +11,7 @@ export function PageHeader({
         <h1 className="font-display text-5xl uppercase tracking-tight text-balance sm:text-6xl">
           {title}
         </h1>
-        <span className="mt-4 block h-px w-24 bg-primary" />
+        <span className="mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
         {subtitle && (
           <p className="mt-5 max-w-xl text-pretty leading-relaxed text-muted-foreground">
             {subtitle}

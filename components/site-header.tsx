@@ -31,7 +31,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <BrandLogo />
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Principal">
+        <nav className="hidden items-center gap-1 md:flex" aria-label={t.nav.mainLabel}>
           {nav.map((item) => (
             <Link
               key={item.href}
@@ -58,7 +58,7 @@ export function SiteHeader() {
           <button
             type="button"
             className="flex size-9 items-center justify-center rounded-full text-foreground md:hidden"
-            aria-label="Abrir menú"
+            aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
@@ -70,7 +70,7 @@ export function SiteHeader() {
       {open && (
         <nav
           className="border-t border-border/60 bg-background px-4 py-3 md:hidden"
-          aria-label="Móvil"
+          aria-label={t.nav.mobileLabel}
         >
           {nav.map((item) => (
             <Link

@@ -12,10 +12,10 @@ export function AboutSection() {
     <section id="about" className="border-t border-border/60">
       <Reveal className="mx-auto grid w-full max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-28">
         <div>
-          <h2 className="font-display text-4xl uppercase tracking-tight sm:text-5xl">
+          <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl">
             {t.about.title}
           </h2>
-          <span className="mt-4 block h-px w-24 bg-primary" />
+          <span className="mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
           <p className="mt-6 max-w-md text-pretty leading-relaxed text-muted-foreground">
             {t.about.body}
           </p>
@@ -26,7 +26,10 @@ export function AboutSection() {
           <ol className="mt-4 space-y-5">
             {experience.map((item, i) => (
               <li key={i} className="relative border-l border-border pl-5">
-                <span className="absolute -left-[5px] top-1.5 size-2.5 rounded-full bg-primary" />
+                <span
+                  className="absolute -left-[5px] top-1.5 size-2.5 rounded-full bg-primary"
+                  aria-hidden="true"
+                />
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3">
                   <p className="font-medium text-foreground">
                     {item.role[locale]}{' '}
@@ -61,7 +64,7 @@ export function AboutSection() {
               <MapPin className="size-4 text-primary" />
               {t.about.cardLocation}
             </div>
-            <div className="mt-6 flex items-center justify-center gap-2">
+            <div className="mt-6 flex items-center justify-center gap-2" aria-hidden="true">
               <span className="h-px w-10 bg-border" />
               <span className="size-1.5 rounded-full bg-primary" />
               <span className="h-px w-10 bg-border" />

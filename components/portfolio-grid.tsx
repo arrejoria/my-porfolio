@@ -12,7 +12,7 @@ export function PortfolioGrid({ projects }: { projects: ProjectDoc[] }) {
 
   return (
     <div className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-20">
-      {projects.map((project) => (
+      {projects.map((project, index) => (
         <article
           key={project.slug}
           className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-primary/50"
@@ -23,6 +23,7 @@ export function PortfolioGrid({ projects }: { projects: ProjectDoc[] }) {
               alt={project.title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
+              priority={index === 0}
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>

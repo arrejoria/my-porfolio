@@ -15,7 +15,7 @@ export function BlogPostContent({ post }: { post: PostDoc }) {
         href="/blog"
         className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
-        <ArrowLeft className="size-4" />
+        <ArrowLeft className="size-4" aria-hidden="true" />
         {t.blog.back}
       </Link>
       <h1 className="mt-6 text-balance font-display text-4xl uppercase tracking-tight sm:text-5xl">

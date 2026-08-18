@@ -32,7 +32,7 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,var(--border)_1px,transparent_0)] [background-size:32px_32px] opacity-40" />
       <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-24 text-center sm:px-6 md:py-36">
         <span className="flex size-16 items-center justify-center rounded-xl border border-border bg-background/40 backdrop-blur">
-          <Code2 className="size-7 text-primary" />
+          <Code2 className="size-7 text-primary" aria-hidden="true" />
         </span>
 
         <h1
