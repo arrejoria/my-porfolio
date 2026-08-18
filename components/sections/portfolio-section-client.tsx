@@ -78,7 +78,7 @@ export function PortfolioSectionClient({ project }: { project: ProjectDoc }) {
           </div>
         </Reveal>
 
-        <div className="mt-10 flex justify-center">
+        <Reveal delay={0.25} className="mt-10 flex justify-center">
           <Button
             render={
               <Link href="/portfolio">
@@ -90,7 +90,7 @@ export function PortfolioSectionClient({ project }: { project: ProjectDoc }) {
             variant="outline"
             className="group rounded-full px-7"
           />
-        </div>
+        </Reveal>
       </div>
     </section>
   )
