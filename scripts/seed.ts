@@ -225,14 +225,14 @@ async function seed() {
     })
     if (existing.docs.length > 0) continue
 
-    let image: number | undefined
+    let image: string | undefined
     if (imageFile) {
       const media = await payload.create({
         collection: 'media',
         data: { alt: project.title },
         filePath: path.resolve(process.cwd(), 'scripts', 'seed-assets', imageFile),
       })
-      image = media.id
+      image = String(media.id)
     }
 
     await payload.create({ collection: 'projects', data: { ...project, image } })
