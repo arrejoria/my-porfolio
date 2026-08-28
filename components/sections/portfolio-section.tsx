@@ -6,13 +6,12 @@ export async function PortfolioSection() {
   const payload = await getPayload()
   const { docs } = await payload.find({
     collection: 'projects',
-    limit: 1,
+    limit: 12,
     depth: 1,
     sort: '-createdAt',
   })
 
-  const featured = docs[0] as ProjectDoc | undefined
-  if (!featured) return null
+  if (docs.length === 0) return null
 
-  return <PortfolioSectionClient project={featured} />
+  return <PortfolioSectionClient projects={docs as ProjectDoc[]} />
 }

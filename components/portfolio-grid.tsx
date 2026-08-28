@@ -19,16 +19,19 @@ export function PortfolioGrid({ projects }: { projects: ProjectDoc[] }) {
       {projects.map((project, index) => (
         <article
           key={project.slug}
-          className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-primary/50"
+          className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-foreground"
         >
           <div className="relative aspect-[16/10] overflow-hidden border-b border-border">
+            <span className="absolute left-2 top-2 z-10 rounded border border-border bg-background/80 px-1.5 py-0.5 font-mono text-[10px] text-foreground backdrop-blur">
+              N.{String(index + 1).padStart(2, '0')}
+            </span>
             <Image
               src={mediaUrl(project.image) || '/placeholder.svg'}
               alt={project.title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               priority={index === 0}
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover grayscale contrast-[1.15] brightness-95 transition-[filter,transform] duration-500 group-hover:scale-105 group-hover:grayscale-0"
             />
           </div>
           <div className="flex flex-1 flex-col p-6">

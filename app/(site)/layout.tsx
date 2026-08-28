@@ -1,38 +1,47 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Albert_Sans, Pathway_Gothic_One } from 'next/font/google'
+import { Bricolage_Grotesque, Hanken_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import { I18nProvider } from '@/lib/i18n/provider'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { Toaster } from '@/components/ui/sonner'
+import { ClickBurstOverlay } from '@/components/motion/click-burst'
 import './globals.css'
 
-const albert = Albert_Sans({
+const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
-  variable: '--font-albert',
+  weight: ['400', '800'],
+  variable: '--font-bricolage',
   display: 'swap',
 })
 
-const pathway = Pathway_Gothic_One({
+const hanken = Hanken_Grotesk({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-pathway',
+  weight: ['400', '700'],
+  variable: '--font-hanken',
+  display: 'swap',
+})
+
+const jbmono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: '500',
+  variable: '--font-jbmono',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Lucas Arrejoria — Frontend Developer',
+  title: 'Lucas Arrejoria — Full Stack Developer',
   description:
-    'Portafolio personal, proyectos y blog de Lucas Arrejoria, desarrollador frontend especializado en JavaScript, React, WordPress y PHP.',
+    'Portafolio personal, proyectos y blog de Lucas Arrejoria, Full Stack Developer especializado en WordPress, PHP, automatización con n8n e integraciones con IA.',
   generator: 'v0.app',
 }
 
 export const viewport: Viewport = {
   colorScheme: 'dark light',
   themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#141416' },
-    { media: '(prefers-color-scheme: light)', color: '#fafafa' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0a0b' },
+    { media: '(prefers-color-scheme: light)', color: '#f7f6f4' },
   ],
 }
 
@@ -43,7 +52,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning className="bg-background">
-      <body className={`${albert.variable} ${pathway.variable} font-sans antialiased`}>
+      <body
+        className={`${bricolage.variable} ${hanken.variable} ${jbmono.variable} font-sans antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -57,6 +68,7 @@ export default function RootLayout({
               <SiteFooter />
             </div>
             <Toaster />
+            <ClickBurstOverlay />
           </I18nProvider>
         </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}

@@ -18,3 +18,9 @@ tsconfig.tsbuildinfo
 
 # Payload media uploads (local disk storage, see lib/payload/collections/media.ts)
 media/
+
+# Local-only working files (not part of the app)
+assets-web-anterior/
+.agents/
+my-profile.pdf
+skills-lock.json
