@@ -35,6 +35,21 @@ export type PostDoc = {
   updatedAt: string
 }
 
+export type CaseStudyDoc = {
+  id: string
+  title: string
+  slug: string
+  summary: { es: string; en: string }
+  content: { es: SerializedEditorState; en: SerializedEditorState }
+  tools?: { tool: string }[] | null
+  coverImage?: MediaDoc | string | null
+  repoUrl?: string | null
+  demoUrl?: string | null
+  published: boolean
+  createdAt: string
+  updatedAt: string
+}
+
 export function mediaUrl(media: MediaDoc | string | null | undefined): string | undefined {
   if (!media || typeof media === 'string') return undefined
   return media.url ?? undefined

@@ -19,6 +19,7 @@ export function SiteHeader() {
   const nav = [
     { href: '/', label: t.nav.home },
     { href: '/portfolio', label: t.nav.portfolio },
+    { href: '/case-studies', label: t.nav.caseStudies },
     { href: '/blog', label: t.nav.blog },
     { href: '/contact', label: t.nav.contact },
   ]

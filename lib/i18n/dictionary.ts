@@ -5,6 +5,7 @@ export const dictionary = {
     nav: {
       home: 'Inicio',
       portfolio: 'Proyectos',
+      caseStudies: 'Automatización',
       blog: 'Blog',
       contact: 'Contacto',
       admin: 'Panel',
@@ -43,6 +44,19 @@ export const dictionary = {
       framesLabel: 'CUADROS',
       dragHint: 'ARRASTRÁ PARA VER MÁS →',
     },
+    caseStudies: {
+      title: 'Casos de IA & Automatización',
+      subtitle:
+        'Flujos y sistemas donde la IA ejecuta y yo dirijo — n8n, integraciones y automatización aplicada.',
+      readMore: 'Ver caso completo',
+      empty: 'Todavía no hay casos publicados. Vuelve pronto.',
+      back: 'Volver a casos',
+      publishedOn: 'Publicado el',
+      viewAll: 'Ver todos los casos',
+      toolsLabel: 'Herramientas',
+      demo: 'Ver demo',
+      code: 'Código',
+    },
     blog: {
       title: 'Blog',
       subtitle:
@@ -69,6 +83,7 @@ export const dictionary = {
     nav: {
       home: 'Home',
       portfolio: 'Projects',
+      caseStudies: 'Automation',
       blog: 'Blog',
       contact: 'Contact',
       admin: 'Admin',
@@ -106,6 +121,19 @@ export const dictionary = {
       viewAll: 'View all work',
       framesLabel: 'FRAMES',
       dragHint: 'DRAG TO SEE MORE →',
+    },
+    caseStudies: {
+      title: 'AI & Automation Case Studies',
+      subtitle:
+        'Flows and systems where AI executes and I direct — n8n, integrations, and applied automation.',
+      readMore: 'Read full case',
+      empty: 'No case studies yet. Check back soon.',
+      back: 'Back to case studies',
+      publishedOn: 'Published on',
+      viewAll: 'View all case studies',
+      toolsLabel: 'Tools',
+      demo: 'View demo',
+      code: 'Code',
     },
     blog: {
       title: 'Blog',

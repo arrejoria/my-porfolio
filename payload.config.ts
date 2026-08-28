@@ -10,6 +10,7 @@ import sharp from 'sharp'
 // (e.g. `payload migrate:create --use-swc`), not just Next.js's bundler.
 import { account, session, user, verification } from './lib/db/schema'
 import { Admins } from './lib/payload/collections/admins'
+import { CaseStudies } from './lib/payload/collections/case-studies'
 import { Media } from './lib/payload/collections/media'
 import { Pages } from './lib/payload/collections/pages'
 import { Posts } from './lib/payload/collections/posts'
@@ -30,7 +31,7 @@ export default buildConfig({
       beforeNavLinks: ['/components/ViewSiteDropdown#ViewSiteDropdown'],
     },
   },
-  collections: [Admins, Media, Pages, Posts, Projects],
+  collections: [Admins, CaseStudies, Media, Pages, Posts, Projects],
   globals: [ContactSettings, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET ?? '',
