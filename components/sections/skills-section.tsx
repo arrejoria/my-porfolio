@@ -105,11 +105,18 @@ function SkillMarqueeRow({
           </div>
 
           {!reducedMotion && (
-            <div
-              ref={solidRef}
-              className="absolute inset-0 inline-flex w-max items-center gap-6 whitespace-nowrap font-display text-3xl font-extrabold uppercase text-foreground [clip-path:inset(0_calc(50%-3rem)_0_calc(50%-3rem))] sm:text-4xl sm:[clip-path:inset(0_calc(50%-4rem)_0_calc(50%-4rem))] md:text-5xl md:[clip-path:inset(0_calc(50%-5rem)_0_calc(50%-5rem))]"
-            >
-              <TrackContent tokens={displayTokens} prefix="solid" />
+            // Clip-path needs its own reference box to be the row's (viewport)
+            // width so the visible window sits at a fixed point on screen — the
+            // GSAP-transformed track inside it is content-width instead (same
+            // width as `ghostRef`, so `xPercent` moves both by an identical
+            // pixel distance and the loop stays in lockstep).
+            <div className="absolute inset-0 flex items-center [clip-path:inset(0_calc(50%-3rem)_0_calc(50%-3rem))] sm:[clip-path:inset(0_calc(50%-4rem)_0_calc(50%-4rem))] md:[clip-path:inset(0_calc(50%-5rem)_0_calc(50%-5rem))]">
+              <div
+                ref={solidRef}
+                className="inline-flex w-max items-center gap-6 whitespace-nowrap font-display text-3xl font-extrabold uppercase text-foreground sm:text-4xl md:text-5xl"
+              >
+                <TrackContent tokens={displayTokens} prefix="solid" />
+              </div>
             </div>
           )}
         </div>
