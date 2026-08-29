@@ -1,75 +1,29 @@
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import type {
+  CaseStudy,
+  ContactSetting,
+  Media,
+  Page,
+  Post,
+  Project,
+  SiteSetting,
+} from './payload-types'
 
-// Hand-written shapes for the Payload collections defined in
-// lib/payload/collections/*.ts. Payload can generate a fully typed
-// payload-types.ts from a live database (`payload generate:types`), but no
-// live DB is available in this environment — these mirror the field configs
-// closely enough for the app to consume the Local API safely.
+// Payload's own generated types (lib/payload/payload-types.ts) are the
+// source of truth for every collection/global shape — these are just
+// app-facing aliases so the rest of the codebase doesn't import the
+// generated file (marked "DO NOT MODIFY BY HAND") directly.
 
-export type MediaDoc = {
-  id: string
-  url?: string | null
-  alt?: string | null
-}
+export type MediaDoc = Media
+export type ProjectDoc = Project
+export type PostDoc = Post
+export type CaseStudyDoc = CaseStudy
+export type PageDoc = Page
+export type SiteSettingsDoc = SiteSetting
+export type ContactSettingsDoc = ContactSetting
 
-export type ProjectDoc = {
-  id: string
-  title: string
-  slug: string
-  description: { es: string; en: string }
-  tags?: { tag: string }[] | null
-  image?: MediaDoc | string | null
-  liveUrl?: string | null
-  repoUrl?: string | null
-}
-
-export type PostDoc = {
-  id: string
-  title: { es: string; en: string }
-  slug: string
-  excerpt: { es: string; en: string }
-  content: { es: SerializedEditorState; en: SerializedEditorState }
-  coverImage?: MediaDoc | string | null
-  published: boolean
-  createdAt: string
-  updatedAt: string
-}
-
-export type CaseStudyDoc = {
-  id: string
-  title: string
-  slug: string
-  summary: { es: string; en: string }
-  content: { es: SerializedEditorState; en: SerializedEditorState }
-  tools?: { tool: string }[] | null
-  coverImage?: MediaDoc | string | null
-  repoUrl?: string | null
-  demoUrl?: string | null
-  published: boolean
-  createdAt: string
-  updatedAt: string
-}
-
-export function mediaUrl(media: MediaDoc | string | null | undefined): string | undefined {
-  if (!media || typeof media === 'string') return undefined
+export function mediaUrl(media: MediaDoc | number | null | undefined): string | undefined {
+  if (!media || typeof media === 'number') return undefined
   return media.url ?? undefined
-}
-
-export type ContactSettingsDoc = {
-  buttonLabel: string
-  buttonLink: string
-  message?: string | null
-}
-
-export type PageDoc = {
-  id: string
-  title: string
-  slug: string
-}
-
-export type SiteSettingsDoc = {
-  siteName: string
-  homePage?: PageDoc | string | null
 }
 
 // Appends `message` as a WhatsApp prefilled-text `?text=` param when set,
