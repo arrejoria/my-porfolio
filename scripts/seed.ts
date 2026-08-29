@@ -171,6 +171,108 @@ const richText = (text: string) => ({
   },
 })
 
+const textNode = (text: string) => ({
+  type: 'text',
+  format: 0,
+  detail: 0,
+  mode: 'normal' as const,
+  style: '',
+  text,
+  version: 1,
+})
+
+const heading = (text: string, tag: 'h2' | 'h3' = 'h2') => ({
+  type: 'heading',
+  tag,
+  format: '' as const,
+  indent: 0,
+  version: 1,
+  direction: 'ltr' as const,
+  children: [textNode(text)],
+})
+
+const paragraph = (text: string) => ({
+  type: 'paragraph',
+  format: '' as const,
+  indent: 0,
+  version: 1,
+  direction: 'ltr' as const,
+  children: [textNode(text)],
+})
+
+const richTextDoc = (blocks: ReturnType<typeof heading | typeof paragraph>[]) => ({
+  root: {
+    type: 'root',
+    format: '' as const,
+    indent: 0,
+    version: 1,
+    direction: 'ltr' as const,
+    children: blocks,
+  },
+})
+
+const seedCaseStudies = [
+  {
+    slug: 'chatbot-ia-woocommerce',
+    title: 'Chatbot IA — WooCommerce',
+    summary: {
+      es: 'Diseñé el chatbot de IA para un e-commerce WordPress/WooCommerce de ~300 productos: system prompt, modelo, RAG y cache con Redis para bajar costo y latencia.',
+      en: 'Designed the AI chatbot for a ~300-product WordPress/WooCommerce store: system prompt, model choice, RAG, and Redis caching to cut cost and latency.',
+    },
+    content: {
+      es: richTextDoc([
+        paragraph(
+          'Chatbot conversacional con IA para un e-commerce en WordPress/WooCommerce de aproximadamente 300 productos, pensado para que los usuarios descubran productos, promociones y recomendaciones por lenguaje natural en lugar de depender solo del buscador tradicional.',
+        ),
+        heading('El problema'),
+        paragraph(
+          'Enviar el catálogo completo al modelo en cada interacción disparaba el costo, agregaba ruido y aumentaba la latencia de respuesta. Había que resolver cómo darle al LLM solo la información relevante para cada consulta, sin perder precisión ni agregar demoras perceptibles en la conversación.',
+        ),
+        heading('Lo que hice'),
+        paragraph(
+          'Diseñé el system prompt y elegí el modelo, ajustando parámetros como la temperature para equilibrar precisión y naturalidad en las respuestas. Sobre el flujo conversacional armado en Typebot, integré un agente con acceso a herramientas y al catálogo mediante un enfoque RAG, recuperando solo la información relevante para cada consulta en lugar de enviar los 300 productos en cada turno.',
+        ),
+        paragraph(
+          'Hice pruebas exhaustivas contra el catálogo real para afinar el comportamiento del modelo y encontrar los requerimientos óptimos de contexto y formato de respuesta. También implementé cache con Redis para el historial conversacional — deliberadamente sin cachear productos, precios ni stock, para que esa información saliera siempre fresca desde el catálogo.',
+        ),
+        heading('Resultado'),
+        paragraph(
+          'Medí consumo de tokens y latencia en cada iteración para mantener el costo bajo control. El resultado fue un chatbot capaz de responder consultas de descubrimiento de productos con contexto acotado y relevante, con tiempos de respuesta estables gracias al cache de conversación, sin depender de enviar el catálogo completo en cada turno.',
+        ),
+      ]),
+      en: richTextDoc([
+        paragraph(
+          'Conversational AI chatbot for a WordPress/WooCommerce store with around 300 products, built so users could discover products, promotions, and recommendations through natural language instead of relying solely on the traditional search.',
+        ),
+        heading('The problem'),
+        paragraph(
+          'Sending the full catalog to the model on every interaction drove up cost, added noise, and increased response latency. The challenge was feeding the LLM only the information relevant to each query, without losing accuracy or adding noticeable delays to the conversation.',
+        ),
+        heading('What I built'),
+        paragraph(
+          'I designed the system prompt and chose the model, tuning parameters like temperature to balance accuracy and natural phrasing in responses. On top of a conversational flow built in Typebot, I integrated an agent with access to tools and the product catalog using a RAG approach, retrieving only the information relevant to each query instead of sending all 300 products on every turn.',
+        ),
+        paragraph(
+          'I ran exhaustive testing against the real catalog to fine-tune model behavior and find the optimal context and response requirements. I also implemented Redis caching for conversation history — deliberately excluding products, prices, and stock from the cache, so that data always came back fresh from the catalog.',
+        ),
+        heading('Result'),
+        paragraph(
+          'I measured token consumption and latency on every iteration to keep cost under control. The result was a chatbot able to answer product-discovery queries with focused, relevant context, with stable response times thanks to conversation caching, without needing to send the full catalog on every turn.',
+        ),
+      ]),
+    },
+    tools: [
+      { tool: 'Typebot' },
+      { tool: 'LLM Agents' },
+      { tool: 'RAG' },
+      { tool: 'Redis' },
+      { tool: 'WooCommerce' },
+      { tool: 'NocoDB' },
+    ],
+    published: true,
+  },
+]
+
 const seedPosts = [
   {
     slug: 'hello-world',
@@ -239,6 +341,19 @@ async function seed() {
     createdProjects += 1
   }
 
+  let createdCaseStudies = 0
+  for (const caseStudy of seedCaseStudies) {
+    const existing = await payload.find({
+      collection: 'case-studies',
+      where: { slug: { equals: caseStudy.slug } },
+      limit: 1,
+    })
+    if (existing.docs.length > 0) continue
+
+    await payload.create({ collection: 'case-studies', data: caseStudy })
+    createdCaseStudies += 1
+  }
+
   let createdPosts = 0
   for (const post of seedPosts) {
     const existing = await payload.find({
@@ -252,7 +367,7 @@ async function seed() {
   }
 
   console.log(
-    `Inserted ${createdProjects} project(s) and ${createdPosts} post(s). Existing slugs were skipped.`,
+    `Inserted ${createdProjects} project(s), ${createdCaseStudies} case stud${createdCaseStudies === 1 ? 'y' : 'ies'}, and ${createdPosts} post(s). Existing slugs were skipped.`,
   )
 }
 
