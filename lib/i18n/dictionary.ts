@@ -38,6 +38,7 @@ export const dictionary = {
         ai: 'AI & Automatización',
         infra: 'Infraestructura',
       },
+      appliedAi: 'IA Aplicada',
     },
     portfolio: {
       title: 'Proyectos',
@@ -78,6 +79,9 @@ export const dictionary = {
       subtitle:
         '¿Tienes un proyecto en mente o quieres colaborar? Escríbeme y te responderé pronto.',
       or: 'O encuéntrame en',
+    },
+    social: {
+      email: 'Correo',
     },
     footer: {
       rights: 'Todos los derechos reservados.',
@@ -121,6 +125,7 @@ export const dictionary = {
         ai: 'AI & Automation',
         infra: 'Infrastructure',
       },
+      appliedAi: 'Applied AI',
     },
     portfolio: {
       title: 'Projects',
@@ -161,6 +166,9 @@ export const dictionary = {
       subtitle:
         'Have a project in mind or want to collaborate? Send me a message and I will get back to you soon.',
       or: 'Or find me on',
+    },
+    social: {
+      email: 'Email',
     },
     footer: {
       rights: 'All rights reserved.',

@@ -12,13 +12,20 @@ export const profile = {
 
 export type SkillGroup = {
   key: 'core' | 'backend' | 'ai' | 'infra'
+  /**
+   * Most items are proper nouns/tech terms (locale-invariant), rendered
+   * verbatim. The `'applied-ai'` sentinel marks the one item that IS a
+   * translatable phrase rather than a brand/technology name — the skills
+   * marquee (see `SkillsSection`) resolves it through `t.skills.appliedAi`
+   * instead of rendering it as-is.
+   */
   items: string[]
 }
 
 export const skillGroups: SkillGroup[] = [
   { key: 'core', items: ['JavaScript', 'TypeScript', 'Next.js', 'React', 'HTML & CSS', 'Tailwind CSS'] },
   { key: 'backend', items: ['PHP', 'WordPress', 'WooCommerce', 'Gutenberg', 'Elementor', 'ACF', 'Gravity Forms'] },
-  { key: 'ai', items: ['n8n', 'IA Aplicada', 'Twilio', 'APIs REST'] },
+  { key: 'ai', items: ['n8n', 'applied-ai', 'Twilio', 'APIs REST'] },
   { key: 'infra', items: ['Supabase', 'Redis', 'GNU/Linux', 'NocoDB'] },
 ]
 

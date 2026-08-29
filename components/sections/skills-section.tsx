@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { useI18n } from '@/lib/i18n/provider'
-import { skillGroups, type SkillGroup } from '@/lib/site-data'
+import { skillGroups } from '@/lib/site-data'
 import { Reveal, prefersReducedMotion } from '@/components/motion/reveal'
 
 const SEPARATOR = '✦'
@@ -42,14 +42,14 @@ function TrackContent({ tokens, prefix }: { tokens: Token[]; prefix: string }) {
 }
 
 function SkillMarqueeRow({
-  group,
+  items,
   title,
   direction,
   duration,
   isLast,
   reducedMotion,
 }: {
-  group: SkillGroup
+  items: string[]
   title: string
   direction: 'left' | 'right'
   duration: number
@@ -79,9 +79,9 @@ function SkillMarqueeRow({
     { dependencies: [reducedMotion], scope: ghostRef },
   )
 
-  const unit = buildUnit(group.items)
+  const unit = buildUnit(items)
   const displayTokens = reducedMotion ? unit.slice(0, -1) : [...unit, ...unit]
-  const readableList = group.items.join(', ')
+  const readableList = items.join(', ')
 
   return (
     <div className="relative">
@@ -145,7 +145,7 @@ export function SkillsSection() {
         {skillGroups.map((group, i) => (
           <SkillMarqueeRow
             key={group.key}
-            group={group}
+            items={group.items.map((item) => (item === 'applied-ai' ? t.skills.appliedAi : item))}
             title={t.skills.columns[group.key]}
             direction={ROW_MOTION[i]!.direction}
             duration={ROW_MOTION[i]!.duration}
