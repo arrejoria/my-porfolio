@@ -12,6 +12,11 @@ export const dictionary = {
       mobileLabel: 'Móvil',
       openMenu: 'Abrir menú',
       closeMenu: 'Cerrar menú',
+      menu: 'Menú',
+      theme: 'Tema',
+      language: 'Idioma',
+      light: 'Claro',
+      dark: 'Oscuro',
     },
     hero: {
       role: 'Full Stack Developer',
@@ -90,6 +95,11 @@ export const dictionary = {
       mobileLabel: 'Mobile',
       openMenu: 'Open menu',
       closeMenu: 'Close menu',
+      menu: 'Menu',
+      theme: 'Theme',
+      language: 'Language',
+      light: 'Light',
+      dark: 'Dark',
     },
     hero: {
       role: 'Full Stack Developer',
