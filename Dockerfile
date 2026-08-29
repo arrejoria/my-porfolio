@@ -5,6 +5,7 @@ WORKDIR /app
 # --- deps: install dependencies only when the lockfile changes -------------
 FROM base AS deps
 COPY package.json pnpm-lock.yaml ./
+COPY patches ./patches
 RUN corepack enable pnpm && pnpm install --frozen-lockfile
 
 # --- dev: hot-reload dev server, source is bind-mounted by compose ---------
