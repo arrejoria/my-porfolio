@@ -67,6 +67,7 @@ export const dictionary = {
       publishedOn: 'Publicado el',
       minRead: 'min de lectura',
       viewAll: 'Ver todo el blog',
+      comingSoon: 'Próximamente',
     },
     contact: {
       title: 'Hablemos',
@@ -145,6 +146,7 @@ export const dictionary = {
       publishedOn: 'Published on',
       minRead: 'min read',
       viewAll: 'View all posts',
+      comingSoon: 'Coming soon',
     },
     contact: {
       title: "Let's talk",

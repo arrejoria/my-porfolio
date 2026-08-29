@@ -281,6 +281,7 @@ const seedPosts = [
       es: 'La primera publicación de este blog.',
       en: 'The first post on this blog.',
     },
+    category: 'Blog',
     content: {
       es: richText('Este es el contenido de la primera publicación seedeada.'),
       en: richText('This is the content of the first seeded post.'),
@@ -294,6 +295,7 @@ const seedPosts = [
       es: 'Notas sobre cómo integré Payload CMS con Next.js App Router.',
       en: 'Notes on wiring up Payload CMS with the Next.js App Router.',
     },
+    category: 'Payload · Next.js',
     content: {
       es: richText('Este es el contenido de la segunda publicación seedeada.'),
       en: richText('This is the content of the second seeded post.'),

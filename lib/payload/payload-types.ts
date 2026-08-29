@@ -261,6 +261,7 @@ export interface Post {
     es: string;
     en: string;
   };
+  category?: string | null;
   content: {
     es: {
       root: {
@@ -512,6 +513,7 @@ export interface PostsSelect<T extends boolean = true> {
         es?: T;
         en?: T;
       };
+  category?: T;
   content?:
     | T
     | {

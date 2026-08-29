@@ -34,6 +34,10 @@ export const Posts: CollectionConfig = {
       ],
     },
     {
+      name: 'category',
+      type: 'text',
+    },
+    {
       name: 'content',
       type: 'group',
       fields: [

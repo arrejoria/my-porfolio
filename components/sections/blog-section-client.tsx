@@ -6,9 +6,12 @@ import { Button } from '@/components/ui/button'
 import { useI18n } from '@/lib/i18n/provider'
 import type { PostDoc } from '@/lib/payload/types'
 import { Reveal } from '@/components/motion/reveal'
+import { Ticker } from '@/components/motion/ticker'
+import { BlogFileRow } from '@/components/blog-file-row'
 
 export function BlogSectionClient({ posts }: { posts: PostDoc[] }) {
   const { t, locale } = useI18n()
+  const tickerItems = posts.length > 0 ? posts.map((post) => post.title[locale]) : [t.blog.comingSoon]
 
   return (
     <section id="blog" className="border-t border-border/60">
@@ -24,25 +27,16 @@ export function BlogSectionClient({ posts }: { posts: PostDoc[] }) {
         {posts.length === 0 ? (
           <p className="mt-12 text-sm text-muted-foreground">{t.blog.empty}</p>
         ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-3">
-            {posts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/50"
-              >
-                <p className="font-mono text-xs text-muted-foreground">
-                  {new Date(post.createdAt).toLocaleDateString(locale)}
-                </p>
-                <h3 className="mt-3 font-display text-xl uppercase tracking-tight">
-                  {post.title[locale]}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {post.excerpt[locale]}
-                </p>
-              </Link>
-            ))}
-          </div>
+          <>
+            <div className="mt-12">
+              <Ticker items={tickerItems} />
+            </div>
+            <div className="grid gap-px border border-border bg-border">
+              {posts.map((post, i) => (
+                <BlogFileRow key={post.slug} post={post} index={i} />
+              ))}
+            </div>
+          </>
         )}
 
         <div className="mt-10 flex justify-center">
