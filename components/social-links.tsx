@@ -2,9 +2,8 @@ import { Mail } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '@/components/icons'
 import { profile } from '@/lib/site-data'
 import { cn } from '@/lib/utils'
+import { ScrambleText } from '@/components/motion/scramble-text'
 
-// WhatsApp lives as the main CTA on /contact (CMS-managed via Payload's
-// contact-settings global), not duplicated here as a static icon link.
 const links = [
   { href: profile.socials.github, label: 'GitHub', Icon: GithubIcon },
   { href: profile.socials.linkedin, label: 'LinkedIn', Icon: LinkedinIcon },
@@ -28,9 +27,15 @@ export function SocialLinks({
           target="_blank"
           rel="noreferrer"
           aria-label={label}
-          className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+          className={cn(
+            'flex h-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground',
+            label === 'Email' ? 'px-2.5' : 'w-9',
+          )}
         >
           <Icon className="size-[18px]" />
+          {label === 'Email' && (
+            <ScrambleText text={profile.email} className="ml-1.5 font-mono text-xs" />
+          )}
         </a>
       ))}
     </div>

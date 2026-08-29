@@ -21,7 +21,6 @@ export function SiteHeader() {
     { href: '/portfolio', label: t.nav.portfolio },
     { href: '/case-studies', label: t.nav.caseStudies },
     { href: '/blog', label: t.nav.blog },
-    { href: '/contact', label: t.nav.contact },
   ]
 
   const isActive = (href: string) =>

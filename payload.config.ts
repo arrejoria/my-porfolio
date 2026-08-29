@@ -15,7 +15,6 @@ import { Media } from './lib/payload/collections/media'
 import { Pages } from './lib/payload/collections/pages'
 import { Posts } from './lib/payload/collections/posts'
 import { Projects } from './lib/payload/collections/projects'
-import { ContactSettings } from './lib/payload/globals/contact-settings'
 import { SiteSettings } from './lib/payload/globals/site-settings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -32,7 +31,7 @@ export default buildConfig({
     },
   },
   collections: [Admins, CaseStudies, Media, Pages, Posts, Projects],
-  globals: [ContactSettings, SiteSettings],
+  globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET ?? '',
   typescript: {

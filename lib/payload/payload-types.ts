@@ -96,11 +96,9 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
-    'contact-settings': ContactSetting;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
-    'contact-settings': ContactSettingsSelect<false> | ContactSettingsSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -592,18 +590,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-settings".
- */
-export interface ContactSetting {
-  id: number;
-  buttonLabel: string;
-  buttonLink: string;
-  message?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
 export interface SiteSetting {
@@ -615,18 +601,6 @@ export interface SiteSetting {
   homePage: number | Page;
   updatedAt?: string | null;
   createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-settings_select".
- */
-export interface ContactSettingsSelect<T extends boolean = true> {
-  buttonLabel?: T;
-  buttonLink?: T;
-  message?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
