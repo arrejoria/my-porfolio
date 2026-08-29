@@ -31,7 +31,7 @@ export const dictionary = {
     },
     skills: {
       title: 'Lo que sé',
-      body: 'Sin porcentajes. Una cinta que corre sola, agrupada por función — lo que cruza el centro se invierte a negativo.',
+      body: 'De la interfaz al servidor. Construyo con WordPress y Next.js, automatizo con IA y n8n, y sostengo todo con la infraestructura necesaria — sin atarme a una sola pila.',
       columns: {
         core: 'Core Stack',
         backend: 'Backend & CMS',
@@ -118,7 +118,7 @@ export const dictionary = {
     },
     skills: {
       title: 'What I know',
-      body: 'No percentages. A ribbon that runs on its own, grouped by function — whatever crosses the center inverts to negative.',
+      body: 'From the interface to the server. I build with WordPress and Next.js, automate with AI and n8n, and run the infrastructure underneath — without locking into a single stack.',
       columns: {
         core: 'Core Stack',
         backend: 'Backend & CMS',

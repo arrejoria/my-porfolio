@@ -24,9 +24,12 @@ export type SkillGroup = {
 
 export const skillGroups: SkillGroup[] = [
   { key: 'core', items: ['JavaScript', 'TypeScript', 'Next.js', 'React', 'HTML & CSS', 'Tailwind CSS'] },
-  { key: 'backend', items: ['PHP', 'WordPress', 'WooCommerce', 'Gutenberg', 'Elementor', 'ACF', 'Gravity Forms'] },
-  { key: 'ai', items: ['n8n', 'applied-ai', 'Twilio', 'APIs REST'] },
-  { key: 'infra', items: ['Supabase', 'Redis', 'GNU/Linux', 'NocoDB'] },
+  {
+    key: 'backend',
+    items: ['PHP', 'WordPress', 'WooCommerce', 'Gutenberg', 'Elementor', 'ACF', 'Gravity Forms', 'Payload CMS'],
+  },
+  { key: 'ai', items: ['n8n', 'applied-ai', 'RAG', 'MCP', 'LLM Agents', 'Twilio', 'APIs REST'] },
+  { key: 'infra', items: ['Postgres', 'Docker', 'Nginx', 'Linux', 'Supabase', 'Redis', 'NocoDB'] },
 ]
 
 // Projects and blog posts are now managed by Payload CMS — see
