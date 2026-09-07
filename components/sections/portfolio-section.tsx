@@ -4,14 +4,14 @@ import { PortfolioSectionClient } from './portfolio-section-client'
 
 export async function PortfolioSection() {
   const payload = await getPayload()
-  const { docs } = await payload.find({
+  const { docs, totalDocs } = await payload.find({
     collection: 'projects',
-    limit: 12,
+    limit: 5,
     depth: 1,
     sort: '-createdAt',
   })
 
   if (docs.length === 0) return null
 
-  return <PortfolioSectionClient projects={docs as ProjectDoc[]} />
+  return <PortfolioSectionClient projects={docs as ProjectDoc[]} totalCount={totalDocs} />
 }
