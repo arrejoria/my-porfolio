@@ -204,6 +204,11 @@ export interface CaseStudy {
         id?: string | null;
       }[]
     | null;
+  status: 'live' | 'in-progress';
+  result?: {
+    es?: string | null;
+    en?: string | null;
+  } | null;
   coverImage?: (number | null) | Media;
   repoUrl?: string | null;
   demoUrl?: string | null;

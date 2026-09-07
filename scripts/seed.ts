@@ -269,6 +269,11 @@ const seedCaseStudies = [
       { tool: 'WooCommerce' },
       { tool: 'NocoDB' },
     ],
+    status: 'live' as const,
+    result: {
+      es: 'Costo y latencia de respuesta reducidos',
+      en: 'Reduced response cost and latency',
+    },
     published: true,
   },
 ]

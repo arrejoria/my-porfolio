@@ -27,10 +27,12 @@ export const dictionary = {
       contact: 'Hablemos',
     },
     about: {
+      eyebrow: 'Quién soy',
       title: 'Sobre mí',
       body: 'Full Stack Developer en Buenos Aires. Más de 6 años trabajando con WordPress, PHP y JavaScript, hoy orientando el perfil hacia automatización e integraciones: n8n, TypeScript, Supabase y APIs externas. Soluciones mantenibles, escalables, sin vueltas.',
     },
     skills: {
+      eyebrow: 'Stack técnico',
       title: 'Lo que sé',
       body: 'De la interfaz al servidor. Construyo con WordPress y Next.js, automatizo con IA y n8n, y sostengo todo con la infraestructura necesaria — sin atarme a una sola pila.',
       columns: {
@@ -42,6 +44,7 @@ export const dictionary = {
       appliedAi: 'IA Aplicada',
     },
     portfolio: {
+      eyebrow: 'Trabajo reciente',
       title: 'Proyectos',
       subtitle: 'Una selección de trabajos recientes en desarrollo web y automatización.',
       visit: 'Visitar',
@@ -53,6 +56,7 @@ export const dictionary = {
       next: 'Siguiente',
     },
     caseStudies: {
+      eyebrow: 'Registro de casos',
       title: 'Casos de IA & Automatización',
       subtitle:
         'Flujos y sistemas donde la IA ejecuta y yo dirijo — n8n, integraciones y automatización aplicada.',
@@ -64,8 +68,11 @@ export const dictionary = {
       toolsLabel: 'Herramientas',
       demo: 'Ver demo',
       code: 'Código',
+      statusLive: 'Live',
+      statusInProgress: 'En curso',
     },
     blog: {
+      eyebrow: 'Notas y escritura',
       title: 'Blog',
       subtitle:
         'Notas sobre desarrollo web, aprendizajes y experimentos con nuevas tecnologías.',
@@ -78,6 +85,7 @@ export const dictionary = {
       comingSoon: 'Próximamente',
     },
     contact: {
+      eyebrow: 'Trabajemos juntos',
       title: 'Hablemos',
       subtitle:
         '¿Tienes un proyecto en mente o quieres colaborar? Escríbeme y te responderé pronto.',
@@ -117,10 +125,12 @@ export const dictionary = {
       contact: "Let's talk",
     },
     about: {
+      eyebrow: 'Who I am',
       title: 'About me',
       body: 'Full Stack Developer based in Buenos Aires. 6+ years working with WordPress, PHP, and JavaScript, now steering toward automation and integrations: n8n, TypeScript, Supabase, and external APIs. Maintainable, scalable solutions — no fuss.',
     },
     skills: {
+      eyebrow: 'Technical stack',
       title: 'What I know',
       body: 'From the interface to the server. I build with WordPress and Next.js, automate with AI and n8n, and run the infrastructure underneath — without locking into a single stack.',
       columns: {
@@ -132,6 +142,7 @@ export const dictionary = {
       appliedAi: 'Applied AI',
     },
     portfolio: {
+      eyebrow: 'Recent work',
       title: 'Projects',
       subtitle: 'A selection of recent work in web development and automation.',
       visit: 'Visit',
@@ -143,6 +154,7 @@ export const dictionary = {
       next: 'Next',
     },
     caseStudies: {
+      eyebrow: 'Case log',
       title: 'AI & Automation Case Studies',
       subtitle:
         'Flows and systems where AI executes and I direct — n8n, integrations, and applied automation.',
@@ -154,8 +166,11 @@ export const dictionary = {
       toolsLabel: 'Tools',
       demo: 'View demo',
       code: 'Code',
+      statusLive: 'Live',
+      statusInProgress: 'In progress',
     },
     blog: {
+      eyebrow: 'Notes & writing',
       title: 'Blog',
       subtitle:
         'Notes on web development, learnings and experiments with new technologies.',
@@ -168,6 +183,7 @@ export const dictionary = {
       comingSoon: 'Coming soon',
     },
     contact: {
+      eyebrow: "Let's work together",
       title: "Let's talk",
       subtitle:
         'Have a project in mind or want to collaborate? Send me a message and I will get back to you soon.',

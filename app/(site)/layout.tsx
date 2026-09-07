@@ -1,6 +1,13 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Bricolage_Grotesque, Hanken_Grotesk, JetBrains_Mono } from 'next/font/google'
+import {
+  Bricolage_Grotesque,
+  Fraunces,
+  Hanken_Grotesk,
+  IBM_Plex_Mono,
+  IBM_Plex_Sans,
+  JetBrains_Mono,
+} from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import { I18nProvider } from '@/lib/i18n/provider'
 import { SiteHeader } from '@/components/site-header'
@@ -29,6 +36,29 @@ const jbmono = JetBrains_Mono({
   subsets: ['latin'],
   weight: '500',
   variable: '--font-jbmono',
+  display: 'swap',
+})
+
+// Scoped to the case-studies section only — every other section keeps the
+// three fonts above (see design.md's typography exception note).
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-fraunces',
+  display: 'swap',
+})
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-plex-mono',
+  display: 'swap',
+})
+
+const plexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-plex-sans',
   display: 'swap',
 })
 
@@ -64,7 +94,7 @@ export default async function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning className="bg-background">
       <body
-        className={`${bricolage.variable} ${hanken.variable} ${jbmono.variable} font-sans antialiased`}
+        className={`${bricolage.variable} ${hanken.variable} ${jbmono.variable} ${fraunces.variable} ${plexMono.variable} ${plexSans.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"

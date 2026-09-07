@@ -135,6 +135,16 @@
     font-family: var(--font-display);
     letter-spacing: 0.01em;
   }
+  /* Case-studies-only typeface trio — see design.md's typography exception. */
+  .font-serif-display {
+    font-family: var(--font-fraunces), ui-serif, Georgia, serif;
+  }
+  .font-plex-mono {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+  }
+  .font-plex-sans {
+    font-family: var(--font-plex-sans), ui-sans-serif, sans-serif;
+  }
   /* Flat vignette used to bookend sections — no color, just tonal depth. */
   .bg-vignette {
     background-image:

@@ -21,6 +21,9 @@ export function ContactSection() {
   return (
     <section id="contact" className="border-t border-border/60 bg-vignette">
       <Reveal className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-20 text-center sm:px-6 md:py-28">
+        <p className="mb-5 flex items-center justify-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground before:h-px before:w-[22px] before:bg-muted-foreground before:content-['']">
+          {t.contact.eyebrow} <b className="font-medium tabular-nums text-foreground/80">/ 06</b>
+        </p>
         <h2
           ref={repelRef}
           className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl"
@@ -42,7 +45,6 @@ export function ContactSection() {
             </span>
           ))}
         </h2>
-        <span className="mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
         <p className="mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground">
           {t.contact.subtitle}
         </p>

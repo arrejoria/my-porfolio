@@ -33,6 +33,24 @@ export const CaseStudies: CollectionConfig = {
       type: 'array',
       fields: [{ name: 'tool', type: 'text', required: true }],
     },
+    {
+      name: 'status',
+      type: 'select',
+      options: [
+        { label: 'Live', value: 'live' },
+        { label: 'In progress', value: 'in-progress' },
+      ],
+      defaultValue: 'live',
+      required: true,
+    },
+    {
+      name: 'result',
+      type: 'group',
+      fields: [
+        { name: 'es', type: 'text' },
+        { name: 'en', type: 'text' },
+      ],
+    },
     { name: 'coverImage', type: 'upload', relationTo: 'media' },
     { name: 'repoUrl', type: 'text' },
     { name: 'demoUrl', type: 'text' },

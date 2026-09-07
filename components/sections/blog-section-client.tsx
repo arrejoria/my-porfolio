@@ -16,10 +16,12 @@ export function BlogSectionClient({ posts }: { posts: PostDoc[] }) {
   return (
     <section id="blog" className="border-t border-border/60">
       <Reveal className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
+        <p className="mb-5 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground before:h-px before:w-[22px] before:bg-muted-foreground before:content-['']">
+          {t.blog.eyebrow} <b className="font-medium tabular-nums text-foreground/80">/ 05</b>
+        </p>
         <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
           {t.blog.title}
         </h2>
-        <span className="mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
         <p className="mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground">
           {t.blog.subtitle}
         </p>

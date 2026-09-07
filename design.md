@@ -28,26 +28,46 @@ The hero (`hero-section.tsx`) is the one intentional exception: taller
 
 ## Header block (internal spacing)
 
-Every section's heading block, in order:
+Every section's heading block, in order — an eyebrow line, the heading, then
+the subtitle:
 
 ```tsx
+<p className="mb-5 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground before:h-px before:w-[22px] before:bg-muted-foreground before:content-['']">
+  {t.<section>.eyebrow} <b className="font-medium tabular-nums text-foreground/80">/ 0{n}</b>
+</p>
 <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
   {title}
 </h2>
-<span className="mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
 <p className="mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground">
   {subtitle}
 </p>
 ```
 
+- The eyebrow is `font-mono`, small caps (`text-xs uppercase
+  tracking-[0.16em]`), muted, with a short `before:` tick mark (22px line) in
+  front of the label. A bold, tabular-nums section number (`/ 01`, `/ 02`, …)
+  follows the label.
 - Heading always scales `text-4xl sm:text-5xl md:text-6xl` — don't drop the
   `md:` step.
-- Underline accent is always `mt-4` off the heading.
-- Subtitle is always `mt-6` off the underline.
+- The eyebrow sits `mb-5` above the heading (replaces the old `mt-4`
+  underline-accent step). Subtitle is always `mt-6` off the heading.
+- Numbering runs by homepage order, excluding the hero (which has no
+  eyebrow/number — see the hero exception above): About=01, Skills=02,
+  Portfolio=03, Case Studies=04, Blog=05, Contact=06. The number is a static
+  string per section — there's no shared numbering component/logic.
 
 `skills-section.tsx` and `contact-section.tsx` center this block
 (`text-center`, `mx-auto`) instead of left-aligning it — that's a layout
-choice, not a rhythm exception; the `mt-4`/`mt-6` values still apply.
+choice, not a rhythm exception; add `justify-center` to the eyebrow row (so
+its `before:` tick centers too) and keep the `mb-5`/`mt-6` values as-is.
+
+**Typography exception:** `case-studies-section-client.tsx` swaps its `h2`
+from the site's default `font-display` (Bricolage) to `font-serif-display`
+(Fraunces), and its row content uses two more section-scoped typefaces —
+`font-plex-mono` (IBM Plex Mono) and `font-plex-sans` (IBM Plex Sans) — all
+three loaded via `next/font/google` in `app/(site)/layout.tsx` and scoped to
+that section only. Every other section's `h2` stays on `font-display`;
+`--font-display`/`--font-sans`/`--font-mono` are unchanged sitewide.
 
 ## Content gaps
 
@@ -58,6 +78,8 @@ choice, not a rhythm exception; the `mt-4`/`mt-6` values still apply.
 
 ## Reference implementations
 
-`case-studies-section-client.tsx` and `blog-section-client.tsx` are the
-cleanest examples of the full pattern (one outer container, header block,
-`mt-12` content, `mt-10` CTA).
+`about-section.tsx` and `blog-section-client.tsx` are the cleanest examples
+of the full pattern (one outer container, eyebrow header block, `mt-12`
+content, `mt-10` CTA) with the site's default typography. For the eyebrow
+header block's centered variant, see `skills-section.tsx` and
+`contact-section.tsx`.

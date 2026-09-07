@@ -151,10 +151,12 @@ export function PortfolioSectionClient({
       <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
         <Reveal className="flex flex-wrap items-end justify-between gap-6">
           <div>
+            <p className="mb-5 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground before:h-px before:w-[22px] before:bg-muted-foreground before:content-['']">
+              {t.portfolio.eyebrow} <b className="font-medium tabular-nums text-foreground/80">/ 03</b>
+            </p>
             <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
               {t.portfolio.title}
             </h2>
-            <span className="mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
             <p className="mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground">
               {t.portfolio.subtitle}
             </p>
