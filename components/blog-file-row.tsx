@@ -34,7 +34,7 @@ export function BlogFileRow({ post, index }: { post: PostDoc; index: number }) {
 
       <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-1.5 text-[0.65rem] tracking-wider text-muted-foreground whitespace-nowrap group-hover:border-background/40 group-hover:text-background/70">
         <span className="size-[5px] animate-pulse rounded-full bg-current" />
-        {new Date(post.createdAt).toLocaleDateString(locale)}
+        {new Date(post.createdAt).toLocaleDateString(locale, { timeZone: 'UTC' })}
       </span>
     </Link>
   )
