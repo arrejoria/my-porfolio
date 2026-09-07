@@ -17,6 +17,7 @@ export const dictionary = {
       language: 'Idioma',
       light: 'Claro',
       dark: 'Oscuro',
+      latestPost: 'Última entrada',
     },
     hero: {
       role: 'Full Stack Developer',
@@ -104,6 +105,7 @@ export const dictionary = {
       language: 'Language',
       light: 'Light',
       dark: 'Dark',
+      latestPost: 'Latest post',
     },
     hero: {
       role: 'Full Stack Developer',

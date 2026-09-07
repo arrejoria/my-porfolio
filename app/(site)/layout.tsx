@@ -7,6 +7,8 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { Toaster } from '@/components/ui/sonner'
 import { ClickBurstOverlay } from '@/components/motion/click-burst'
+import { getPayload } from '@/lib/payload/get-payload'
+import type { PostDoc } from '@/lib/payload/types'
 import './globals.css'
 
 const bricolage = Bricolage_Grotesque({
@@ -45,11 +47,20 @@ export const viewport: Viewport = {
   ],
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const payload = await getPayload()
+  const { docs } = await payload.find({
+    collection: 'posts',
+    where: { published: { equals: true } },
+    limit: 1,
+    sort: '-createdAt',
+  })
+  const latestPost = (docs[0] as PostDoc | undefined) ?? null
+
   return (
     <html lang="es" suppressHydrationWarning className="bg-background">
       <body
@@ -63,7 +74,7 @@ export default function RootLayout({
         >
           <I18nProvider>
             <div className="flex min-h-svh flex-col">
-              <SiteHeader />
+              <SiteHeader latestPost={latestPost} />
               <main className="flex-1">{children}</main>
               <SiteFooter />
             </div>
