@@ -136,12 +136,13 @@ export function SkillsSection() {
   const reducedMotion = mounted && prefersReducedMotion()
 
   return (
-    <section id="skills" className="bg-vignette">
+    <section id="skills" className="border-t border-border/60 bg-vignette">
       <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
         <Reveal className="mx-auto max-w-2xl text-center">
           <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
             {t.skills.title}
           </h2>
+          <span className="mx-auto mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
           <p className="mt-6 text-pretty leading-relaxed text-muted-foreground">
             {t.skills.body}
           </p>

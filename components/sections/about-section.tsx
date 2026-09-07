@@ -10,7 +10,7 @@ export function AboutSection() {
   return (
     <section id="about" className="border-t border-border/60">
       <Reveal className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
-        <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl">
+        <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
           {t.about.title}
         </h2>
         <span className="mt-4 block h-px w-24 bg-primary" aria-hidden="true" />
