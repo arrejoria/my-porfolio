@@ -208,7 +208,7 @@ export interface CaseStudy {
   result?: {
     es?: string | null;
     en?: string | null;
-  } | null;
+  };
   coverImage?: (number | null) | Media;
   repoUrl?: string | null;
   demoUrl?: string | null;
@@ -462,6 +462,13 @@ export interface CaseStudiesSelect<T extends boolean = true> {
     | {
         tool?: T;
         id?: T;
+      };
+  status?: T;
+  result?:
+    | T
+    | {
+        es?: T;
+        en?: T;
       };
   coverImage?: T;
   repoUrl?: T;
