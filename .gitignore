@@ -22,5 +22,6 @@ media/
 # Local-only working files (not part of the app)
 assets-web-anterior/
 .agents/
+.atl/
 my-profile.pdf
 skills-lock.json
