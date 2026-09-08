@@ -105,6 +105,7 @@ export const dictionary = {
       minRead: 'min de lectura',
       viewAll: 'Ver todo el blog',
       comingSoon: 'Próximamente',
+      moreComing: 'Más notas en camino — vuelve pronto.',
     },
     contact: {
       title: 'Hablemos',
@@ -224,6 +225,7 @@ export const dictionary = {
       minRead: 'min read',
       viewAll: 'View all posts',
       comingSoon: 'Coming soon',
+      moreComing: 'More notes on the way — check back soon.',
     },
     contact: {
       title: "Let's talk",
