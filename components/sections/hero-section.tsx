@@ -12,9 +12,10 @@ import { useI18n } from '@/lib/i18n/provider'
 import { prefersReducedMotion } from '@/components/motion/reveal'
 import { useMagnetic } from '@/components/motion/magnetic'
 import { triggerClickBurst } from '@/components/motion/click-burst'
+import { BootSequence, type BootSequenceHandle } from '@/components/motion/boot-sequence'
 import { profile } from '@/lib/site-data'
 
-const HERO_STACK = ['n8n', 'Next.js', 'WordPress', 'Postgres', 'Docker', 'Supabase']
+const HERO_STACK = ['n8n', 'WooCommerce', 'WhatsApp API', 'Supabase', 'NocoDB', 'Docker']
 
 // Fractional (0–1) layout of an abstract workflow graph — echoes an n8n
 // canvas without depicting a real one. Edges reference indices into this list.
@@ -352,6 +353,7 @@ function useLocalClock(locale: 'es' | 'en') {
 export function HeroSection() {
   const { t, locale } = useI18n()
   const sectionRef = useRef<HTMLElement>(null)
+  const bootRef = useRef<BootSequenceHandle>(null)
   const discoverRef = useMagnetic<HTMLAnchorElement>()
   const contactRef = useMagnetic<HTMLAnchorElement>()
   const clock = useLocalClock(locale)
@@ -365,11 +367,18 @@ export function HeroSection() {
   useEffect(() => setMounted(true), [])
   const reducedMotion = mounted && prefersReducedMotion()
 
-  const nameWords = profile.name.split(' ')
+  // Gates the entrance timeline below: false while the boot terminal is
+  // either playing or hasn't decided yet (avoids a wasted/invisible tween
+  // behind the opaque boot overlay), true once BootSequence's onDone fires
+  // — whether that's from the full sequence, a skip, or a session-storage
+  // fast path where the boot never shows at all.
+  const [bootDone, setBootDone] = useState(false)
+
+  const nameWords = [profile.name.split(' ')[0]!]
 
   useGSAP(
     () => {
-      if (prefersReducedMotion()) return
+      if (!bootDone || prefersReducedMotion()) return
 
       gsap
         .timeline({ defaults: { opacity: 0, y: 24, duration: 0.7, ease: 'power2.out' } })
@@ -384,14 +393,17 @@ export function HeroSection() {
         .from('[data-reveal="cta"]', { stagger: 0.1 }, 0.5)
         .from('[data-reveal="bottombar"]', {}, 0.6)
     },
-    { scope: sectionRef },
+    { scope: sectionRef, dependencies: [bootDone] },
   )
 
   return (
     <section
+      id="top"
       ref={sectionRef}
       className="hero-noise relative isolate flex min-h-dvh flex-col justify-between overflow-hidden bg-background font-mono"
     >
+      <BootSequence ref={bootRef} onDone={() => setBootDone(true)} />
+
       <WorkflowGraph sectionRef={sectionRef} mounted={mounted} reducedMotion={reducedMotion} />
 
       <div className="scrim" aria-hidden="true" />
@@ -405,14 +417,28 @@ export function HeroSection() {
             <span className="size-[7px] shrink-0 animate-pulse rounded-full bg-foreground" aria-hidden="true" />
             {t.hero.status}
           </div>
-          <div className="text-right text-[11.5px] tracking-[0.1em] text-muted-foreground/70 tabular-nums">
-            <span className="text-muted-foreground">{clock ?? '—:—:—'}</span> {t.hero.localTime}
+          <div className="flex items-center gap-3">
+            <div className="text-right text-[11.5px] tracking-[0.1em] text-muted-foreground/70 tabular-nums">
+              <span className="text-muted-foreground">{clock ?? '—:—:—'}</span> {t.hero.localTime}
+            </div>
+            <button
+              type="button"
+              onClick={() => bootRef.current?.replay()}
+              aria-label={t.hero.replayLabel}
+              title={t.hero.replayLabel}
+              className="flex size-6 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground/70 transition-[color,border-color,transform] duration-150 hover:border-muted-foreground hover:text-muted-foreground active:scale-90"
+            >
+              <svg viewBox="0 0 24 24" className="ml-px size-[9px] fill-current">
+                <path d="M6 4l15 8-15 8V4z" />
+              </svg>
+            </button>
           </div>
         </div>
 
         <div className="max-w-2xl">
-          <p className="mb-[18px] text-xs tracking-[0.16em] text-muted-foreground/70 uppercase">
-            {profile.location}
+          <p className="mb-[18px] flex items-center gap-1.5 text-xs tracking-[0.16em] text-muted-foreground/70 uppercase">
+            {t.hero.eyebrowRole}
+            <span className="text-muted-foreground">/ {t.hero.eyebrowLocation}</span>
           </p>
 
           <h1 className="mb-5 font-display text-[clamp(3rem,9vw,6.5rem)] leading-[0.96] font-extrabold tracking-tight text-balance text-foreground uppercase">

@@ -1,14 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import {
-  Archivo,
-  Bricolage_Grotesque,
-  Fraunces,
-  Hanken_Grotesk,
-  IBM_Plex_Mono,
-  IBM_Plex_Sans,
-  JetBrains_Mono,
-} from 'next/font/google'
+import { Bricolage_Grotesque, Fraunces, Hanken_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import { I18nProvider } from '@/lib/i18n/provider'
 import { SiteHeader } from '@/components/site-header'
@@ -40,35 +32,14 @@ const jbmono = JetBrains_Mono({
   display: 'swap',
 })
 
-// Scoped to the case-studies section only — every other section keeps the
-// three fonts above (see design.md's typography exception note).
+// The one deliberate accent typeface — a warmer serif italic used sparingly
+// for a handful of "editorial" moments (see design.md's typography
+// exception note). Every other role uses the three fonts above.
 const fraunces = Fraunces({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
   variable: '--font-fraunces',
-  display: 'swap',
-})
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-plex-mono',
-  display: 'swap',
-})
-
-const plexSans = IBM_Plex_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-plex-sans',
-  display: 'swap',
-})
-
-// Scoped to the profile section only (stat number + marquee words) — see
-// design.md's typography exception note.
-const archivo = Archivo({
-  subsets: ['latin'],
-  weight: ['700', '800'],
-  variable: '--font-archivo',
   display: 'swap',
 })
 
@@ -104,7 +75,7 @@ export default async function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning className="bg-background">
       <body
-        className={`${bricolage.variable} ${hanken.variable} ${jbmono.variable} ${fraunces.variable} ${plexMono.variable} ${plexSans.variable} ${archivo.variable} font-sans antialiased`}
+        className={`${bricolage.variable} ${hanken.variable} ${jbmono.variable} ${fraunces.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"

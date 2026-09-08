@@ -20,14 +20,31 @@ export const dictionary = {
       latestPost: 'Última entrada',
     },
     hero: {
-      role: 'Full Stack Developer',
+      eyebrowRole: 'n8n developer',
+      eyebrowLocation: 'Buenos Aires, AR',
+      role: 'Automation Developer — Workflows y Sistemas Backend',
       subtitle:
-        'WordPress, PHP y automatización con n8n — más de 6 años construyendo sitios, integraciones y flujos con IA aplicada.',
+        'Diseño workflows de n8n que conectan WooCommerce, WhatsApp y herramientas internas en pipelines que siguen funcionando aunque dejes de mirarlos.',
       discover: 'Ver proyectos',
       contact: 'Hablemos',
       status: 'Disponible para nuevos proyectos',
       stack: 'Stack',
       localTime: 'hora local',
+      skipIntro: 'Saltar intro',
+      replayLabel: 'Reproducir animación de inicio',
+      bootLog: [
+        'cargando variables de entorno',
+        'conectando a postgres (supabase)',
+        'migraciones aplicadas — 14/14',
+        'seed: collections de payload cms cargadas',
+        'levantando contenedores docker — 4/4',
+        'sincronizando woocommerce ↔ supabase',
+        'workflows n8n activos — 7',
+        'webhook whatsapp api verificado',
+        'build completado en 1.42s',
+      ],
+      bootReady: '✓ listo → https://arrejoria.dev',
+      bootFinished: '✓ proceso finalizado',
     },
     profile: {
       eyebrow: 'Trayectoria',
@@ -90,11 +107,9 @@ export const dictionary = {
       comingSoon: 'Próximamente',
     },
     contact: {
-      eyebrow: 'Trabajemos juntos',
       title: 'Hablemos',
       subtitle:
         '¿Tienes un proyecto en mente o quieres colaborar? Escríbeme y te responderé pronto.',
-      or: 'O encuéntrame en',
     },
     social: {
       email: 'Correo',
@@ -102,6 +117,7 @@ export const dictionary = {
     footer: {
       rights: 'Todos los derechos reservados.',
       builtWith: 'Diseñado y desarrollado por Lucas Arrejoria.',
+      backToTop: 'Volver arriba',
     },
   },
   en: {
@@ -123,14 +139,31 @@ export const dictionary = {
       latestPost: 'Latest post',
     },
     hero: {
-      role: 'Full Stack Developer',
+      eyebrowRole: 'n8n developer',
+      eyebrowLocation: 'Buenos Aires, AR',
+      role: 'Automation Developer — Workflows & Backend Systems',
       subtitle:
-        'WordPress, PHP, and automation with n8n — 6+ years building sites, integrations, and AI-powered workflows.',
+        'I design n8n workflows that connect WooCommerce, WhatsApp, and internal tools into pipelines that keep running once you stop watching them.',
       discover: 'View projects',
       contact: "Let's talk",
       status: 'Available for new projects',
       stack: 'Stack',
       localTime: 'local time',
+      skipIntro: 'Skip intro',
+      replayLabel: 'Play intro animation',
+      bootLog: [
+        'loading environment variables',
+        'connecting to postgres (supabase)',
+        'migrations applied — 14/14',
+        'seed: payload cms collections loaded',
+        'starting docker containers — 4/4',
+        'syncing woocommerce ↔ supabase',
+        'n8n workflows active — 7',
+        'whatsapp api webhook verified',
+        'build completed in 1.42s',
+      ],
+      bootReady: '✓ ready → https://arrejoria.dev',
+      bootFinished: '✓ process finished',
     },
     profile: {
       eyebrow: 'Trajectory',
@@ -193,11 +226,9 @@ export const dictionary = {
       comingSoon: 'Coming soon',
     },
     contact: {
-      eyebrow: "Let's work together",
       title: "Let's talk",
       subtitle:
         'Have a project in mind or want to collaborate? Send me a message and I will get back to you soon.',
-      or: 'Or find me on',
     },
     social: {
       email: 'Email',
@@ -205,6 +236,7 @@ export const dictionary = {
     footer: {
       rights: 'All rights reserved.',
       builtWith: 'Designed and developed by Lucas Arrejoria.',
+      backToTop: 'Back to top',
     },
   },
 } as const

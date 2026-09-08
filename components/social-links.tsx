@@ -33,8 +33,8 @@ export function SocialLinks({
           rel="noreferrer"
           aria-label={label}
           className={cn(
-            'flex h-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground',
-            Icon === Mail ? 'px-2.5' : 'w-9',
+            'flex h-[30px] items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-foreground/60 hover:text-foreground',
+            Icon === Mail ? 'px-2.5' : 'w-[30px]',
           )}
         >
           <Icon className="size-[18px]" />

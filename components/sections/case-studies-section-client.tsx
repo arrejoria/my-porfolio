@@ -59,11 +59,11 @@ export function CaseStudiesSectionClient({ caseStudies }: { caseStudies: CaseStu
                   <h3 className="font-serif-display text-xl font-medium tracking-tight text-foreground">
                     {cs.title}
                   </h3>
-                  <p className="font-plex-sans mt-2.5 max-w-[58ch] text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-2.5 max-w-[58ch] text-sm leading-relaxed text-muted-foreground">
                     {cs.summary[locale]}
                   </p>
                   {cs.result?.[locale] && (
-                    <span className="font-plex-mono mt-3.5 flex items-center gap-2 text-xs text-muted-foreground/80">
+                    <span className="mt-3.5 flex items-center gap-2 font-mono text-xs text-muted-foreground/80">
                       <span aria-hidden="true">→</span>
                       {cs.result[locale]}
                     </span>

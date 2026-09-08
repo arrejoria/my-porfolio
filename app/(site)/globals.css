@@ -137,22 +137,12 @@
     letter-spacing: 0.01em;
   }
 
-  /* Case-studies-only typeface trio — see design.md's typography exception. */
+  /* The one deliberate accent typeface — see design.md's typography
+     exception. Used sparingly across a few sections for the same
+     editorial-serif role; every other role stays on the site's default
+     three fonts (font-display/font-sans/font-mono). */
   .font-serif-display {
     font-family: var(--font-fraunces), ui-serif, Georgia, serif;
-  }
-
-  .font-plex-mono {
-    font-family: var(--font-plex-mono), ui-monospace, monospace;
-  }
-
-  .font-plex-sans {
-    font-family: var(--font-plex-sans), ui-sans-serif, sans-serif;
-  }
-
-  /* Profile-section-only typeface — stat number + marquee words. */
-  .font-tick {
-    font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   }
 
   /* Hero's grain overlay, as a real ::before so it doesn't need its own DOM
@@ -208,5 +198,27 @@
       radial-gradient(120% 60% at 50% 0%,
         color-mix(in oklch, var(--foreground) 4%, transparent),
         transparent 70%);
+  }
+
+  /* Contact section's status pill dot — the only motion left in that
+     section (see design.md's motion exception note). */
+  @keyframes breathe {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.82); }
+  }
+  .status-dot {
+    position: relative;
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 9999px;
+    background: var(--foreground);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--foreground) 7%, transparent);
+    animation: breathe 2.6s ease-in-out infinite;
+  }
+
+  /* Boot terminal's typed-command cursor (components/motion/boot-sequence.tsx). */
+  @keyframes blink {
+    50% { opacity: 0; }
   }
 }

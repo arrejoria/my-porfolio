@@ -68,29 +68,65 @@ the subtitle:
   Case Studies=03, Blog=04, Contact=05. The number is a static string per
   section — there's no shared numbering component/logic.
 
-`contact-section.tsx` centers this block (`text-center`, `mx-auto`) instead
-of left-aligning it — that's a layout choice, not a rhythm exception; add
-`justify-center` to the eyebrow row (so its `before:` tick centers too) and
-keep the `mb-5`/`mt-6` values as-is.
+**`contact-section.tsx` exception:** unlike every other section, Contact
+drops the eyebrow/counter header pattern entirely. Instead of an eyebrow
+line + numbered heading, it opens with a status pill (`.status-dot` +
+`t.hero.status`) — a deliberate bookend with the Hero section's own status
+line, which opens the page with the exact same message this section closes
+it with — followed by a plain italic `font-serif-display` heading (no
+per-character effects). It's also the one section whose motion language is
+deliberately minimal: only the status dot animates (the `breathe` keyframe
+behind `.status-dot`, in `globals.css`'s `@layer utilities`); there's no
+scroll-triggered character stagger, no magnetic cursor-follow CTA, and no
+scramble-text email — a calmer, "closing" tone versus the rest of the
+homepage's motion-heavy sections.
 
-**Typography exceptions:**
+**Typography — one shared accent, not a font per section:** the site has
+exactly four typefaces, full stop: `font-display` (Bricolage), `font-sans`
+(Hanken Grotesk), `font-mono` (JetBrains Mono) everywhere by default, plus
+one deliberate accent, `font-serif-display` (Fraunces, `--font-fraunces`,
+loaded in `app/(site)/layout.tsx`) — a warmer serif italic used for a
+handful of "editorial" moments: `case-studies-section-client.tsx`'s `h2` and
+row titles, `profile-section.tsx`'s statement paragraph, and
+`contact-section.tsx`'s `h2`. That's the only exception, and it's
+consistent everywhere it appears — the same face, the same purpose. Earlier
+drafts of these three sections each brought their own extra typeface for
+mono labels and display numerals (IBM Plex Mono, IBM Plex Sans, Archivo) —
+those were removed as pure redundancy: same visual role as the sitewide
+fonts, different face, no design reason for the split. Don't reintroduce a
+per-section typeface without a role the existing four genuinely can't cover.
 
-- `case-studies-section-client.tsx` swaps its `h2` from the site's default
-  `font-display` (Bricolage) to `font-serif-display` (Fraunces), and its row
-  content uses two more section-scoped typefaces — `font-plex-mono` (IBM
-  Plex Mono) and `font-plex-sans` (IBM Plex Sans).
-- `profile-section.tsx` has no visible `h2` (a `sr-only` heading keeps the
-  landmark for assistive tech); its "statement" intro paragraph uses
-  `font-serif-display` (Fraunces) at reading size rather than as an
-  uppercase heading, its stat number and marquee words use `font-tick`
-  (Archivo, weights 700/800), and its row labels use `font-plex-mono` (IBM
-  Plex Mono) like case-studies' rows.
+`profile-section.tsx` has no visible `h2` (a `sr-only` heading keeps the
+landmark for assistive tech); its "statement" intro paragraph uses
+`font-serif-display` at reading size rather than as an uppercase heading.
+Its stat number and marquee words use `font-display` (same extrabold
+uppercase treatment as Hero's `h1`), and its row labels use the sitewide
+`font-mono`.
 
-All of these — `--font-fraunces`, `--font-plex-mono`, `--font-plex-sans`,
-`--font-archivo` — are loaded via `next/font/google` in
-`app/(site)/layout.tsx` and scoped only to the sections that use them. Every
-other section's `h2` stays on `font-display`;
-`--font-display`/`--font-sans`/`--font-mono` are unchanged sitewide.
+**`site-footer.tsx` note:** the sitewide footer (rendered once in
+`app/(site)/layout.tsx`, outside `<main>`, so it persists across every page)
+now carries the back-to-top link (`href="#top"`, matching the `id="top"` on
+`hero-section.tsx`'s root `<section>`) and a trimmed 2-icon social row
+(`<SocialLinks subset={2} />` — GitHub/LinkedIn only). Email is dropped from
+the footer's icon row since it's now the prominent Contact section CTA
+instead.
+
+## Background treatments
+
+Most sections have no background beyond the page's flat `bg-background` —
+that's the default, not a gap to fill in. `app/(site)/globals.css` has
+`.bg-vignette` / `.bg-vignette-soft` (soft top-anchored glow, eased in from
+zero so a section's top seam against a flat-black neighbor reads as
+continuous rather than a hard brightness jump — `color-mix`-based, no
+hardcoded color, adapts across themes). Only `profile-section.tsx` uses one
+today (`bg-vignette-soft`, blending against Hero).
+
+Don't reach for a new background mechanism without discussing it first —
+three things have already been tried and reverted here: a full-page static
+dot-grid texture, reusing the Hero's canvas sitewide, and applying
+`bg-vignette-soft` (with shifted glow anchors) to Portfolio/Case
+Studies/Blog too — that last one read as the same background repeated on
+every section rather than adding distinct life to each one.
 
 ## Content gaps
 
@@ -103,7 +139,7 @@ other section's `h2` stays on `font-display`;
 
 `blog-section-client.tsx` is the cleanest example of the full pattern (one
 outer container, eyebrow header block, `mt-12` content, `mt-10` CTA) with
-the site's default typography. For the eyebrow header block's centered
-variant, see `contact-section.tsx`. For the full-bleed-content exception
-(padded header container + separate unpadded marquee block), see
-`profile-section.tsx`.
+the site's default typography. For the full-bleed-content exception (padded
+header container + separate unpadded marquee block), see
+`profile-section.tsx`. For the no-eyebrow "closing" exception, see
+`contact-section.tsx`.

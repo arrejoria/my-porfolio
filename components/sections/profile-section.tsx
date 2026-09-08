@@ -92,7 +92,7 @@ function SkillMarqueeRow({
 
   return (
     <div className="grid grid-cols-[84px_1fr] items-stretch border-b border-border sm:grid-cols-[200px_1fr]">
-      <div className="flex items-center gap-[9px] border-r border-border py-[18px] pr-3.5 pl-5 font-plex-mono text-[10.5px] leading-[1.3] tracking-[0.1em] text-muted-foreground uppercase sm:whitespace-nowrap sm:text-[11.5px] sm:tracking-[0.12em]">
+      <div className="flex items-center gap-[9px] border-r border-border py-[18px] pr-3.5 pl-5 font-mono text-[10.5px] leading-[1.3] tracking-[0.1em] text-muted-foreground uppercase sm:whitespace-nowrap sm:text-[11.5px] sm:tracking-[0.12em]">
         <span className="h-[5px] w-[5px] shrink-0 rounded-full bg-muted-foreground/70" aria-hidden="true" />
         {title}
       </div>
@@ -105,8 +105,8 @@ function SkillMarqueeRow({
             ref={ghostRef}
             className={
               reducedMotion
-                ? 'flex flex-wrap items-center gap-x-6 gap-y-2 font-tick text-3xl font-extrabold uppercase text-foreground sm:text-4xl md:text-5xl'
-                : 'inline-flex w-max items-center gap-6 whitespace-nowrap font-tick text-3xl font-extrabold uppercase text-muted-foreground/40 sm:text-4xl md:text-5xl'
+                ? 'flex flex-wrap items-center gap-x-6 gap-y-2 font-display text-3xl font-extrabold uppercase text-foreground sm:text-4xl md:text-5xl'
+                : 'inline-flex w-max items-center gap-6 whitespace-nowrap font-display text-3xl font-extrabold uppercase text-muted-foreground/40 sm:text-4xl md:text-5xl'
             }
           >
             <TrackContent tokens={displayTokens} prefix="ghost" markWords={!reducedMotion} />
@@ -121,7 +121,7 @@ function SkillMarqueeRow({
             <div className="absolute inset-0 flex items-center [clip-path:inset(0_calc(50%-3rem)_0_calc(50%-3rem))] sm:[clip-path:inset(0_calc(50%-4rem)_0_calc(50%-4rem))] md:[clip-path:inset(0_calc(50%-5rem)_0_calc(50%-5rem))]">
               <div
                 ref={solidRef}
-                className="inline-flex w-max items-center gap-6 whitespace-nowrap font-tick text-3xl font-extrabold uppercase text-foreground sm:text-4xl md:text-5xl"
+                className="inline-flex w-max items-center gap-6 whitespace-nowrap font-display text-3xl font-extrabold uppercase text-foreground sm:text-4xl md:text-5xl"
               >
                 <TrackContent tokens={displayTokens} prefix="solid" />
               </div>
@@ -234,7 +234,7 @@ export function ProfileSection() {
           </div>
 
           <div className="mt-[34px] flex flex-col gap-2 border-t border-border pt-[22px] lg:mt-0 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10">
-            <span className="font-tick text-[clamp(56px,6.5vw,92px)] leading-[0.88] font-extrabold tabular-nums text-foreground">
+            <span className="font-display text-[clamp(56px,6.5vw,92px)] leading-[0.88] font-extrabold tabular-nums text-foreground">
               {t.profile.statNumber}
               <span className="align-super text-[0.48em] text-muted-foreground">+</span>
             </span>
