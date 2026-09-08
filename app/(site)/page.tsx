@@ -1,6 +1,5 @@
 import { HeroSection } from '@/components/sections/hero-section'
-import { AboutSection } from '@/components/sections/about-section'
-import { SkillsSection } from '@/components/sections/skills-section'
+import { ProfileSection } from '@/components/sections/profile-section'
 import { PortfolioSection } from '@/components/sections/portfolio-section'
 import { CaseStudiesSection } from '@/components/sections/case-studies-section'
 import { BlogSection } from '@/components/sections/blog-section'
@@ -16,8 +15,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <AboutSection />
-      <SkillsSection />
+      <ProfileSection />
       <PortfolioSection />
       <CaseStudiesSection />
       <BlogSection />

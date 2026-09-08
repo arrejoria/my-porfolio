@@ -13,7 +13,7 @@ import { prefersReducedMotion } from '@/components/motion/reveal'
 export function Ticker({ items }: { items: string[] }) {
   const trackRef = useRef<HTMLDivElement>(null)
 
-  // Same mount-gated pattern as SkillsSection: `window.matchMedia` isn't
+  // Same mount-gated pattern as ProfileSection: `window.matchMedia` isn't
   // available during SSR, so reduced-motion state is resolved only after
   // the client mounts.
   const [mounted, setMounted] = useState(false)

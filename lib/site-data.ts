@@ -16,7 +16,7 @@ export type SkillGroup = {
    * Most items are proper nouns/tech terms (locale-invariant), rendered
    * verbatim. The `'applied-ai'` sentinel marks the one item that IS a
    * translatable phrase rather than a brand/technology name — the skills
-   * marquee (see `SkillsSection`) resolves it through `t.skills.appliedAi`
+   * marquee (see `ProfileSection`) resolves it through `t.profile.appliedAi`
    * instead of rendering it as-is.
    */
   items: string[]

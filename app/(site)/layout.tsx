@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import {
+  Archivo,
   Bricolage_Grotesque,
   Fraunces,
   Hanken_Grotesk,
@@ -62,6 +63,15 @@ const plexSans = IBM_Plex_Sans({
   display: 'swap',
 })
 
+// Scoped to the profile section only (stat number + marquee words) — see
+// design.md's typography exception note.
+const archivo = Archivo({
+  subsets: ['latin'],
+  weight: ['700', '800'],
+  variable: '--font-archivo',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: 'Lucas Arrejoria — Full Stack Developer',
   description:
@@ -94,7 +104,7 @@ export default async function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning className="bg-background">
       <body
-        className={`${bricolage.variable} ${hanken.variable} ${jbmono.variable} ${fraunces.variable} ${plexMono.variable} ${plexSans.variable} font-sans antialiased`}
+        className={`${bricolage.variable} ${hanken.variable} ${jbmono.variable} ${fraunces.variable} ${plexMono.variable} ${plexSans.variable} ${archivo.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"

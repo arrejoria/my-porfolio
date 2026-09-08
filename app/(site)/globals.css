@@ -52,20 +52,20 @@
 /* Dark is the default aesthetic (matches the prototype). */
 :root {
   color-scheme: dark;
-  --background: oklch(0.09 0 0);
+  --background: #0a0a09;
   --foreground: oklch(0.97 0 0);
   --card: oklch(0.13 0 0);
   --card-foreground: oklch(0.97 0 0);
   --popover: oklch(0.13 0 0);
   --popover-foreground: oklch(0.97 0 0);
   --primary: oklch(0.97 0 0);
-  --primary-foreground: oklch(0.09 0 0);
+  --primary-foreground: #0a0a09;
   --secondary: oklch(0.17 0 0);
   --secondary-foreground: oklch(0.97 0 0);
   --muted: oklch(0.17 0 0);
   --muted-foreground: oklch(0.68 0 0);
   --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.09 0 0);
+  --accent-foreground: #0a0a09;
   --destructive: oklch(0.62 0.22 25);
   --border: oklch(1 0 0 / 14%);
   --input: oklch(1 0 0 / 18%);
@@ -79,7 +79,7 @@
   --sidebar: oklch(0.13 0 0);
   --sidebar-foreground: oklch(0.97 0 0);
   --sidebar-primary: oklch(0.97 0 0);
-  --sidebar-primary-foreground: oklch(0.09 0 0);
+  --sidebar-primary-foreground: #0a0a09;
   --sidebar-accent: oklch(0.17 0 0);
   --sidebar-accent-foreground: oklch(0.97 0 0);
   --sidebar-border: oklch(1 0 0 / 14%);
@@ -125,6 +125,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -135,28 +136,77 @@
     font-family: var(--font-display);
     letter-spacing: 0.01em;
   }
+
   /* Case-studies-only typeface trio — see design.md's typography exception. */
   .font-serif-display {
     font-family: var(--font-fraunces), ui-serif, Georgia, serif;
   }
+
   .font-plex-mono {
     font-family: var(--font-plex-mono), ui-monospace, monospace;
   }
+
   .font-plex-sans {
     font-family: var(--font-plex-sans), ui-sans-serif, sans-serif;
   }
+
+  /* Profile-section-only typeface — stat number + marquee words. */
+  .font-tick {
+    font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* Hero's grain overlay, as a real ::before so it doesn't need its own DOM
+     node — the section itself must be `position: relative` (it already is,
+     via `relative isolate`). */
+  .hero-noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+
+  /* Hero's readability scrim beside the WorkflowGraph canvas — fades the
+     graph out toward the content column so text stays legible over it. */
+  .scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(100deg,
+        #0a0a09 0%,
+        #0a0a09 18%,
+        rgba(10, 10, 9, 0.86) 34%,
+        rgba(10, 10, 9, 0.35) 54%,
+        rgba(10, 10, 9, 0) 72%);
+  }
+
   /* Flat vignette used to bookend sections — no color, just tonal depth. */
   .bg-vignette {
     background-image:
-      linear-gradient(
-        180deg,
+      linear-gradient(180deg,
         color-mix(in oklch, var(--foreground) 6%, transparent),
-        transparent 40%
-      ),
-      radial-gradient(
-        120% 60% at 50% 0%,
+        transparent 40%),
+      radial-gradient(120% 60% at 50% 0%,
         color-mix(in oklch, var(--foreground) 4%, transparent),
-        transparent 70%
-      );
+        transparent 70%);
+  }
+
+  /* Same glow as .bg-vignette, but eased in from zero at the very top edge
+     instead of starting at full tint — used where a section's top border
+     sits directly against Hero's flat black, so the seam reads as one
+     continuous surface instead of a hard brightness jump. */
+  .bg-vignette-soft {
+    background-image:
+      linear-gradient(180deg,
+        transparent,
+        color-mix(in oklch, var(--foreground) 6%, transparent) 16%,
+        transparent 42%),
+      radial-gradient(120% 60% at 50% 0%,
+        color-mix(in oklch, var(--foreground) 4%, transparent),
+        transparent 70%);
   }
 }
