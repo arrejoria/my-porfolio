@@ -1,6 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -37,7 +38,25 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'lib', 'payload', 'payload-types.ts'),
   },
+  // Scoped to `pages` only — case-studies/posts/projects keep their own
+  // dedicated bilingual copy fields and don't need a generic SEO tab.
+  // NOTE: unlike every other bilingual field in this schema (see the
+  // `{ es, en }` group pattern documented in lib/payload/blocks/shared.ts),
+  // this plugin's meta.title/meta.description/meta.image fields are
+  // single-language only. Bilingual SEO support is deliberately deferred
+  // to a future change, not implemented here.
+  plugins: [
+    seoPlugin({
+      collections: ['pages'],
+      uploadsCollection: 'media',
+      generateTitle: ({ doc }) => (doc && 'title' in doc ? doc.title : ''),
+    }),
+  ],
   db: postgresAdapter({
+    // Dev-mode auto-push was masking schema drift ("Pulling schema from
+    // database..." on every request). Schema changes now require an
+    // explicit, committed migration via `pnpm payload:migrate:create`.
+    push: false,
     pool: {
       connectionString: process.env.DATABASE_URL,
     },

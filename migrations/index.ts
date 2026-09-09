@@ -1,9 +1,21 @@
 import * as migration_20260829_024817_initial_schema from './20260829_024817_initial_schema';
+import * as migration_20260908_213915_formalize_case_studies_status_result_columns from './20260908_213915_formalize_case_studies_status_result_columns';
+import * as migration_20260908_214527_add_pages_layout_blocks_and_seo from './20260908_214527_add_pages_layout_blocks_and_seo';
 
 export const migrations = [
   {
     up: migration_20260829_024817_initial_schema.up,
     down: migration_20260829_024817_initial_schema.down,
-    name: '20260829_024817_initial_schema'
+    name: '20260829_024817_initial_schema',
+  },
+  {
+    up: migration_20260908_213915_formalize_case_studies_status_result_columns.up,
+    down: migration_20260908_213915_formalize_case_studies_status_result_columns.down,
+    name: '20260908_213915_formalize_case_studies_status_result_columns',
+  },
+  {
+    up: migration_20260908_214527_add_pages_layout_blocks_and_seo.up,
+    down: migration_20260908_214527_add_pages_layout_blocks_and_seo.down,
+    name: '20260908_214527_add_pages_layout_blocks_and_seo'
   },
 ];

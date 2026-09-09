@@ -246,8 +246,111 @@ export interface Page {
    * URL path for this page, e.g. '/' or '/portfolio'.
    */
   slug: string;
+  /**
+   * Homepage sections. Once wired up, reordering will change render order and the ordinal numbers shown next to each section. Hero, Profile and Portfolio are fixed in code and always render first. This field is not yet read by any route, so reordering here currently has no visible effect on the live site.
+   */
+  layout?: (CaseStudiesBlock | BlogBlock | ContactBlock)[] | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseStudiesBlock".
+ */
+export interface CaseStudiesBlock {
+  /**
+   * Homepage only. Does not change the /case-studies page header.
+   */
+  eyebrow?: {
+    es?: string | null;
+    en?: string | null;
+  };
+  /**
+   * Homepage only. Does not change the /case-studies page header.
+   */
+  title?: {
+    es?: string | null;
+    en?: string | null;
+  };
+  /**
+   * Homepage only. Does not change the /case-studies page header.
+   */
+  subtitle?: {
+    es?: string | null;
+    en?: string | null;
+  };
+  /**
+   * Number of published case studies to show on the homepage.
+   */
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'caseStudies';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogBlock".
+ */
+export interface BlogBlock {
+  /**
+   * Homepage only. Does not change the /blog page header.
+   */
+  eyebrow?: {
+    es?: string | null;
+    en?: string | null;
+  };
+  /**
+   * Homepage only. Does not change the /blog page header.
+   */
+  title?: {
+    es?: string | null;
+    en?: string | null;
+  };
+  /**
+   * Homepage only. Does not change the /blog page header.
+   */
+  subtitle?: {
+    es?: string | null;
+    en?: string | null;
+  };
+  /**
+   * Number of published posts to show on the homepage.
+   */
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blog';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock".
+ */
+export interface ContactBlock {
+  /**
+   * Homepage only.
+   */
+  title?: {
+    es?: string | null;
+    en?: string | null;
+  };
+  /**
+   * Homepage only.
+   */
+  subtitle?: {
+    es?: string | null;
+    en?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contact';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -502,8 +605,96 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  layout?:
+    | T
+    | {
+        caseStudies?: T | CaseStudiesBlockSelect<T>;
+        blog?: T | BlogBlockSelect<T>;
+        contact?: T | ContactBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseStudiesBlock_select".
+ */
+export interface CaseStudiesBlockSelect<T extends boolean = true> {
+  eyebrow?:
+    | T
+    | {
+        es?: T;
+        en?: T;
+      };
+  title?:
+    | T
+    | {
+        es?: T;
+        en?: T;
+      };
+  subtitle?:
+    | T
+    | {
+        es?: T;
+        en?: T;
+      };
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogBlock_select".
+ */
+export interface BlogBlockSelect<T extends boolean = true> {
+  eyebrow?:
+    | T
+    | {
+        es?: T;
+        en?: T;
+      };
+  title?:
+    | T
+    | {
+        es?: T;
+        en?: T;
+      };
+  subtitle?:
+    | T
+    | {
+        es?: T;
+        en?: T;
+      };
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock_select".
+ */
+export interface ContactBlockSelect<T extends boolean = true> {
+  title?:
+    | T
+    | {
+        es?: T;
+        en?: T;
+      };
+  subtitle?:
+    | T
+    | {
+        es?: T;
+        en?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
