@@ -1,0 +1,164 @@
+import { describe, expect, it } from 'vitest'
+import { HARDCODED_NUMBERED_COUNT, pick, resolveHomeSections } from './sections'
+import type { PageDoc } from '@/lib/payload/types'
+
+type Layout = NonNullable<PageDoc['layout']>
+
+function caseStudiesBlock(overrides: Partial<Layout[number]> = {}): Layout[number] {
+  return {
+    blockType: 'caseStudies',
+    id: undefined,
+    eyebrow: { es: 'Eyebrow ES', en: 'Eyebrow EN' },
+    title: { es: 'Title ES', en: 'Title EN' },
+    subtitle: { es: 'Subtitle ES', en: 'Subtitle EN' },
+    limit: 5,
+    ...overrides,
+  } as Layout[number]
+}
+
+function blogBlock(overrides: Partial<Layout[number]> = {}): Layout[number] {
+  return {
+    blockType: 'blog',
+    id: undefined,
+    eyebrow: { es: 'Blog Eyebrow ES', en: 'Blog Eyebrow EN' },
+    title: { es: 'Blog Title ES', en: 'Blog Title EN' },
+    subtitle: { es: 'Blog Subtitle ES', en: 'Blog Subtitle EN' },
+    limit: 4,
+    ...overrides,
+  } as Layout[number]
+}
+
+function contactBlock(overrides: Partial<Layout[number]> = {}): Layout[number] {
+  return {
+    blockType: 'contact',
+    id: undefined,
+    title: { es: 'Contact Title ES', en: 'Contact Title EN' },
+    subtitle: { es: 'Contact Subtitle ES', en: 'Contact Subtitle EN' },
+    ...overrides,
+  } as Layout[number]
+}
+
+describe('resolveHomeSections', () => {
+  it('returns the default 3-section layout (numbered 03/04) when layout is undefined', () => {
+    const sections = resolveHomeSections(undefined)
+
+    expect(sections.map((s) => s.kind)).toEqual(['caseStudies', 'blog', 'contact'])
+    expect(sections[0]).toMatchObject({ kind: 'caseStudies', number: HARDCODED_NUMBERED_COUNT + 1 })
+    expect(sections[1]).toMatchObject({ kind: 'blog', number: HARDCODED_NUMBERED_COUNT + 2 })
+    expect(sections[2]).not.toHaveProperty('number')
+    // every copy field is absent so pick() falls through to the dictionary
+    expect(sections[0]).toMatchObject({ eyebrow: undefined, title: undefined, subtitle: undefined })
+  })
+
+  it('returns the default 3-section layout when layout is null', () => {
+    const sections = resolveHomeSections(null)
+    expect(sections.map((s) => s.kind)).toEqual(['caseStudies', 'blog', 'contact'])
+  })
+
+  it('returns the default 3-section layout when layout is an empty array', () => {
+    const sections = resolveHomeSections([])
+    expect(sections.map((s) => s.kind)).toEqual(['caseStudies', 'blog', 'contact'])
+    expect(sections[0]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 1 })
+    expect(sections[1]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 2 })
+  })
+
+  it('resolves all 3 real blocks in their given order, numbering only caseStudies/blog', () => {
+    const sections = resolveHomeSections([caseStudiesBlock(), contactBlock(), blogBlock()])
+
+    expect(sections.map((s) => s.kind)).toEqual(['caseStudies', 'contact', 'blog'])
+    expect(sections[0]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 1 })
+    expect(sections[2]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 2 })
+    expect(sections[1]).not.toHaveProperty('number')
+  })
+
+  it('renumbers correctly when blog precedes case studies', () => {
+    const sections = resolveHomeSections([blogBlock(), caseStudiesBlock()])
+
+    expect(sections[0]).toMatchObject({ kind: 'blog', number: HARDCODED_NUMBERED_COUNT + 1 })
+    expect(sections[1]).toMatchObject({ kind: 'caseStudies', number: HARDCODED_NUMBERED_COUNT + 2 })
+  })
+
+  it('never assigns contact a number regardless of position', () => {
+    const first = resolveHomeSections([contactBlock(), caseStudiesBlock(), blogBlock()])
+    expect(first[0]).not.toHaveProperty('number')
+    expect(first[1]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 1 })
+    expect(first[2]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 2 })
+
+    const middle = resolveHomeSections([caseStudiesBlock(), contactBlock(), blogBlock()])
+    expect(middle[1]).not.toHaveProperty('number')
+    expect(middle[0]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 1 })
+    expect(middle[2]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 2 })
+  })
+
+  it('renders only the present block types when layout has some blocks missing', () => {
+    const onlyCaseStudies = resolveHomeSections([caseStudiesBlock()])
+    expect(onlyCaseStudies.map((s) => s.kind)).toEqual(['caseStudies'])
+    expect(onlyCaseStudies[0]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 1 })
+
+    const caseStudiesAndContact = resolveHomeSections([caseStudiesBlock(), contactBlock()])
+    expect(caseStudiesAndContact.map((s) => s.kind)).toEqual(['caseStudies', 'contact'])
+    expect(caseStudiesAndContact[0]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 1 })
+
+    const blogOnly = resolveHomeSections([blogBlock()])
+    expect(blogOnly[0]).toMatchObject({ kind: 'blog', number: HARDCODED_NUMBERED_COUNT + 1 })
+  })
+
+  it('closes the gap when case studies is removed — blog becomes the first numbered slot', () => {
+    const sections = resolveHomeSections([contactBlock(), blogBlock()])
+    expect(sections.find((s) => s.kind === 'blog')).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 1 })
+  })
+
+  it('skips unknown block types defensively without breaking numbering', () => {
+    const stale = { blockType: 'unknownFutureBlock', id: 'x' } as unknown as Layout[number]
+    const sections = resolveHomeSections([stale, caseStudiesBlock(), blogBlock()])
+
+    expect(sections.map((s) => s.kind)).toEqual(['caseStudies', 'blog'])
+    expect(sections[0]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 1 })
+    expect(sections[1]).toMatchObject({ number: HARDCODED_NUMBERED_COUNT + 2 })
+  })
+
+  it('falls back to the default limit (3) when limit is absent or below 1', () => {
+    const noLimit = resolveHomeSections([caseStudiesBlock({ limit: undefined })])
+    expect(noLimit[0]).toMatchObject({ limit: 3 })
+
+    const zeroLimit = resolveHomeSections([caseStudiesBlock({ limit: 0 })])
+    expect(zeroLimit[0]).toMatchObject({ limit: 3 })
+  })
+
+  it('preserves a valid limit from the block', () => {
+    const sections = resolveHomeSections([caseStudiesBlock({ limit: 7 })])
+    expect(sections[0]).toMatchObject({ limit: 7 })
+  })
+
+  it('uses block.id as the react key when present, otherwise a stable positional fallback', () => {
+    const withId = resolveHomeSections([caseStudiesBlock({ id: 'abc123' })])
+    expect(withId[0].key).toBe('abc123')
+
+    const withoutId = resolveHomeSections([caseStudiesBlock({ id: undefined })])
+    expect(withoutId[0].key).toBe('caseStudies-0')
+  })
+})
+
+describe('pick', () => {
+  it('returns the value for the given locale when present', () => {
+    expect(pick({ es: 'Hola', en: 'Hello' }, 'es', 'fallback')).toBe('Hola')
+    expect(pick({ es: 'Hola', en: 'Hello' }, 'en', 'fallback')).toBe('Hello')
+  })
+
+  it('falls back when the value is undefined', () => {
+    expect(pick(undefined, 'es', 'fallback')).toBe('fallback')
+  })
+
+  it('falls back when the value is null', () => {
+    expect(pick(null, 'es', 'fallback')).toBe('fallback')
+  })
+
+  it('falls back per-locale when only one side of the bilingual group is empty', () => {
+    expect(pick({ es: 'Hola', en: '' }, 'en', 'fallback')).toBe('fallback')
+    expect(pick({ es: '', en: 'Hello' }, 'es', 'fallback')).toBe('fallback')
+  })
+
+  it('falls back when the field itself is null on the group', () => {
+    expect(pick({ es: null, en: 'Hello' }, 'es', 'fallback')).toBe('fallback')
+  })
+})

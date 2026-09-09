@@ -208,6 +208,7 @@ export function ProfileSection() {
   return (
     <section id="profile" className="border-t border-border/60 bg-vignette-soft">
       <Reveal className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
+        {/* Hardcoded ordinal — counted by HARDCODED_NUMBERED_COUNT in lib/homepage/sections.ts; keep in sync if this section's position/number changes. */}
         <p className="mb-5 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground before:h-px before:w-[22px] before:bg-muted-foreground before:content-['']">
           {t.profile.eyebrow} <b className="font-medium tabular-nums text-foreground/80">/ 01</b>
         </p>

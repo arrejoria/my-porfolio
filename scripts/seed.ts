@@ -322,6 +322,42 @@ const seedPosts = [
   },
 ]
 
+// Homepage `pages` doc content — deliberately identical to
+// lib/i18n/dictionary.ts's t.caseStudies/t.blog/t.contact copy, so the
+// seeded block content is byte-for-byte the "day one" state before an
+// admin customizes anything (matches what the dictionary fallback would
+// already render if this doc didn't exist at all).
+const homePageLayout = [
+  {
+    blockType: 'caseStudies' as const,
+    eyebrow: { es: 'Registro de casos', en: 'Case log' },
+    title: { es: 'Casos de IA & Automatización', en: 'AI & Automation Case Studies' },
+    subtitle: {
+      es: 'Flujos y sistemas donde la IA ejecuta y yo dirijo — n8n, integraciones y automatización aplicada.',
+      en: 'Flows and systems where AI executes and I direct — n8n, integrations, and applied automation.',
+    },
+    limit: 3,
+  },
+  {
+    blockType: 'blog' as const,
+    eyebrow: { es: 'Notas y escritura', en: 'Notes & writing' },
+    title: { es: 'Blog', en: 'Blog' },
+    subtitle: {
+      es: 'Notas sobre desarrollo web, aprendizajes y experimentos con nuevas tecnologías.',
+      en: 'Notes on web development, learnings and experiments with new technologies.',
+    },
+    limit: 3,
+  },
+  {
+    blockType: 'contact' as const,
+    title: { es: 'Hablemos', en: "Let's talk" },
+    subtitle: {
+      es: '¿Tienes un proyecto en mente o quieres colaborar? Escríbeme y te responderé pronto.',
+      en: 'Have a project in mind or want to collaborate? Send me a message and I will get back to you soon.',
+    },
+  },
+]
+
 async function seed() {
   const payload = await getPayload({ config })
 
@@ -373,8 +409,48 @@ async function seed() {
     createdPosts += 1
   }
 
+  const existingHomePage = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: '/' } },
+    limit: 1,
+  })
+  const homePage =
+    existingHomePage.docs[0] ??
+    (await payload.create({
+      collection: 'pages',
+      data: {
+        title: 'Home',
+        slug: '/',
+        layout: homePageLayout,
+      },
+    }))
+  const createdHomePage = existingHomePage.docs.length === 0
+
+  let updatedSiteSettings = false
+  // Mirrors app/(payload)/admin/components/ViewSiteDropdown.tsx: findGlobal
+  // throws if `site-settings` was never saved before (e.g. brand-new DB).
+  let currentHomePageId: number | undefined
+  try {
+    const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
+    const currentHomePage = siteSettings.homePage
+    currentHomePageId =
+      currentHomePage && typeof currentHomePage === 'object' ? currentHomePage.id : currentHomePage
+  } catch {
+    currentHomePageId = undefined
+  }
+  if (currentHomePageId !== homePage.id) {
+    await payload.updateGlobal({
+      slug: 'site-settings',
+      data: { homePage: homePage.id },
+    })
+    updatedSiteSettings = true
+  }
+
   console.log(
     `Inserted ${createdProjects} project(s), ${createdCaseStudies} case stud${createdCaseStudies === 1 ? 'y' : 'ies'}, and ${createdPosts} post(s). Existing slugs were skipped.`,
+  )
+  console.log(
+    `Home page: ${createdHomePage ? 'created' : 'already existed'}. site-settings.homePage: ${updatedSiteSettings ? 'updated' : 'already pointed at home'}.`,
   )
 }
 
