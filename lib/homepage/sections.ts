@@ -1,5 +1,5 @@
 import type { Locale } from '@/lib/i18n/dictionary'
-import type { PageDoc } from '@/lib/payload/types'
+import type { Localized, PageDoc } from '@/lib/payload/types'
 
 // Hero, Profile and Portfolio always render first, hardcoded, ahead of the
 // blocks region. Only Profile (/ 01) and Portfolio (/ 02) carry a numbered
@@ -11,7 +11,10 @@ export const HARDCODED_NUMBERED_COUNT = 2
 
 const DEFAULT_LIMIT = 3
 
-export type Bilingual = { es?: string | null; en?: string | null } | null | undefined
+// Payload-i18n-migration design D3: `Bilingual` is kept (name unchanged —
+// zero churn at existing client call sites) but now derives from the
+// shared `Localized<T>` type bridge instead of duplicating its shape.
+export type Bilingual = Localized<string> | null | undefined
 
 export type HomeSection =
   | {
@@ -131,4 +134,14 @@ export function resolveHomeSections(layout: PageDoc['layout']): HomeSection[] {
 // is the fallback mechanism" convention in lib/payload/blocks/shared.ts.
 export function pick(value: Bilingual, locale: Locale, fallback: string): string {
   return value?.[locale] || fallback
+}
+
+// payload-i18n-migration design D4: a scoped exception to `fallback: false`
+// for collection body content (blog posts, case-studies body/summary/
+// result) that has no `lib/i18n/dictionary.ts` entry — the alternative
+// there is a blank page, not a wrong-language string. Unlike `pick()`, the
+// fallback target is always `es` (the `defaultLocale`), never the requested
+// locale's opposite in general, and there's no dictionary fallback string.
+export function pickContent(value: Bilingual, locale: Locale): string {
+  return value?.[locale] || value?.es || ''
 }

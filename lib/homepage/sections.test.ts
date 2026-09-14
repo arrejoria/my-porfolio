@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { HARDCODED_NUMBERED_COUNT, pick, resolveHomeSections } from './sections'
+import { HARDCODED_NUMBERED_COUNT, pick, pickContent, resolveHomeSections } from './sections'
 import type { PageDoc } from '@/lib/payload/types'
 
 type Layout = NonNullable<PageDoc['layout']>
@@ -160,5 +160,38 @@ describe('pick', () => {
 
   it('falls back when the field itself is null on the group', () => {
     expect(pick({ es: null, en: 'Hello' }, 'es', 'fallback')).toBe('fallback')
+  })
+})
+
+// payload-i18n-migration design D4: `pickContent` is a scoped exception to
+// `fallback: false` for collection body content (blog posts, case-studies
+// body/summary/result) that has no `lib/i18n/dictionary.ts` entry to fall
+// back to — the alternative there is a blank page, not a wrong-language
+// string. Unlike `pick()`, the fallback target is always `es` (the
+// `defaultLocale`), not "whichever locale has content" bidirectionally.
+describe('pickContent', () => {
+  it('returns the value for the given locale when both es/en are present', () => {
+    expect(pickContent({ es: 'Resumen', en: 'Summary' }, 'es')).toBe('Resumen')
+    expect(pickContent({ es: 'Resumen', en: 'Summary' }, 'en')).toBe('Summary')
+  })
+
+  it('falls back to es when the requested locale (en) is empty', () => {
+    expect(pickContent({ es: 'Resumen' }, 'en')).toBe('Resumen')
+    expect(pickContent({ es: 'Resumen', en: null }, 'en')).toBe('Resumen')
+  })
+
+  it('does NOT fall back to en when the requested locale (es) is empty — fallback target is always es', () => {
+    expect(pickContent({ en: 'Summary' }, 'es')).toBe('')
+    expect(pickContent({ es: null, en: 'Summary' }, 'es')).toBe('')
+  })
+
+  it('returns an empty string when neither locale has a value', () => {
+    expect(pickContent({}, 'es')).toBe('')
+    expect(pickContent({}, 'en')).toBe('')
+  })
+
+  it('returns an empty string when the value itself is null/undefined', () => {
+    expect(pickContent(null, 'es')).toBe('')
+    expect(pickContent(undefined, 'en')).toBe('')
   })
 })

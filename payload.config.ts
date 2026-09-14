@@ -35,6 +35,19 @@ export default buildConfig({
   globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET ?? '',
+  // `fallback: false` is deliberate (payload-i18n-migration design D1): with
+  // fallback on, a server read that forgets `locale: 'all'` would silently
+  // render Spanish text in the English UI with no error. With fallback off,
+  // the same mistake yields absence, which routes into the already-built
+  // `pick()`/`pickContent()` → lib/i18n/dictionary.ts fallback path instead.
+  localization: {
+    locales: [
+      { label: 'Español', code: 'es' },
+      { label: 'English', code: 'en' },
+    ],
+    defaultLocale: 'es',
+    fallback: false,
+  },
   typescript: {
     outputFile: path.resolve(dirname, 'lib', 'payload', 'payload-types.ts'),
   },
