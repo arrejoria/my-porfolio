@@ -21,6 +21,17 @@ import { SiteSettings } from './lib/payload/globals/site-settings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+// `@payloadcms/plugin-seo`'s MetaTitleField/MetaDescriptionField/
+// MetaImageField hardcode `localized: true` in their own source, independent
+// of whether the host app enables localization. Now that `localization` is
+// configured below, those 3 fields would silently become locale-aware from
+// Payload's perspective — but `cms_pages` still has flat, non-localized
+// columns (no `cms_pages_locales` table). Strip `localized` from just those
+// 3 stored fields (leaving the UI-only Overview/Preview fields untouched) to
+// keep SEO meta single-language, matching both the DB schema and the
+// deliberate design decision noted below.
+const DELOCALIZED_SEO_META_FIELD_NAMES = new Set(['title', 'description', 'image'])
+
 export default buildConfig({
   admin: {
     user: Admins.slug,
@@ -63,6 +74,13 @@ export default buildConfig({
       collections: ['pages'],
       uploadsCollection: 'media',
       generateTitle: ({ doc }) => (doc && 'title' in doc ? doc.title : ''),
+      // See DELOCALIZED_SEO_META_FIELD_NAMES above for why this is needed.
+      fields: ({ defaultFields }) =>
+        defaultFields.map((field) =>
+          'name' in field && DELOCALIZED_SEO_META_FIELD_NAMES.has(field.name)
+            ? { ...field, localized: false }
+            : field,
+        ),
     }),
   ],
   db: postgresAdapter({
