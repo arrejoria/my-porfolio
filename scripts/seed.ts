@@ -414,15 +414,30 @@ async function seed() {
     createdCaseStudies += 1
   }
 
+  // payload-i18n-migration A2: title/excerpt/content are now `localized:
+  // true` scalars, not `{es,en}` groups — same two-step create(es)+update(en)
+  // pattern established by A1's case-studies loop (Local API has no
+  // `locale: 'all'` write mode).
   let createdPosts = 0
-  for (const post of seedPosts) {
+  for (const { title, excerpt, content, ...post } of seedPosts) {
     const existing = await payload.find({
       collection: 'posts',
       where: { slug: { equals: post.slug } },
       limit: 1,
     })
     if (existing.docs.length > 0) continue
-    await payload.create({ collection: 'posts', data: post })
+
+    const created = await payload.create({
+      collection: 'posts',
+      locale: 'es',
+      data: { ...post, title: title.es, excerpt: excerpt.es, content: content.es },
+    })
+    await payload.update({
+      collection: 'posts',
+      id: created.id,
+      locale: 'en',
+      data: { title: title.en, excerpt: excerpt.en, content: content.en },
+    })
     createdPosts += 1
   }
 

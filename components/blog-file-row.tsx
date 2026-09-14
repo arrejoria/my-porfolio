@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useI18n } from '@/lib/i18n/provider'
 import type { PostDoc } from '@/lib/payload/types'
+import { pickContent } from '@/lib/homepage/sections'
 
 /**
  * One row of the "fichero" (file-record) blog list — the whole row is the
@@ -13,6 +14,7 @@ import type { PostDoc } from '@/lib/payload/types'
  */
 export function BlogFileRow({ post, index }: { post: PostDoc; index: number }) {
   const { locale } = useI18n()
+  const title = pickContent(post.title, locale)
 
   return (
     <Link
@@ -24,7 +26,7 @@ export function BlogFileRow({ post, index }: { post: PostDoc; index: number }) {
       </span>
 
       <span className="min-w-0">
-        <h3 className="font-sans text-lg font-bold text-balance">{post.title[locale]}</h3>
+        <h3 className="font-sans text-lg font-bold text-balance">{title}</h3>
         {post.category && (
           <span className="mt-1.5 block font-mono text-xs tracking-wide uppercase text-muted-foreground group-hover:text-background/70">
             {post.category}

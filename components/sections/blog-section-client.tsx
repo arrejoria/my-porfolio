@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { useI18n } from '@/lib/i18n/provider'
 import type { PostDoc } from '@/lib/payload/types'
 import type { HomeSection } from '@/lib/homepage/sections'
-import { pick } from '@/lib/homepage/sections'
+import { pick, pickContent } from '@/lib/homepage/sections'
 import { Reveal } from '@/components/motion/reveal'
 
 type BlogHomeSection = Extract<HomeSection, { kind: 'blog' }>
@@ -54,7 +54,7 @@ export function BlogSectionClient({ posts, block }: { posts: PostDoc[]; block: B
 
                 <span className="min-w-0">
                   <h3 className="font-serif-display text-lg tracking-tight text-foreground">
-                    {post.title[locale]}
+                    {pickContent(post.title, locale)}
                   </h3>
                   {post.category && (
                     <span className="mt-1.5 block font-mono text-xs tracking-wide text-muted-foreground uppercase">

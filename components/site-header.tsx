@@ -10,9 +10,11 @@ import { prefersReducedMotion } from '@/components/motion/reveal'
 import { useI18n } from '@/lib/i18n/provider'
 import { cn } from '@/lib/utils'
 import type { PostDoc } from '@/lib/payload/types'
+import { pickContent } from '@/lib/homepage/sections'
 
 export function SiteHeader({ latestPost }: { latestPost: PostDoc | null }) {
   const { t, locale, toggleLocale } = useI18n()
+  const latestPostTitle = latestPost ? pickContent(latestPost.title, locale) : ''
   const pathname = usePathname()
   const { resolvedTheme, setTheme } = useTheme()
 
@@ -161,7 +163,7 @@ export function SiteHeader({ latestPost }: { latestPost: PostDoc | null }) {
                   >
                     <span>
                       <h3 className="text-balance font-sans text-lg font-bold transition-colors group-hover:text-primary">
-                        {latestPost.title[locale]}
+                        {latestPostTitle}
                       </h3>
                       <span className="mt-2 block text-sm text-muted-foreground">
                         {new Date(latestPost.createdAt).toLocaleDateString(locale, {

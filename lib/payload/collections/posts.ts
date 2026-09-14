@@ -1,8 +1,16 @@
 import type { CollectionConfig } from 'payload'
 
-// Bilingual fields are modeled as a `group` with `es`/`en` sub-fields rather
-// than Payload's native `localization`, so they mirror the shape the app's
-// custom lib/i18n system already expects (see lib/i18n/dictionary.ts).
+// payload-i18n-migration (A2): `title`/`excerpt`/`content` used to be
+// `group` fields with hand-authored `es`/`en` sub-fields. They are now
+// native `localized: true` scalars — Payload's `localization` config
+// (payload.config.ts) stores per-locale values in a satellite
+// `cms_posts_locales` table instead of `_es`/`_en` columns. Field names are
+// unchanged on purpose so `doc.title[locale]` / `pick()` / `pickContent()`
+// call sites don't need a rename (design D3, replayed from the A1
+// case-studies pilot). `required: true` is still honored, but Payload only
+// enforces it for the locale being saved — see lib/payload/types.ts's
+// `AllLocales<T, K>` doc comment (design D4) for why a doc can now exist
+// with `es` filled and `en` empty.
 export const Posts: CollectionConfig = {
   slug: 'posts',
   dbName: 'cms_posts',
@@ -10,14 +18,7 @@ export const Posts: CollectionConfig = {
     useAsTitle: 'slug',
   },
   fields: [
-    {
-      name: 'title',
-      type: 'group',
-      fields: [
-        { name: 'es', type: 'text', required: true },
-        { name: 'en', type: 'text', required: true },
-      ],
-    },
+    { name: 'title', type: 'text', localized: true, required: true },
     {
       name: 'slug',
       type: 'text',
@@ -25,26 +26,12 @@ export const Posts: CollectionConfig = {
       unique: true,
       index: true,
     },
-    {
-      name: 'excerpt',
-      type: 'group',
-      fields: [
-        { name: 'es', type: 'text', required: true },
-        { name: 'en', type: 'text', required: true },
-      ],
-    },
+    { name: 'excerpt', type: 'text', localized: true, required: true },
     {
       name: 'category',
       type: 'text',
     },
-    {
-      name: 'content',
-      type: 'group',
-      fields: [
-        { name: 'es', type: 'richText', required: true },
-        { name: 'en', type: 'richText', required: true },
-      ],
-    },
+    { name: 'content', type: 'richText', localized: true, required: true },
     {
       name: 'coverImage',
       type: 'upload',

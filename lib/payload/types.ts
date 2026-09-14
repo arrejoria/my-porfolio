@@ -17,7 +17,6 @@ import type {
 
 export type MediaDoc = Media
 export type ProjectDoc = Project
-export type PostDoc = Post
 export type PageDoc = Page
 export type SiteSettingsDoc = SiteSetting
 
@@ -39,11 +38,16 @@ export type AllLocales<T, K extends keyof T> = Omit<T, K> & {
 // payload-i18n-migration A1: Case Studies is the pilot conversion —
 // `summary`/`content`/`result` are now `localized: true` in
 // lib/payload/collections/case-studies.ts, so every server read passes
-// `locale: 'all'` and these three fields arrive as `{ es, en }`. `PostDoc`/
-// `ProjectDoc` above are rewired the same way in A2/A3, the same slice that
-// converts each collection's fields (see apply-progress for A0/PR1's
-// rationale on why this couldn't be wired ahead of the actual conversion).
+// `locale: 'all'` and these three fields arrive as `{ es, en }`. `ProjectDoc`
+// above is rewired the same way in A3, the same slice that converts each
+// collection's fields (see apply-progress for A0/PR1's rationale on why
+// this couldn't be wired ahead of the actual conversion).
 export type CaseStudyDoc = AllLocales<CaseStudy, 'summary' | 'content' | 'result'>
+
+// payload-i18n-migration A2: `title`/`excerpt`/`content` are now
+// `localized: true` in lib/payload/collections/posts.ts, replaying the A1
+// pilot's playbook verbatim.
+export type PostDoc = AllLocales<Post, 'title' | 'excerpt' | 'content'>
 
 // Homepage `layout` block aliases — used by lib/homepage/sections.ts and the
 // homepage section components so they don't import payload-types directly.

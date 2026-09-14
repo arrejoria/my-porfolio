@@ -335,47 +335,24 @@ export interface ContactBlock {
  */
 export interface Post {
   id: number;
-  title: {
-    es: string;
-    en: string;
-  };
+  title: string;
   slug: string;
-  excerpt: {
-    es: string;
-    en: string;
-  };
+  excerpt: string;
   category?: string | null;
   content: {
-    es: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
+    root: {
+      type: string;
+      children: {
+        type: any;
         version: number;
-      };
-      [k: string]: unknown;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
     };
-    en: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    [k: string]: unknown;
   };
   coverImage?: (number | null) | Media;
   published?: boolean | null;
@@ -663,26 +640,11 @@ export interface ContactBlockSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
-  title?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
+  title?: T;
   slug?: T;
-  excerpt?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
+  excerpt?: T;
   category?: T;
-  content?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
+  content?: T;
   coverImage?: T;
   published?: T;
   updatedAt?: T;

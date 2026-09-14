@@ -12,6 +12,7 @@ export default async function BlogPage() {
     where: { published: { equals: true } },
     limit: 100,
     sort: '-createdAt',
+    locale: 'all',
   })
 
   return <BlogPageContent posts={docs as PostDoc[]} />

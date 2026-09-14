@@ -3,12 +3,14 @@
 import { PageHeader } from '@/components/page-header'
 import { useI18n } from '@/lib/i18n/provider'
 import type { PostDoc } from '@/lib/payload/types'
+import { pickContent } from '@/lib/homepage/sections'
 import { Ticker } from '@/components/motion/ticker'
 import { BlogFileRow } from '@/components/blog-file-row'
 
 export function BlogPageContent({ posts }: { posts: PostDoc[] }) {
   const { t, locale } = useI18n()
-  const tickerItems = posts.length > 0 ? posts.map((post) => post.title[locale]) : [t.blog.comingSoon]
+  const tickerItems =
+    posts.length > 0 ? posts.map((post) => pickContent(post.title, locale)) : [t.blog.comingSoon]
 
   return (
     <>

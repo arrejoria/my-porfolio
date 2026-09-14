@@ -12,6 +12,7 @@ export async function BlogSection({ block }: { block: BlogHomeSection }) {
     where: { published: { equals: true } },
     limit: block.limit,
     sort: '-createdAt',
+    locale: 'all',
   })
 
   return <BlogSectionClient posts={docs as PostDoc[]} block={block} />

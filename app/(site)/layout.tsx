@@ -86,6 +86,7 @@ export default async function RootLayout({
     where: { published: { equals: true } },
     limit: 1,
     sort: '-createdAt',
+    locale: 'all',
   })
   const latestPost = (docs[0] as PostDoc | undefined) ?? null
 

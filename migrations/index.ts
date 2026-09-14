@@ -3,6 +3,8 @@ import * as migration_20260908_213915_formalize_case_studies_status_result_colum
 import * as migration_20260908_214527_add_pages_layout_blocks_and_seo from './20260908_214527_add_pages_layout_blocks_and_seo';
 import * as migration_20260914_204003_localize_case_studies from './20260914_204003_localize_case_studies';
 import * as migration_20260914_204004_drop_case_studies_legacy_locale_columns from './20260914_204004_drop_case_studies_legacy_locale_columns';
+import * as migration_20260914_215045_localize_posts from './20260914_215045_localize_posts';
+import * as migration_20260914_215046_drop_posts_legacy_locale_columns from './20260914_215046_drop_posts_legacy_locale_columns';
 
 export const migrations = [
   {
@@ -29,5 +31,15 @@ export const migrations = [
     up: migration_20260914_204004_drop_case_studies_legacy_locale_columns.up,
     down: migration_20260914_204004_drop_case_studies_legacy_locale_columns.down,
     name: '20260914_204004_drop_case_studies_legacy_locale_columns',
+  },
+  {
+    up: migration_20260914_215045_localize_posts.up,
+    down: migration_20260914_215045_localize_posts.down,
+    name: '20260914_215045_localize_posts',
+  },
+  {
+    up: migration_20260914_215046_drop_posts_legacy_locale_columns.up,
+    down: migration_20260914_215046_drop_posts_legacy_locale_columns.down,
+    name: '20260914_215046_drop_posts_legacy_locale_columns',
   },
 ];

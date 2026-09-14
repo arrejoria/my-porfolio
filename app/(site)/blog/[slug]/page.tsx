@@ -17,6 +17,7 @@ export default async function BlogPostPage({
     collection: 'posts',
     where: { slug: { equals: slug }, published: { equals: true } },
     limit: 1,
+    locale: 'all',
   })
 
   const post = docs[0] as PostDoc | undefined
