@@ -136,13 +136,22 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   }
 }
 
+// down() intentionally leaves the restored legacy columns nullable rather
+// than re-asserting their pre-migration NOT NULL constraint. Design D4
+// legalized partial-locale docs (only `es` translated, `en` never touched)
+// going forward, so by the time a rollback runs there may be no `en` row in
+// `cms_case_studies_locales` to restore — forcing `summary_en`/`content_en`
+// back to NOT NULL would throw ("contains null values") and abort the
+// transaction, leaving the DB in a broken hybrid state (legacy columns and
+// the `_locales` satellite table both present, `payload_migrations`'s
+// ledger inconsistent with the paired N+1 migration's rollback). down() is
+// a best-effort restorative rollback, not a guarantee of exact
+// pre-migration NOT-NULL state — a nullable column still correctly
+// holds/returns whatever was actually backfilled (NULL only for
+// genuinely-untranslated locales).
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
    ALTER TABLE "cms_case_studies_locales" DISABLE ROW LEVEL SECURITY;
   DROP TABLE "cms_case_studies_locales" CASCADE;
-  DROP TYPE "public"."_locales";
-  ALTER TABLE "cms_case_studies" ALTER COLUMN "summary_es" SET NOT NULL;
-  ALTER TABLE "cms_case_studies" ALTER COLUMN "summary_en" SET NOT NULL;
-  ALTER TABLE "cms_case_studies" ALTER COLUMN "content_es" SET NOT NULL;
-  ALTER TABLE "cms_case_studies" ALTER COLUMN "content_en" SET NOT NULL;`)
+  DROP TYPE "public"."_locales";`)
 }
