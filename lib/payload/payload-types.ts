@@ -247,7 +247,7 @@ export interface Page {
    */
   slug: string;
   /**
-   * Homepage sections. Once wired up, reordering will change render order and the ordinal numbers shown next to each section. Hero, Profile and Portfolio are fixed in code and always render first. This field is not yet read by any route, so reordering here currently has no visible effect on the live site.
+   * Homepage sections. Reordering changes render order and the ordinal numbers shown next to each section, and takes effect immediately on the live site. Hero, Profile and Portfolio are fixed in code and always render first. Removing one block removes that section from the homepage. Removing all of them resets the homepage to its default content instead of leaving it blank.
    */
   layout?: (CaseStudiesBlock | BlogBlock | ContactBlock)[] | null;
   meta?: {

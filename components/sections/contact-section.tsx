@@ -3,10 +3,16 @@
 import { ArrowUpRight } from 'lucide-react'
 import { useI18n } from '@/lib/i18n/provider'
 import { profile } from '@/lib/site-data'
+import type { HomeSection } from '@/lib/homepage/sections'
+import { pick } from '@/lib/homepage/sections'
 import { Reveal } from '@/components/motion/reveal'
 
-export function ContactSection() {
-  const { t } = useI18n()
+type ContactHomeSection = Extract<HomeSection, { kind: 'contact' }>
+
+export function ContactSection({ block }: { block: ContactHomeSection }) {
+  const { t, locale } = useI18n()
+  const title = pick(block.title, locale, t.contact.title)
+  const subtitle = pick(block.subtitle, locale, t.contact.subtitle)
 
   return (
     <section id="contact" className="border-t border-border/60">
@@ -17,10 +23,10 @@ export function ContactSection() {
             {t.hero.status}
           </p>
           <h2 className="font-serif-display text-[clamp(34px,4.6vw,50px)] font-medium tracking-[-0.005em] text-balance text-foreground italic">
-            {t.contact.title}
+            {title}
           </h2>
           <p className="mt-4 max-w-[42ch] text-[14.5px] leading-[1.65] text-muted-foreground">
-            {t.contact.subtitle}
+            {subtitle}
           </p>
         </div>
 

@@ -25,7 +25,7 @@ Install dependencies with pnpm:
 pnpm install
 ```
 
-No environment-variable or additional setup commands are documented here because they are not confirmed in this README.
+No environment-variable or additional setup commands are documented here because they are not confirmed in this README, with one exception: **`NEXT_PUBLIC_SITE_URL`** (e.g. `https://arrejoria.dev` — must include the `https://` scheme, and must not be blank) should be set in production's `.env`. It backs `metadataBase` in `app/(site)/layout.tsx`, which resolves relative asset URLs (Payload media, og:image) to absolute ones for social-media unfurls. If it's unset, blank, or missing a scheme, `metadataBase` falls back to `http://localhost:3000` instead of throwing — broken on every real deploy, but invisible in local dev since `localhost:3000` happens to already be correct there.
 
 Before the first `pnpm dev` (or `docker compose up`) against a fresh/empty database, you must run the Payload migrations — see "Database migrations (Payload)" below. Payload's dev-mode schema auto-provisioning is disabled (`push: false`), so nothing creates the database tables automatically; skipping this step causes "relation does not exist" errors.
 

@@ -5,22 +5,32 @@ import { ArrowUpRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useI18n } from '@/lib/i18n/provider'
 import type { PostDoc } from '@/lib/payload/types'
+import type { HomeSection } from '@/lib/homepage/sections'
+import { pick } from '@/lib/homepage/sections'
 import { Reveal } from '@/components/motion/reveal'
 
-export function BlogSectionClient({ posts }: { posts: PostDoc[] }) {
+type BlogHomeSection = Extract<HomeSection, { kind: 'blog' }>
+
+export function BlogSectionClient({ posts, block }: { posts: PostDoc[]; block: BlogHomeSection }) {
   const { t, locale } = useI18n()
+  const eyebrow = pick(block.eyebrow, locale, t.blog.eyebrow)
+  const title = pick(block.title, locale, t.blog.title)
+  const subtitle = pick(block.subtitle, locale, t.blog.subtitle)
 
   return (
     <section id="blog" className="border-t border-border/60">
       <Reveal className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
         <p className="mb-5 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground before:h-px before:w-[22px] before:bg-muted-foreground before:content-['']">
-          {t.blog.eyebrow} <b className="font-medium tabular-nums text-foreground/80">/ 04</b>
+          {eyebrow}{' '}
+          <b className="font-medium tabular-nums text-foreground/80">
+            / {String(block.number).padStart(2, '0')}
+          </b>
         </p>
         <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
-          {t.blog.title}
+          {title}
         </h2>
         <p className="mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground">
-          {t.blog.subtitle}
+          {subtitle}
         </p>
 
         {posts.length === 0 ? (

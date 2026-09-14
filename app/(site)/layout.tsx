@@ -43,11 +43,28 @@ const fraunces = Fraunces({
   display: 'swap',
 })
 
+// Falls back to localhost on any invalid value (blank, whitespace, missing
+// scheme) rather than throwing — `metadata` below is a module-scope object,
+// evaluated at boot, so an unguarded `new URL()` here would take the entire
+// (site) layout down on a bad NEXT_PUBLIC_SITE_URL, not just SEO metadata.
+function safeSiteUrl(value: string | undefined): URL {
+  try {
+    if (!value?.trim()) throw new Error('empty')
+    return new URL(value)
+  } catch {
+    return new URL('http://localhost:3000')
+  }
+}
+
 export const metadata: Metadata = {
+  // Required for og:image/twitter:image to resolve to an absolute URL in
+  // production — Media docs (lib/payload/types.ts's mediaUrl()) return
+  // relative paths, and without metadataBase Next falls back to
+  // http://localhost:3000 on a self-hosted (non-Vercel) deploy like this one.
+  metadataBase: safeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   title: 'Lucas Arrejoria — Full Stack Developer',
   description:
     'Portafolio personal, proyectos y blog de Lucas Arrejoria, Full Stack Developer especializado en WordPress, PHP, automatización con n8n e integraciones con IA.',
-  generator: 'v0.app',
 }
 
 export const viewport: Viewport = {

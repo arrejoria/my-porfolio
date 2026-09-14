@@ -6,22 +6,38 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useI18n } from '@/lib/i18n/provider'
 import type { CaseStudyDoc } from '@/lib/payload/types'
+import type { HomeSection } from '@/lib/homepage/sections'
+import { pick } from '@/lib/homepage/sections'
 import { Reveal } from '@/components/motion/reveal'
 
-export function CaseStudiesSectionClient({ caseStudies }: { caseStudies: CaseStudyDoc[] }) {
+type CaseStudiesHomeSection = Extract<HomeSection, { kind: 'caseStudies' }>
+
+export function CaseStudiesSectionClient({
+  caseStudies,
+  block,
+}: {
+  caseStudies: CaseStudyDoc[]
+  block: CaseStudiesHomeSection
+}) {
   const { t, locale } = useI18n()
+  const eyebrow = pick(block.eyebrow, locale, t.caseStudies.eyebrow)
+  const title = pick(block.title, locale, t.caseStudies.title)
+  const subtitle = pick(block.subtitle, locale, t.caseStudies.subtitle)
 
   return (
     <section id="case-studies" className="border-t border-border/60">
       <Reveal className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 md:py-28">
         <p className="mb-5 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground before:h-px before:w-[22px] before:bg-muted-foreground before:content-['']">
-          {t.caseStudies.eyebrow} <b className="font-medium tabular-nums text-foreground/80">/ 03</b>
+          {eyebrow}{' '}
+          <b className="font-medium tabular-nums text-foreground/80">
+            / {String(block.number).padStart(2, '0')}
+          </b>
         </p>
         <h2 className="font-serif-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
-          {t.caseStudies.title}
+          {title}
         </h2>
         <p className="mt-6 max-w-xl text-pretty leading-relaxed text-muted-foreground">
-          {t.caseStudies.subtitle}
+          {subtitle}
         </p>
 
         {caseStudies.length === 0 ? (
