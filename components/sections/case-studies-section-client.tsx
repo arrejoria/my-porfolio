@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { useI18n } from '@/lib/i18n/provider'
 import type { CaseStudyDoc } from '@/lib/payload/types'
 import type { HomeSection } from '@/lib/homepage/sections'
-import { pick } from '@/lib/homepage/sections'
+import { pick, pickContent } from '@/lib/homepage/sections'
 import { Reveal } from '@/components/motion/reveal'
 
 type CaseStudiesHomeSection = Extract<HomeSection, { kind: 'caseStudies' }>
@@ -76,12 +76,12 @@ export function CaseStudiesSectionClient({
                     {cs.title}
                   </h3>
                   <p className="mt-2.5 max-w-[58ch] text-sm leading-relaxed text-muted-foreground">
-                    {cs.summary[locale]}
+                    {pickContent(cs.summary, locale)}
                   </p>
-                  {cs.result?.[locale] && (
+                  {pickContent(cs.result, locale) && (
                     <span className="mt-3.5 flex items-center gap-2 font-mono text-xs text-muted-foreground/80">
                       <span aria-hidden="true">→</span>
-                      {cs.result[locale]}
+                      {pickContent(cs.result, locale)}
                     </span>
                   )}
                 </div>

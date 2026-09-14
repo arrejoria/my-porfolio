@@ -12,6 +12,7 @@ export default async function CaseStudiesPage() {
     where: { published: { equals: true } },
     limit: 100,
     sort: '-createdAt',
+    locale: 'all',
   })
 
   return <CaseStudiesPageContent caseStudies={docs as CaseStudyDoc[]} />

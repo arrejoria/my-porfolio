@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/page-header'
 import { Badge } from '@/components/ui/badge'
 import { useI18n } from '@/lib/i18n/provider'
 import type { CaseStudyDoc } from '@/lib/payload/types'
+import { pickContent } from '@/lib/homepage/sections'
 
 export function CaseStudiesPageContent({ caseStudies }: { caseStudies: CaseStudyDoc[] }) {
   const { t, locale } = useI18n()
@@ -25,7 +26,7 @@ export function CaseStudiesPageContent({ caseStudies }: { caseStudies: CaseStudy
               >
                 <h2 className="font-display text-2xl uppercase tracking-tight">{cs.title}</h2>
                 <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  {cs.summary[locale]}
+                  {pickContent(cs.summary, locale)}
                 </p>
                 {cs.tools && cs.tools.length > 0 && (
                   <div className="mt-4 flex flex-wrap gap-2">

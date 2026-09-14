@@ -10,6 +10,11 @@ import type { CaseStudyDoc } from '@/lib/payload/types'
 
 export function CaseStudyContent({ caseStudy }: { caseStudy: CaseStudyDoc }) {
   const { t, locale } = useI18n()
+  // `content` is richText (lexical), so `pickContent()` (string-only, design
+  // D4) doesn't apply — same es-fallback intent, applied by hand: no
+  // lib/i18n/dictionary.ts entry exists for case-study body copy, so an
+  // unset `en` falls back to `es` instead of rendering a blank article.
+  const content = caseStudy.content?.[locale] ?? caseStudy.content?.es
 
   return (
     <article className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6 md:py-20">
@@ -59,7 +64,7 @@ export function CaseStudyContent({ caseStudy }: { caseStudy: CaseStudyDoc }) {
         </div>
       )}
       <div className="mt-10 max-w-none text-pretty leading-relaxed [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:uppercase [&_h3]:mt-6 [&_h3]:font-display [&_h3]:text-xl [&_h3]:uppercase [&_p]:mt-4 [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-5">
-        <RichText data={caseStudy.content[locale]} />
+        {content && <RichText data={content} />}
       </div>
     </article>
   )

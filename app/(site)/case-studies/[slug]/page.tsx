@@ -17,6 +17,7 @@ export default async function CaseStudyPage({
     collection: 'case-studies',
     where: { slug: { equals: slug }, published: { equals: true } },
     limit: 1,
+    locale: 'all',
   })
 
   const caseStudy = docs[0] as CaseStudyDoc | undefined

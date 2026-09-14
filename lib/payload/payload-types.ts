@@ -162,41 +162,21 @@ export interface CaseStudy {
   id: number;
   title: string;
   slug: string;
-  summary: {
-    es: string;
-    en: string;
-  };
+  summary: string;
   content: {
-    es: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
+    root: {
+      type: string;
+      children: {
+        type: any;
         version: number;
-      };
-      [k: string]: unknown;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
     };
-    en: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    [k: string]: unknown;
   };
   tools?:
     | {
@@ -205,10 +185,7 @@ export interface CaseStudy {
       }[]
     | null;
   status: 'live' | 'in-progress';
-  result?: {
-    es?: string | null;
-    en?: string | null;
-  };
+  result?: string | null;
   coverImage?: (number | null) | Media;
   repoUrl?: string | null;
   demoUrl?: string | null;
@@ -548,18 +525,8 @@ export interface AdminsSelect<T extends boolean = true> {
 export interface CaseStudiesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  summary?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
-  content?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
+  summary?: T;
+  content?: T;
   tools?:
     | T
     | {
@@ -567,12 +534,7 @@ export interface CaseStudiesSelect<T extends boolean = true> {
         id?: T;
       };
   status?: T;
-  result?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
+  result?: T;
   coverImage?: T;
   repoUrl?: T;
   demoUrl?: T;

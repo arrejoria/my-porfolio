@@ -12,6 +12,7 @@ export async function CaseStudiesSection({ block }: { block: CaseStudiesHomeSect
     where: { published: { equals: true } },
     limit: block.limit,
     sort: '-createdAt',
+    locale: 'all',
   })
 
   return <CaseStudiesSectionClient caseStudies={docs as CaseStudyDoc[]} block={block} />

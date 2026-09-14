@@ -384,8 +384,15 @@ async function seed() {
     createdProjects += 1
   }
 
+  // payload-i18n-migration A1: summary/content/result are now
+  // `localized: true` scalars, not a `{es,en}` group — the Local API has no
+  // `locale: 'all'` write mode (that's read-only), so a localized doc is
+  // seeded in two calls: `create` with `locale: 'es'` (the defaultLocale)
+  // for every field, then `update` with `locale: 'en'` for just the three
+  // localized ones. Reused verbatim by A2 (posts)/A3 (projects) — see
+  // apply-progress for the pilot-slice playbook this establishes.
   let createdCaseStudies = 0
-  for (const caseStudy of seedCaseStudies) {
+  for (const { summary, content, result, ...caseStudy } of seedCaseStudies) {
     const existing = await payload.find({
       collection: 'case-studies',
       where: { slug: { equals: caseStudy.slug } },
@@ -393,7 +400,17 @@ async function seed() {
     })
     if (existing.docs.length > 0) continue
 
-    await payload.create({ collection: 'case-studies', data: caseStudy })
+    const created = await payload.create({
+      collection: 'case-studies',
+      locale: 'es',
+      data: { ...caseStudy, summary: summary.es, content: content.es, result: result?.es },
+    })
+    await payload.update({
+      collection: 'case-studies',
+      id: created.id,
+      locale: 'en',
+      data: { summary: summary.en, content: content.en, result: result?.en },
+    })
     createdCaseStudies += 1
   }
 
