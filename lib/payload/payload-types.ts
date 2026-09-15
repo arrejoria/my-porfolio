@@ -367,10 +367,7 @@ export interface Project {
   id: number;
   title: string;
   slug: string;
-  description: {
-    es: string;
-    en: string;
-  };
+  description: string;
   tags?:
     | {
         tag: string;
@@ -657,12 +654,7 @@ export interface PostsSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  description?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
+  description?: T;
   tags?:
     | T
     | {

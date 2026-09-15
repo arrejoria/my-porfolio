@@ -5,6 +5,7 @@ import * as migration_20260914_204003_localize_case_studies from './20260914_204
 import * as migration_20260914_204004_drop_case_studies_legacy_locale_columns from './20260914_204004_drop_case_studies_legacy_locale_columns';
 import * as migration_20260914_215045_localize_posts from './20260914_215045_localize_posts';
 import * as migration_20260914_215046_drop_posts_legacy_locale_columns from './20260914_215046_drop_posts_legacy_locale_columns';
+import * as migration_20260915_035412_localize_projects from './20260915_035412_localize_projects';
 
 export const migrations = [
   {
@@ -41,5 +42,10 @@ export const migrations = [
     up: migration_20260914_215046_drop_posts_legacy_locale_columns.up,
     down: migration_20260914_215046_drop_posts_legacy_locale_columns.down,
     name: '20260914_215046_drop_posts_legacy_locale_columns',
+  },
+  {
+    up: migration_20260915_035412_localize_projects.up,
+    down: migration_20260915_035412_localize_projects.down,
+    name: '20260915_035412_localize_projects',
   },
 ];

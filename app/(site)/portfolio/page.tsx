@@ -12,6 +12,7 @@ export default async function PortfolioPage() {
     limit: 100,
     depth: 1,
     sort: '-createdAt',
+    locale: 'all',
   })
 
   return <PortfolioPageContent projects={docs as ProjectDoc[]} />

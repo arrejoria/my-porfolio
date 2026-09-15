@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useI18n } from '@/lib/i18n/provider'
 import type { Dictionary, Locale } from '@/lib/i18n/dictionary'
 import { mediaUrl, type ProjectDoc } from '@/lib/payload/types'
+import { pickContent } from '@/lib/homepage/sections'
 import { Reveal, prefersReducedMotion } from '@/components/motion/reveal'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -46,7 +47,7 @@ function ProjectCard({
       <div className="flex flex-1 flex-col p-5">
         <h3 className="truncate font-display text-lg uppercase tracking-tight">{project.title}</h3>
         <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-          {project.description[locale]}
+          {pickContent(project.description, locale)}
         </p>
         {project.tags && project.tags.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">

@@ -361,8 +361,12 @@ const homePageLayout = [
 async function seed() {
   const payload = await getPayload({ config })
 
+  // payload-i18n-migration A3: `description` is now `localized: true`, not a
+  // `{es,en}` group — same two-step create(es)+update(en) pattern
+  // established by A1 (case-studies)/A2 (posts): the Local API has no
+  // `locale: 'all'` write mode (that's read-only).
   let createdProjects = 0
-  for (const { imageFile, ...project } of seedProjects) {
+  for (const { imageFile, description, ...project } of seedProjects) {
     const existing = await payload.find({
       collection: 'projects',
       where: { slug: { equals: project.slug } },
@@ -380,7 +384,17 @@ async function seed() {
       image = media.id
     }
 
-    await payload.create({ collection: 'projects', data: { ...project, image } })
+    const created = await payload.create({
+      collection: 'projects',
+      locale: 'es',
+      data: { ...project, description: description.es, image },
+    })
+    await payload.update({
+      collection: 'projects',
+      id: created.id,
+      locale: 'en',
+      data: { description: description.en },
+    })
     createdProjects += 1
   }
 

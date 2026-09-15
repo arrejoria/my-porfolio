@@ -9,6 +9,7 @@ export async function PortfolioSection() {
     limit: 5,
     depth: 1,
     sort: '-createdAt',
+    locale: 'all',
   })
 
   if (docs.length === 0) return null

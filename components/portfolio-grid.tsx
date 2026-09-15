@@ -6,6 +6,7 @@ import { GithubIcon } from '@/components/icons'
 import { Badge } from '@/components/ui/badge'
 import { useI18n } from '@/lib/i18n/provider'
 import { mediaUrl, type ProjectDoc } from '@/lib/payload/types'
+import { pickContent } from '@/lib/homepage/sections'
 import { Reveal } from '@/components/motion/reveal'
 
 export function PortfolioGrid({ projects }: { projects: ProjectDoc[] }) {
@@ -39,7 +40,7 @@ export function PortfolioGrid({ projects }: { projects: ProjectDoc[] }) {
               {project.title}
             </h2>
             <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-              {project.description[locale]}
+              {pickContent(project.description, locale)}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {(project.tags ?? []).map(({ tag }) => (
