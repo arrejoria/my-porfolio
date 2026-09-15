@@ -386,12 +386,34 @@ const homePageLayoutEn = [
   },
 ]
 
+// Guards against `homePageLayoutEs`/`homePageLayoutEn` drifting out of sync
+// (a block added/removed/renamed on one side but not the other): without
+// this, `seedHomePage()`'s `blockType` matching below would silently fall
+// back to the `es` block for any unmatched `en` entry, writing Spanish text
+// into the "en" locale with zero error.
+function assertHomePageLayoutsMatch() {
+  const esTypes = new Set(homePageLayoutEs.map((b) => b.blockType))
+  const enTypes = new Set(homePageLayoutEn.map((b) => b.blockType))
+  const missingFromEn = [...esTypes].filter((t) => !enTypes.has(t))
+  const missingFromEs = [...enTypes].filter((t) => !esTypes.has(t))
+  if (missingFromEn.length > 0 || missingFromEs.length > 0) {
+    throw new Error(
+      `homePageLayoutEs/homePageLayoutEn blockType mismatch: ` +
+        `${missingFromEn.length > 0 ? `missing from homePageLayoutEn: ${missingFromEn.join(', ')}. ` : ''}` +
+        `${missingFromEs.length > 0 ? `missing from homePageLayoutEs: ${missingFromEs.join(', ')}.` : ''}`,
+    )
+  }
+}
+
 // Creates the home `pages` doc with `es` block content, then updates it with
 // `en` block content — matching each `en` block to the SAME block-row `id`
 // Payload assigned on create (by `blockType`; `validateUniqueBlockTypes` in
 // pages.ts guarantees at most one row per type), so both locale writes land
 // on one block-row instance instead of two.
 async function seedHomePage(payload: Awaited<ReturnType<typeof getPayload>>) {
+  assertHomePageLayoutsMatch()
+
+
   const created = await payload.create({
     collection: 'pages',
     locale: 'es',
