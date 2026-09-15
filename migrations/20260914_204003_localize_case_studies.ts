@@ -87,12 +87,26 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   // Backfill summary/result (plain text) via SQL — safe per the spec's
   // "Plain text backfill" scenario. `content` gets the placeholder here;
   // real values are written below via the Local API.
+  //
+  // The row's existence per locale is gated on "summary_{locale}" IS NOT
+  // NULL, not inserted unconditionally: `cms_case_studies_locales.summary`
+  // is itself NOT NULL (mirrors the pre-migration field's `required: true`,
+  // while `result` was never required and stays nullable in the satellite
+  // table), and design D4 legalizes partial-locale docs — a legacy
+  // `summary_es`/`summary_en` value can legitimately be NULL (e.g. after a
+  // down()+up() round-trip on a doc that was only ever translated in one
+  // locale). Inserting unconditionally would violate the NOT NULL
+  // constraint and abort the whole migration; skipping the row for the
+  // untranslated locale instead matches Payload's own runtime
+  // representation of "not translated" — an absent row, not a NULL value in
+  // a NOT NULL column. `summary` is the authoritative "is this locale
+  // translated" signal (not `result`, which can independently be empty).
   const placeholder = JSON.stringify(emptyLexicalDoc)
   await db.execute(sql`
     INSERT INTO "cms_case_studies_locales" ("_locale", "_parent_id", "summary", "result", "content")
-    SELECT 'es'::"public"."_locales", "id", "summary_es", "result_es", ${placeholder}::jsonb FROM "cms_case_studies"
+    SELECT 'es'::"public"."_locales", "id", "summary_es", "result_es", ${placeholder}::jsonb FROM "cms_case_studies" WHERE "summary_es" IS NOT NULL
     UNION ALL
-    SELECT 'en'::"public"."_locales", "id", "summary_en", "result_en", ${placeholder}::jsonb FROM "cms_case_studies";
+    SELECT 'en'::"public"."_locales", "id", "summary_en", "result_en", ${placeholder}::jsonb FROM "cms_case_studies" WHERE "summary_en" IS NOT NULL;
   `)
 
   // Relax the legacy columns' NOT NULL constraint so the Local API upsert

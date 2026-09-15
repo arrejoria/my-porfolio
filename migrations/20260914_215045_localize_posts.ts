@@ -64,12 +64,27 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   // Backfill title/excerpt (plain text) via SQL — safe per the spec's
   // "Plain text backfill" scenario. `content` gets the placeholder here;
   // real values are written below via the Local API.
+  //
+  // The row's existence per locale is gated on "title_{locale}" IS NOT
+  // NULL, not inserted unconditionally: `cms_posts_locales.title` and
+  // `.excerpt` are both NOT NULL (mirroring the pre-migration fields'
+  // `required: true` on both sub-fields), and design D4 legalizes
+  // partial-locale docs — a legacy `title_es`/`title_en` (and its paired
+  // `excerpt_{locale}`) value can legitimately be NULL (e.g. after a
+  // down()+up() round-trip on a doc that was only ever translated in one
+  // locale). Under the old bilingual() pattern, `title` and `excerpt` were
+  // always written together per locale, so `title` alone is a reliable
+  // proxy for "is this locale translated" — inserting unconditionally would
+  // violate the NOT NULL constraint and abort the whole migration; skipping
+  // the row for the untranslated locale instead matches Payload's own
+  // runtime representation of "not translated" — an absent row, not a NULL
+  // value in a NOT NULL column.
   const placeholder = JSON.stringify(emptyLexicalDoc)
   await db.execute(sql`
     INSERT INTO "cms_posts_locales" ("_locale", "_parent_id", "title", "excerpt", "content")
-    SELECT 'es'::"public"."_locales", "id", "title_es", "excerpt_es", ${placeholder}::jsonb FROM "cms_posts"
+    SELECT 'es'::"public"."_locales", "id", "title_es", "excerpt_es", ${placeholder}::jsonb FROM "cms_posts" WHERE "title_es" IS NOT NULL
     UNION ALL
-    SELECT 'en'::"public"."_locales", "id", "title_en", "excerpt_en", ${placeholder}::jsonb FROM "cms_posts";
+    SELECT 'en'::"public"."_locales", "id", "title_en", "excerpt_en", ${placeholder}::jsonb FROM "cms_posts" WHERE "title_en" IS NOT NULL;
   `)
 
   // Relax the legacy columns' NOT NULL constraint so the Local API upsert
