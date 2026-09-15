@@ -413,7 +413,6 @@ function assertHomePageLayoutsMatch() {
 async function seedHomePage(payload: Awaited<ReturnType<typeof getPayload>>) {
   assertHomePageLayoutsMatch()
 
-
   const created = await payload.create({
     collection: 'pages',
     locale: 'es',
