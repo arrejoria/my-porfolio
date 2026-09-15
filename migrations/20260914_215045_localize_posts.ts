@@ -116,13 +116,15 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+  // Intentionally does NOT restore the legacy columns' NOT NULL constraint.
+  // Design D4 allows partial-locale docs (only `es` translated, `en` never
+  // touched), so a genuinely-untranslated legacy column can legitimately be
+  // NULL after rollback. Forcing NOT NULL here would throw on any such doc
+  // and abort the transaction, leaving the DB in a broken hybrid state. This
+  // down() is a best-effort restorative rollback, not a guarantee of exact
+  // pre-migration schema state — nullable columns still hold and return
+  // whatever data was actually backfilled.
   await db.execute(sql`
    ALTER TABLE "cms_posts_locales" DISABLE ROW LEVEL SECURITY;
-  DROP TABLE "cms_posts_locales" CASCADE;
-  ALTER TABLE "cms_posts" ALTER COLUMN "title_es" SET NOT NULL;
-  ALTER TABLE "cms_posts" ALTER COLUMN "title_en" SET NOT NULL;
-  ALTER TABLE "cms_posts" ALTER COLUMN "excerpt_es" SET NOT NULL;
-  ALTER TABLE "cms_posts" ALTER COLUMN "excerpt_en" SET NOT NULL;
-  ALTER TABLE "cms_posts" ALTER COLUMN "content_es" SET NOT NULL;
-  ALTER TABLE "cms_posts" ALTER COLUMN "content_en" SET NOT NULL;`)
+  DROP TABLE "cms_posts_locales" CASCADE;`)
 }
