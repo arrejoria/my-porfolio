@@ -246,24 +246,15 @@ export interface CaseStudiesBlock {
   /**
    * Homepage only. Does not change the /case-studies page header.
    */
-  eyebrow?: {
-    es?: string | null;
-    en?: string | null;
-  };
+  eyebrow?: string | null;
   /**
    * Homepage only. Does not change the /case-studies page header.
    */
-  title?: {
-    es?: string | null;
-    en?: string | null;
-  };
+  title?: string | null;
   /**
    * Homepage only. Does not change the /case-studies page header.
    */
-  subtitle?: {
-    es?: string | null;
-    en?: string | null;
-  };
+  subtitle?: string | null;
   /**
    * Number of published case studies to show on the homepage.
    */
@@ -280,24 +271,15 @@ export interface BlogBlock {
   /**
    * Homepage only. Does not change the /blog page header.
    */
-  eyebrow?: {
-    es?: string | null;
-    en?: string | null;
-  };
+  eyebrow?: string | null;
   /**
    * Homepage only. Does not change the /blog page header.
    */
-  title?: {
-    es?: string | null;
-    en?: string | null;
-  };
+  title?: string | null;
   /**
    * Homepage only. Does not change the /blog page header.
    */
-  subtitle?: {
-    es?: string | null;
-    en?: string | null;
-  };
+  subtitle?: string | null;
   /**
    * Number of published posts to show on the homepage.
    */
@@ -314,17 +296,11 @@ export interface ContactBlock {
   /**
    * Homepage only.
    */
-  title?: {
-    es?: string | null;
-    en?: string | null;
-  };
+  title?: string | null;
   /**
    * Homepage only.
    */
-  subtitle?: {
-    es?: string | null;
-    en?: string | null;
-  };
+  subtitle?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'contact';
@@ -563,24 +539,9 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "CaseStudiesBlock_select".
  */
 export interface CaseStudiesBlockSelect<T extends boolean = true> {
-  eyebrow?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
-  title?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
-  subtitle?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
+  eyebrow?: T;
+  title?: T;
+  subtitle?: T;
   limit?: T;
   id?: T;
   blockName?: T;
@@ -590,24 +551,9 @@ export interface CaseStudiesBlockSelect<T extends boolean = true> {
  * via the `definition` "BlogBlock_select".
  */
 export interface BlogBlockSelect<T extends boolean = true> {
-  eyebrow?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
-  title?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
-  subtitle?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
+  eyebrow?: T;
+  title?: T;
+  subtitle?: T;
   limit?: T;
   id?: T;
   blockName?: T;
@@ -617,18 +563,8 @@ export interface BlogBlockSelect<T extends boolean = true> {
  * via the `definition` "ContactBlock_select".
  */
 export interface ContactBlockSelect<T extends boolean = true> {
-  title?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
-  subtitle?:
-    | T
-    | {
-        es?: T;
-        en?: T;
-      };
+  title?: T;
+  subtitle?: T;
   id?: T;
   blockName?: T;
 }

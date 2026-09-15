@@ -1,17 +1,36 @@
 import type { Block } from 'payload'
-import { bilingual } from './shared'
 
 // Homepage-only content for the Blog section. This block does NOT affect
 // app/(site)/blog's own page header (t.blog.title / .subtitle in
 // lib/i18n/dictionary.ts) — the two are intentionally independent, with no
 // synchronization between them.
+//
+// payload-i18n-migration (A4): `eyebrow`/`title`/`subtitle` used to be
+// `group` fields with hand-authored `es`/`en` sub-fields (the `bilingual()`
+// helper, now deleted from ./shared). They are now native `localized: true`
+// scalars, same field names, so `pick()` keeps working unchanged (design D3).
 export const BlogBlock: Block = {
   slug: 'blog',
   interfaceName: 'BlogBlock',
   fields: [
-    bilingual('eyebrow', false, 'Homepage only. Does not change the /blog page header.'),
-    bilingual('title', false, 'Homepage only. Does not change the /blog page header.'),
-    bilingual('subtitle', true, 'Homepage only. Does not change the /blog page header.'),
+    {
+      name: 'eyebrow',
+      type: 'text',
+      localized: true,
+      admin: { description: 'Homepage only. Does not change the /blog page header.' },
+    },
+    {
+      name: 'title',
+      type: 'text',
+      localized: true,
+      admin: { description: 'Homepage only. Does not change the /blog page header.' },
+    },
+    {
+      name: 'subtitle',
+      type: 'textarea',
+      localized: true,
+      admin: { description: 'Homepage only. Does not change the /blog page header.' },
+    },
     {
       name: 'limit',
       type: 'number',

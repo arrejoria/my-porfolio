@@ -327,36 +327,90 @@ const seedPosts = [
 // seeded block content is byte-for-byte the "day one" state before an
 // admin customizes anything (matches what the dictionary fallback would
 // already render if this doc didn't exist at all).
-const homePageLayout = [
+//
+// payload-i18n-migration A4: `eyebrow`/`title`/`subtitle` are now
+// `localized: true` scalars on the block configs, not `{es,en}` groups — but
+// unlike A1/A2/A3's flat-collection two-step create(es)+update(en) pattern,
+// these fields live on `pages.layout`'s BLOCK rows, nested inside a single
+// `pages.create()` call. Payload's `blocks` field matches array rows by
+// `id` on update — omitting `id` (or passing a fresh literal object without
+// one) makes `update()` delete the existing block rows and insert brand-new
+// ones, which would silently split the es/en content across two DIFFERENT
+// `cms_pages_blocks_*` row ids instead of two locales of the SAME row. So
+// the `en` pass below reads back the `id`s Payload assigned during the `es`
+// create and threads them through explicitly (see `seedHomePage()`).
+const homePageLayoutEs = [
   {
     blockType: 'caseStudies' as const,
-    eyebrow: { es: 'Registro de casos', en: 'Case log' },
-    title: { es: 'Casos de IA & Automatización', en: 'AI & Automation Case Studies' },
-    subtitle: {
-      es: 'Flujos y sistemas donde la IA ejecuta y yo dirijo — n8n, integraciones y automatización aplicada.',
-      en: 'Flows and systems where AI executes and I direct — n8n, integrations, and applied automation.',
-    },
+    eyebrow: 'Registro de casos',
+    title: 'Casos de IA & Automatización',
+    subtitle:
+      'Flujos y sistemas donde la IA ejecuta y yo dirijo — n8n, integraciones y automatización aplicada.',
     limit: 3,
   },
   {
     blockType: 'blog' as const,
-    eyebrow: { es: 'Notas y escritura', en: 'Notes & writing' },
-    title: { es: 'Blog', en: 'Blog' },
-    subtitle: {
-      es: 'Notas sobre desarrollo web, aprendizajes y experimentos con nuevas tecnologías.',
-      en: 'Notes on web development, learnings and experiments with new technologies.',
-    },
+    eyebrow: 'Notas y escritura',
+    title: 'Blog',
+    subtitle: 'Notas sobre desarrollo web, aprendizajes y experimentos con nuevas tecnologías.',
     limit: 3,
   },
   {
     blockType: 'contact' as const,
-    title: { es: 'Hablemos', en: "Let's talk" },
-    subtitle: {
-      es: '¿Tienes un proyecto en mente o quieres colaborar? Escríbeme y te responderé pronto.',
-      en: 'Have a project in mind or want to collaborate? Send me a message and I will get back to you soon.',
-    },
+    title: 'Hablemos',
+    subtitle: '¿Tienes un proyecto en mente o quieres colaborar? Escríbeme y te responderé pronto.',
   },
 ]
+
+const homePageLayoutEn = [
+  {
+    blockType: 'caseStudies' as const,
+    eyebrow: 'Case log',
+    title: 'AI & Automation Case Studies',
+    subtitle:
+      'Flows and systems where AI executes and I direct — n8n, integrations, and applied automation.',
+    limit: 3,
+  },
+  {
+    blockType: 'blog' as const,
+    eyebrow: 'Notes & writing',
+    title: 'Blog',
+    subtitle: 'Notes on web development, learnings and experiments with new technologies.',
+    limit: 3,
+  },
+  {
+    blockType: 'contact' as const,
+    title: "Let's talk",
+    subtitle:
+      'Have a project in mind or want to collaborate? Send me a message and I will get back to you soon.',
+  },
+]
+
+// Creates the home `pages` doc with `es` block content, then updates it with
+// `en` block content — matching each `en` block to the SAME block-row `id`
+// Payload assigned on create (by `blockType`; `validateUniqueBlockTypes` in
+// pages.ts guarantees at most one row per type), so both locale writes land
+// on one block-row instance instead of two.
+async function seedHomePage(payload: Awaited<ReturnType<typeof getPayload>>) {
+  const created = await payload.create({
+    collection: 'pages',
+    locale: 'es',
+    data: { title: 'Home', slug: '/', layout: homePageLayoutEs },
+  })
+
+  const layoutEn = (created.layout ?? []).map((block) => {
+    const enBlock = homePageLayoutEn.find((b) => b.blockType === block.blockType)
+    return enBlock ? { ...enBlock, id: block.id } : block
+  })
+  await payload.update({
+    collection: 'pages',
+    id: created.id,
+    locale: 'en',
+    data: { layout: layoutEn },
+  })
+
+  return created
+}
 
 async function seed() {
   const payload = await getPayload({ config })
@@ -460,16 +514,7 @@ async function seed() {
     where: { slug: { equals: '/' } },
     limit: 1,
   })
-  const homePage =
-    existingHomePage.docs[0] ??
-    (await payload.create({
-      collection: 'pages',
-      data: {
-        title: 'Home',
-        slug: '/',
-        layout: homePageLayout,
-      },
-    }))
+  const homePage = existingHomePage.docs[0] ?? (await seedHomePage(payload))
   const createdHomePage = existingHomePage.docs.length === 0
 
   let updatedSiteSettings = false

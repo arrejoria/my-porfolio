@@ -1,8 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { HARDCODED_NUMBERED_COUNT, pick, pickContent, resolveHomeSections } from './sections'
-import type { PageDoc } from '@/lib/payload/types'
+import type { HomeLayout } from './sections'
 
-type Layout = NonNullable<PageDoc['layout']>
+// payload-i18n-migration A4: `eyebrow`/`title`/`subtitle` are now
+// `localized: true` scalars on the block configs, so `HomeLayout` (the
+// `locale: 'all'` runtime shape, design D3) is what these fixtures must
+// match — not the raw generated `PageDoc['layout']`, whose block field types
+// are single-locale scalars.
+type Layout = NonNullable<HomeLayout>
 
 function caseStudiesBlock(overrides: Partial<Layout[number]> = {}): Layout[number] {
   return {

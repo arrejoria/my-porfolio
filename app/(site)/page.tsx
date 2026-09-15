@@ -7,6 +7,7 @@ import { BlogSection } from '@/components/sections/blog-section'
 import { ContactSection } from '@/components/sections/contact-section'
 import { getHomePage } from '@/lib/payload/home-page'
 import { resolveHomeSections } from '@/lib/homepage/sections'
+import type { HomeLayout } from '@/lib/homepage/sections'
 import { mediaUrl } from '@/lib/payload/types'
 
 // Homepage content (Portfolio/Blog sections) reads from Payload's Local API,
@@ -35,7 +36,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const homePage = await getHomePage()
-  const sections = resolveHomeSections(homePage?.layout)
+  // payload-i18n-migration A4: every server read passes `locale: 'all'`
+  // (see getHomePage()), so `homePage.layout`'s 8 localized sub-fields
+  // actually arrive as `{ es, en }` at runtime even though `PageDoc['layout']`
+  // (generated from the Payload config alone) declares them as scalars —
+  // same read-site cast pattern as `CaseStudyDoc[]`/`PostDoc[]`/`ProjectDoc[]`
+  // (design D3).
+  const sections = resolveHomeSections(homePage?.layout as HomeLayout)
 
   return (
     <>

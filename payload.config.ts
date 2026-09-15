@@ -64,9 +64,9 @@ export default buildConfig({
   },
   // Scoped to `pages` only — case-studies/posts/projects keep their own
   // dedicated bilingual copy fields and don't need a generic SEO tab.
-  // NOTE: unlike every other bilingual field in this schema (see the
-  // `{ es, en }` group pattern documented in lib/payload/blocks/shared.ts),
-  // this plugin's meta.title/meta.description/meta.image fields are
+  // NOTE: unlike every other bilingual field in this schema (all native
+  // `localized: true` scalars as of payload-i18n-migration A1-A4), this
+  // plugin's meta.title/meta.description/meta.image fields are
   // single-language only. Bilingual SEO support is deliberately deferred
   // to a future change, not implemented here.
   plugins: [

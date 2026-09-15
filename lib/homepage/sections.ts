@@ -1,5 +1,10 @@
 import type { Locale } from '@/lib/i18n/dictionary'
-import type { Localized, PageDoc } from '@/lib/payload/types'
+import type {
+  BlogBlockDoc,
+  CaseStudiesBlockDoc,
+  ContactBlockDoc,
+  Localized,
+} from '@/lib/payload/types'
 
 // Hero, Profile and Portfolio always render first, hardcoded, ahead of the
 // blocks region. Only Profile (/ 01) and Portfolio (/ 02) carry a numbered
@@ -78,6 +83,16 @@ function defaultSections(): HomeSection[] {
   ]
 }
 
+// payload-i18n-migration A4: the `layout` blocks field itself is not
+// localized (only 8 of its sub-fields are) — `PageDoc['layout']` (the raw
+// generated type) declares those 8 sub-fields as single-locale scalars,
+// because `generate:types` doesn't know a `locale: 'all'` read will make
+// them arrive as `{ es, en }`. `HomeLayout` is the `locale: 'all'` runtime
+// shape (design D3's `AllLocales<T, K>` bridge, applied per-block-type), so
+// this function's signature reflects what callers actually receive rather
+// than what `payload-types.ts` alone would suggest.
+export type HomeLayout = (CaseStudiesBlockDoc | BlogBlockDoc | ContactBlockDoc)[] | null | undefined
+
 /**
  * Single normalizer for the home page's `layout` blocks array. Always
  * returns a fully-populated `HomeSection[]` — never null/undefined/empty —
@@ -91,7 +106,7 @@ function defaultSections(): HomeSection[] {
  * gapless under any reorder or omission. Unknown block types (e.g. a stale
  * row after a future block removal) are skipped defensively.
  */
-export function resolveHomeSections(layout: PageDoc['layout']): HomeSection[] {
+export function resolveHomeSections(layout: HomeLayout): HomeSection[] {
   if (!layout || layout.length === 0) {
     return defaultSections()
   }
@@ -131,7 +146,8 @@ export function resolveHomeSections(layout: PageDoc['layout']): HomeSection[] {
 
 // Single per-field, per-locale fallback: `||` (not `??`) so an admin-saved
 // empty string also falls back to the dictionary, matching the "optionality
-// is the fallback mechanism" convention in lib/payload/blocks/shared.ts.
+// is the fallback mechanism" convention the homepage blocks (case-studies-
+// block.ts / blog-block.ts / contact-block.ts) use for every localized field.
 export function pick(value: Bilingual, locale: Locale, fallback: string): string {
   return value?.[locale] || fallback
 }

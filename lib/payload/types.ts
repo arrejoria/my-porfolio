@@ -49,11 +49,18 @@ export type PostDoc = AllLocales<Post, 'title' | 'excerpt' | 'content'>
 // lib/payload/collections/projects.ts, replaying the A1/A2 playbook.
 export type ProjectDoc = AllLocales<Project, 'description'>
 
-// Homepage `layout` block aliases — used by lib/homepage/sections.ts and the
-// homepage section components so they don't import payload-types directly.
-export type CaseStudiesBlockDoc = CaseStudiesBlock
-export type BlogBlockDoc = BlogBlock
-export type ContactBlockDoc = ContactBlock
+// payload-i18n-migration A4: `eyebrow`/`title`/`subtitle` (case-studies-block
+// and blog-block) and `title`/`subtitle` (contact-block) are now
+// `localized: true` in lib/payload/blocks/{case-studies,blog,contact}-block.ts,
+// replaying the A1/A2/A3 playbook — same `AllLocales<T, K>` bridge (design
+// D3), applied here to the `pages` collection's `layout` block union instead
+// of a top-level collection. Used by lib/homepage/sections.ts's
+// `resolveHomeSections()` (cast at the read-site boundary, same pattern as
+// `CaseStudyDoc[]`/`PostDoc[]`/`ProjectDoc[]`) and the homepage section
+// components so they don't import payload-types directly.
+export type CaseStudiesBlockDoc = AllLocales<CaseStudiesBlock, 'eyebrow' | 'title' | 'subtitle'>
+export type BlogBlockDoc = AllLocales<BlogBlock, 'eyebrow' | 'title' | 'subtitle'>
+export type ContactBlockDoc = AllLocales<ContactBlock, 'title' | 'subtitle'>
 
 export function mediaUrl(media: MediaDoc | number | null | undefined): string | undefined {
   if (!media || typeof media === 'number') return undefined

@@ -26,6 +26,14 @@ export const getHomePage = cache(async (): Promise<PageDoc | null> => {
     settings = (await payload.findGlobal({
       slug: 'site-settings',
       depth: 2,
+      // payload-i18n-migration A4: the homepage blocks' 8 localized fields
+      // (case-studies/blog/contact) live on the relationship-populated
+      // `pages` doc this global resolves — `locale: 'all'` on the TOP-LEVEL
+      // findGlobal call was empirically confirmed (live, this slice) to
+      // propagate through relationship population at depth:2, so the
+      // populated `pages` doc's block fields arrive as `{ es, en }` too. No
+      // second query / two-call restructure (design D9) was needed.
+      locale: 'all',
     })) as SiteSettingsDoc
   } catch {
     return null
